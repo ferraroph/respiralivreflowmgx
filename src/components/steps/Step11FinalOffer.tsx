@@ -56,8 +56,8 @@ const Step11FinalOffer = ({ userProfile, onUpdateProfile, onNext }: Step11FinalO
 
   const handleCheckout = () => {
     // Track checkout event
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'begin_checkout', {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'begin_checkout', {
         'value': 197,
         'currency': 'BRL',
         'items': [{
@@ -87,7 +87,7 @@ const Step11FinalOffer = ({ userProfile, onUpdateProfile, onNext }: Step11FinalO
         <div className="text-center mb-8">
           <div className="w-20 h-20 mx-auto mb-6 premium-card bg-gradient-to-br from-gold/20 to-success/20 border-gold/40 flex items-center justify-center">
             <img 
-              src="/assets/Logo_Respiralivre.png" 
+              src="/assets/Logo_Respiralivre_variant_2.png" 
               alt="Respira Livre" 
               className="w-12 h-12 object-contain"
             />

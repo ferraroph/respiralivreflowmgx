@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { UserProfile } from '@/types/funnel';
 import Step1CharacterCreation from './steps/Step1CharacterCreation';
 import Step2RealityCheck from './steps/Step2RealityCheck';
 import Step3GoalSelection from './steps/Step3GoalSelection';
@@ -166,42 +167,59 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
   }
 
   const renderCurrentStep = () => {
-    const commonProps = {
-      onNext: handleNext,
-      onUpdateScore: handleScoreUpdate,
-      onUpdateCharacter: handleCharacterUpdate,
-      onUpdateProgress: handleProgressUpdate,
-      onUpdateLead: handleLeadUpdate,
-      characterData,
-      progressData,
-      totalScore
+    const userProfile: UserProfile = {
+      nickname: characterData.nickname || '',
+      avatar: characterData.avatar || '',
+      archetype: characterData.archetype || null,
+      level: characterData.level || 1,
+      xp: totalScore,
+      respirCoins: characterData.respirCoins || 0,
+      streak: characterData.streak || 0,
+      league: characterData.league || 'iniciante',
+      dailyCigarettes: characterData.dailyCigarettes || 0,
+      cigarettePrice: characterData.cigarettePrice || 0,
+      quitGoal: characterData.quitGoal || 'immediate',
+      motivations: characterData.motivations || [],
+      monthlySpend: characterData.monthlySpend || 0,
+      selectedDream: characterData.selectedDream || null,
+      currentStep: currentStep,
+      completedChallenges: characterData.completedChallenges || [],
+      badges: characterData.badges || [],
+      joinedSquad: characterData.joinedSquad || false
+    };
+
+    const handleProfileUpdate = (updates: Partial<UserProfile>) => {
+      handleCharacterUpdate(updates);
+      if (updates.xp !== undefined) {
+        setTotalScore(updates.xp);
+      }
     };
 
     switch (currentStep) {
       case 1:
-        return <Step1CharacterCreation {...commonProps} />;
+        return <Step1CharacterCreation userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} />;
       case 2:
-        return <Step2RealityCheck {...commonProps} />;
+        return <Step2RealityCheck userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} />;
       case 3:
-        return <Step3GoalSelection {...commonProps} />;
+        return <Step3GoalSelection userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} />;
       case 4:
-        return <Step4Calculator {...commonProps} />;
+        return <Step4Calculator onNext={handleNext} onUpdateScore={handleScoreUpdate} onUpdateProgress={handleProgressUpdate} characterData={characterData} />;
       case 5:
-        return <Step5HealthSimulator {...commonProps} />;
+        return <Step5HealthSimulator onNext={handleNext} onBack={() => setCurrentStep(currentStep - 1)} userData={characterData} onUpdateUserData={handleCharacterUpdate} />;
       case 6:
-        return <Step6BreathingChallenge {...commonProps} />;
+        return <Step6BreathingChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} />;
       case 7:
-        return <Step7MindfulnessChallenge {...commonProps} />;
+        return <Step7MindfulnessChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} />;
       case 8:
-        return <Step8ResistanceChallenge {...commonProps} />;
+        return <Step8ResistanceChallenge onNext={handleNext} onUpdateScore={handleScoreUpdate} />;
       case 9:
-        return <Step9FocusChallenge {...commonProps} />;
+        return <Step9FocusChallenge onNext={handleNext} onUpdateScore={handleScoreUpdate} />;
       case 10:
-        return <Step10BossChallenge {...commonProps} />;
+        return <Step10BossChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} />;
       case 11:
-        return <Step11FinalOffer {...commonProps} leadData={leadData} />;
+        return <Step11FinalOffer userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} />;
       default:
-        return <Step1CharacterCreation {...commonProps} />;
+        return <Step1CharacterCreation userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} />;
     }
   };
 

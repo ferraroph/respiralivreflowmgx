@@ -29,13 +29,15 @@ export const ParticleBackground = () => {
     setParticles(initialParticles);
 
     const animateParticles = () => {
-      setParticles(prev => prev.map(particle => ({
-        ...particle,
-        y: particle.y - particle.speed,
-        x: particle.x + Math.sin(particle.y * 0.01) * 0.5,
-        opacity: particle.y < -10 ? Math.random() * 0.5 + 0.1 : particle.opacity,
-        y: particle.y < -10 ? window.innerHeight + 10 : particle.y
-      })));
+      setParticles(prev => prev.map(particle => {
+        const newY = particle.y - particle.speed;
+        return {
+          ...particle,
+          y: newY < -10 ? window.innerHeight + 10 : newY,
+          x: particle.x + Math.sin(particle.y * 0.01) * 0.5,
+          opacity: newY < -10 ? Math.random() * 0.5 + 0.1 : particle.opacity
+        };
+      }));
     };
 
     const interval = setInterval(animateParticles, 50);
