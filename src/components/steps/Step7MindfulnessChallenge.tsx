@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { UserProfile } from '@/types/funnel';
-import { Brain, Play, SkipForward, Trophy, Timer, Zap, Target } from 'lucide-react';
+import { Brain, Play, SkipForward, Trophy, Timer, Zap, Target, Sparkles, ChevronRight } from 'lucide-react';
 import { StepWrapper } from '../StepWrapper';
 
 interface Step7MindfulnessChallengeProps {
@@ -297,26 +297,60 @@ const Step7MindfulnessChallenge = ({ userProfile, onUpdateProfile, onNext, onBac
   }
 
   if (phase === 'completed') {
+    const finalPoints = points;
+    const bonusPoints = Math.floor(points / 3);
+    const finalLevel = Math.floor(focusLevel / 10) + 1;
+    
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background to-purple-900/20 flex items-center justify-center p-6">
+      <div className="min-h-screen flex items-center justify-center p-6" style={{
+        background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%)'
+      }}>
         <div className="max-w-md mx-auto text-center">
-          <div className="premium-card p-8 border-purple-500/30">
-            <div className="w-20 h-20 mx-auto mb-6 premium-card bg-gradient-to-br from-purple-500/20 to-blue-500/20 border-purple-500/30 flex items-center justify-center animate-bounce-in">
-              <Brain className="w-10 h-10 text-purple-400" />
-            </div>
-            <h2 className="text-3xl font-bold text-gradient mb-4">
-              Mente Tranquila!
-            </h2>
-            <div className="space-y-3 text-lg">
-              <p className="text-muted-foreground">Tempo de meditação: {timeElapsed}s</p>
-              <p className="text-muted-foreground">Foco médio: {Math.floor(focusLevel)}%</p>
-              {points > 0 && (
-                <div className="premium-card p-4 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border-purple-500/30">
-                  <p className="text-purple-400 font-bold">+{points} XP • +{Math.floor(points/3)} Coins</p>
-                </div>
-              )}
-            </div>
+          {/* Ícone Verde Circular */}
+          <div className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center animate-bounce-in" style={{
+            background: '#22C55E'
+          }}>
+            <Trophy className="w-10 h-10 text-white" />
           </div>
+          
+          {/* Título */}
+          <h2 className="text-3xl font-bold text-white mb-4">
+            Desafio Concluído!
+          </h2>
+          
+          {/* Mensagem */}
+          <p className="text-white/80 text-base mb-8 leading-relaxed">
+            Você demonstrou uma resistência incrível! Sua força de vontade está se fortalecendo.
+          </p>
+          
+          {/* Card de Resultados */}
+          <div className="rounded-3xl p-6 mb-8" style={{
+            background: 'rgba(79, 70, 229, 0.4)',
+            backdropFilter: 'blur(10px)'
+          }}>
+            <div className="text-2xl font-bold text-white mb-2">Nível Final: {finalLevel}</div>
+            <div className="text-xl mb-4" style={{ color: '#a78bfa' }}>Pontos Ganhos: {finalPoints}</div>
+            {bonusPoints > 0 && (
+              <div className="text-lg font-semibold flex items-center justify-center gap-2" style={{ color: '#22C55E' }}>
+                <Sparkles className="w-5 h-5" />
+                Bônus de Conclusão: +{bonusPoints} pontos!
+              </div>
+            )}
+          </div>
+          
+          {/* Botão CTA */}
+          <button
+            onClick={onNext}
+            className="w-full rounded-2xl font-semibold py-4 px-6 flex items-center justify-center gap-2 transition-all duration-300 hover:scale-105"
+            style={{
+              background: '#22C55E',
+              color: 'white'
+            }}
+          >
+            <Trophy className="w-5 h-5" />
+            <span>Concluir e Coletar Pontos</span>
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
     );

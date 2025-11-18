@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, Eye, Target, Zap, Clock, Award, Circle } from 'lucide-react';
+import { ChevronRight, Eye, Target, Zap, Clock, Award, Circle, Sparkles } from 'lucide-react';
 import { StepWrapper } from '../StepWrapper';
 
 interface Step9FocusChallengeProps {
@@ -196,33 +196,55 @@ const Step9FocusChallenge: React.FC<Step9FocusChallengeProps> = ({ onNext, onBac
     );
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full">
-        <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl text-center">
-          <div className="w-24 h-24 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-            <Award className="w-12 h-12 text-white" />
+  if (currentPhase === 'completed') {
+    const finalPoints = points;
+    const bonusPoints = showBonus ? 150 : 0;
+    
+    return (
+      <div className="min-h-screen flex items-center justify-center p-6" style={{
+        background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%)'
+      }}>
+        <div className="max-w-md mx-auto text-center">
+          {/* Ícone Verde Circular */}
+          <div className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center animate-bounce-in" style={{
+            background: '#22C55E'
+          }}>
+            <Award className="w-10 h-10 text-white" />
           </div>
           
-          <h2 className="text-3xl font-bold text-white mb-4">Foco Aprimorado!</h2>
-          <p className="text-white/80 text-lg mb-6">
-            Excelente! Sua capacidade de concentração está mais aguçada. Continue assim!
+          {/* Título */}
+          <h2 className="text-3xl font-bold text-white mb-4">
+            Desafio Concluído!
+          </h2>
+          
+          {/* Mensagem */}
+          <p className="text-white/80 text-base mb-8 leading-relaxed">
+            Você demonstrou uma resistência incrível! Sua força de vontade está se fortalecendo.
           </p>
-
-          <div className="bg-white/20 rounded-2xl p-6 mb-8">
+          
+          {/* Card de Resultados */}
+          <div className="rounded-3xl p-6 mb-8" style={{
+            background: 'rgba(79, 70, 229, 0.4)',
+            backdropFilter: 'blur(10px)'
+          }}>
             <div className="text-2xl font-bold text-white mb-2">Nível Final: {focusLevel}</div>
-            <div className="text-xl text-blue-300 mb-2">Total de Acertos: {hits}</div>
-            <div className="text-xl text-cyan-300 mb-4">Pontos Ganhos: {points}</div>
+            <div className="text-xl mb-4" style={{ color: '#a78bfa' }}>Pontos Ganhos: {finalPoints}</div>
             {showBonus && (
-              <div className="text-lg text-green-400 font-semibold animate-pulse">
-                🎯 Bônus de Precisão: +150 pontos!
+              <div className="text-lg font-semibold flex items-center justify-center gap-2" style={{ color: '#22C55E' }}>
+                <Sparkles className="w-5 h-5" />
+                Bônus de Conclusão: +{bonusPoints} pontos!
               </div>
             )}
           </div>
-
+          
+          {/* Botão CTA */}
           <button
             onClick={completeAndCollect}
-            className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2"
+            className="w-full rounded-2xl font-semibold py-4 px-6 flex items-center justify-center gap-2 transition-all duration-300 hover:scale-105"
+            style={{
+              background: '#22C55E',
+              color: 'white'
+            }}
           >
             <Award className="w-5 h-5" />
             <span>Concluir e Coletar Pontos</span>
@@ -230,8 +252,10 @@ const Step9FocusChallenge: React.FC<Step9FocusChallengeProps> = ({ onNext, onBac
           </button>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+  
+  return null;
 };
 
 export default Step9FocusChallenge;

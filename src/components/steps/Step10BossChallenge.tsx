@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { UserProfile } from '@/types/funnel';
-import { Skull, Zap, Shield, Sword, Timer, Trophy, Star, AlertTriangle } from 'lucide-react';
+import { Skull, Zap, Shield, Sword, Timer, Trophy, Star, AlertTriangle, Sparkles, ChevronRight } from 'lucide-react';
 import { StepWrapper } from '../StepWrapper';
 
 interface Step10BossChallengeProps {
@@ -332,44 +332,59 @@ const Step10BossChallenge = ({ userProfile, onUpdateProfile, onNext, onBack }: S
 
   if (phase === 'victory') {
     const finalPoints = Math.floor(points * bonusMultiplier);
+    const bonusPoints = Math.floor(finalPoints / 2);
+    const finalLevel = Math.floor(finalPoints / 100) + 1;
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background to-success/20 flex items-center justify-center p-6">
+      <div className="min-h-screen flex items-center justify-center p-6" style={{
+        background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%)'
+      }}>
         <div className="max-w-md mx-auto text-center">
-          <div className="premium-card p-8">
-            <div className="w-24 h-24 mx-auto mb-6 premium-card bg-gradient-to-br from-gold/20 to-success/20 border-gold/40 flex items-center justify-center animate-bounce-in">
-              <Trophy className="w-12 h-12 text-gold" />
-            </div>
-            <h1 className="text-4xl font-black text-gradient mb-4 animate-celebrate">
-              VITÓRIA ÉPICA!
-            </h1>
-            <h2 className="text-2xl font-bold text-foreground mb-6">
-              {BOSS_NAME} foi derrotado!
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="premium-card p-4 bg-gradient-to-r from-gold/20 to-success/20 border-gold/30">
-                <p className="text-lg font-bold text-gold">+{finalPoints} XP</p>
-                <p className="text-sm text-muted-foreground">Multiplicador: {bonusMultiplier.toFixed(1)}x</p>
-              </div>
-              
-              <div className="premium-card p-4 bg-gradient-to-r from-success/20 to-primary/20 border-success/30">
-                <p className="text-lg font-bold text-success">+{Math.floor(finalPoints/2)} Coins</p>
-              </div>
-              
-              <div className="premium-card p-4 bg-gradient-to-r from-primary/20 to-dream/20 border-primary/30">
-                <p className="text-sm font-bold text-primary">Badges Desbloqueados:</p>
-                <p className="text-xs text-muted-foreground">Vencedor de Boss • Destruidor da Ansiedade</p>
-              </div>
-            </div>
-            
-            <button
-              onClick={handleVictory}
-              className="w-full mt-6 premium-button text-lg"
-            >
-              Continuar Jornada
-            </button>
+          {/* Ícone Verde Circular */}
+          <div className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center animate-bounce-in" style={{
+            background: '#22C55E'
+          }}>
+            <Trophy className="w-10 h-10 text-white" />
           </div>
+          
+          {/* Título */}
+          <h2 className="text-3xl font-bold text-white mb-4">
+            Desafio Concluído!
+          </h2>
+          
+          {/* Mensagem */}
+          <p className="text-white/80 text-base mb-8 leading-relaxed">
+            Você demonstrou uma resistência incrível! Sua força de vontade está se fortalecendo.
+          </p>
+          
+          {/* Card de Resultados */}
+          <div className="rounded-3xl p-6 mb-8" style={{
+            background: 'rgba(79, 70, 229, 0.4)',
+            backdropFilter: 'blur(10px)'
+          }}>
+            <div className="text-2xl font-bold text-white mb-2">Nível Final: {finalLevel}</div>
+            <div className="text-xl mb-4" style={{ color: '#a78bfa' }}>Pontos Ganhos: {finalPoints}</div>
+            {bonusPoints > 0 && (
+              <div className="text-lg font-semibold flex items-center justify-center gap-2" style={{ color: '#22C55E' }}>
+                <Sparkles className="w-5 h-5" />
+                Bônus de Conclusão: +{bonusPoints} pontos!
+              </div>
+            )}
+          </div>
+          
+          {/* Botão CTA */}
+          <button
+            onClick={handleVictory}
+            className="w-full rounded-2xl font-semibold py-4 px-6 flex items-center justify-center gap-2 transition-all duration-300 hover:scale-105"
+            style={{
+              background: '#22C55E',
+              color: 'white'
+            }}
+          >
+            <Trophy className="w-5 h-5" />
+            <span>Concluir e Coletar Pontos</span>
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
     );

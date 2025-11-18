@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { UserProfile } from '@/types/funnel';
-import { Crown, Zap, Shield, Heart, Target, Gamepad2, Star, Sparkles } from 'lucide-react';
+import { Crown, Zap, Shield, Heart, Target, Gamepad2, Star, ArrowRight, Enter } from 'lucide-react';
 
 interface Step1CharacterCreationProps {
   userProfile: UserProfile;
@@ -61,27 +61,37 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
   const [showArchetypes, setShowArchetypes] = useState(false);
   const [isSelecting, setIsSelecting] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // Mostrar arquétipos quando nome for preenchido
-  useEffect(() => {
+  const handleEnterClick = () => {
     if (nickname.trim().length >= 3) {
-      const timer = setTimeout(() => {
-        setShowArchetypes(true);
-      }, 300);
-      return () => clearTimeout(timer);
+      setShowArchetypes(true);
+      inputRef.current?.blur();
     } else {
-      setShowArchetypes(false);
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
     }
-  }, [nickname]);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleEnterClick();
+    }
+  };
 
   const handleArchetypeSelect = (archetypeId: string) => {
+    if (isSelecting) return; // Prevenir múltiplos cliques
+    
     setIsSelecting(true);
     setSelectedArchetype(archetypeId);
+    setAnimationComplete(false);
     
     // Animação completa antes de permitir prosseguir
     setTimeout(() => {
       setIsSelecting(false);
-    }, 600);
+      setAnimationComplete(true);
+    }, 800);
   };
 
   const handleNext = () => {
@@ -91,7 +101,7 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
       return;
     }
 
-    if (!selectedArchetype) {
+    if (!selectedArchetype || !animationComplete) {
       return;
     }
 
@@ -106,6 +116,9 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
     });
     onNext();
   };
+
+  const canShowEnter = nickname.trim().length >= 3;
+  const selectedIndex = selectedArchetype ? archetypes.findIndex(a => a.id === selectedArchetype) : -1;
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
@@ -180,14 +193,16 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
             </label>
             <div className="relative">
               <input
+                ref={inputRef}
                 type="text"
                 placeholder="Seu apelido de guerreiro..."
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
-                className={`w-full h-14 px-4 text-lg font-medium rounded-2xl border transition-all duration-300 ${
+                onKeyPress={handleKeyPress}
+                className={`w-full h-14 px-4 pr-12 text-lg font-medium rounded-2xl border transition-all duration-300 ${
                   showError 
                     ? 'border-smoking/50 animate-glow-pulse' 
-                    : nickname.trim().length >= 3
+                    : canShowEnter
                     ? 'border-primary/30'
                     : 'border-white/10'
                 }`}
@@ -198,15 +213,24 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
                 }}
                 maxLength={20}
               />
-              <div className={`absolute right-4 top-1/2 -translate-y-1/2 transition-all duration-300 ${
-                nickname.trim().length >= 3 ? 'text-primary scale-110' : 'text-muted-foreground'
-              }`}>
-                {nickname.trim().length >= 3 ? (
-                  <Sparkles className="w-5 h-5 animate-pulse" />
-                ) : (
+              {/* Ícone Enter Pulsante */}
+              {canShowEnter && !showArchetypes && (
+                <button
+                  onClick={handleEnterClick}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-xl transition-all duration-300 hover:scale-110 active:scale-95 group"
+                  style={{
+                    background: 'var(--gradient-primary)',
+                    boxShadow: 'var(--shadow-glow-primary)'
+                  }}
+                >
+                  <ArrowRight className="w-5 h-5 text-background animate-pulse group-hover:translate-x-1 transition-transform" />
+                </button>
+              )}
+              {!canShowEnter && (
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground">
                   <Gamepad2 className="w-5 h-5" />
-                )}
-              </div>
+                </div>
+              )}
             </div>
             {showError && (
               <div className="mt-3 p-3 rounded-xl border border-smoking/30 animate-bounce-in" style={{
@@ -226,9 +250,9 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
             )}
           </div>
 
-          {/* Premium Archetype Grid - Aparece com animação */}
+          {/* Premium Archetype Grid - Só aparece após Enter */}
           {showArchetypes && (
-            <div className="mb-8 animate-fade-up" style={{animationDelay: '0.3s'}}>
+            <div className="mb-8 animate-fade-up" style={{animationDelay: '0.1s'}}>
               <h2 className="text-lg font-bold text-center mb-6 flex items-center justify-center gap-2">
                 <Crown className="w-5 h-5 text-gold" />
                 <span style={{ 
@@ -246,17 +270,25 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
                   const isSelected = selectedArchetype === archetype.id;
                   const isOther = selectedArchetype && selectedArchetype !== archetype.id;
                   
+                  // Calcular posição para animação de empilhamento
+                  let transformStyle = '';
+                  if (isOther && isSelecting && selectedIndex !== -1) {
+                    const direction = index < selectedIndex ? -1 : 1;
+                    const distance = Math.abs(index - selectedIndex) * 100;
+                    transformStyle = `translateY(${direction * distance}px) scale(0.8)`;
+                  }
+                  
                   return (
                     <div
                       key={archetype.id}
                       onClick={() => handleArchetypeSelect(archetype.id)}
-                      className={`relative p-5 rounded-3xl border cursor-pointer transition-all duration-500 ${
+                      className={`relative p-5 rounded-3xl border cursor-pointer transition-all duration-700 ease-out ${
                         isSelected 
-                          ? 'border-primary/50 scale-105 z-10' 
+                          ? 'border-primary/50 scale-105 z-20' 
                           : isOther && isSelecting
-                          ? 'opacity-0 scale-95 -mt-24'
+                          ? 'opacity-0 pointer-events-none'
                           : isOther
-                          ? 'opacity-30 scale-95'
+                          ? 'opacity-0 pointer-events-none'
                           : 'border-white/10 hover:border-white/20 hover:scale-[1.02]'
                       }`}
                       style={{
@@ -267,9 +299,7 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
                         boxShadow: isSelected 
                           ? 'var(--shadow-glow-primary)' 
                           : 'var(--shadow-glass)',
-                        transform: isOther && isSelecting 
-                          ? `translateY(${-100 * (index > archetypes.findIndex(a => a.id === selectedArchetype) ? 1 : -1)}px)`
-                          : undefined,
+                        transform: transformStyle || (isSelected ? 'scale(1.05)' : 'scale(1)'),
                         animationDelay: `${index * 0.1}s`
                       }}
                     >
@@ -327,8 +357,8 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
             </div>
           )}
 
-          {/* Premium Continue Button */}
-          {nickname.trim().length >= 3 && selectedArchetype && !isSelecting && (
+          {/* Premium Continue Button - Só aparece quando arquétipo selecionado E animação completa */}
+          {showArchetypes && nickname.trim().length >= 3 && selectedArchetype && animationComplete && !isSelecting && (
             <div className="animate-bounce-in">
               <button 
                 onClick={handleNext}
