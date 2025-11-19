@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { UserProfile } from '@/types/funnel';
 import { Crown, Zap, Shield, Heart, Target, Gamepad2, Star, ArrowRight, Enter } from 'lucide-react';
+import NotificationGamified from '../NotificationGamified';
 
 interface Step1CharacterCreationProps {
   userProfile: UserProfile;
@@ -61,7 +62,7 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
   const [showArchetypes, setShowArchetypes] = useState(false);
   const [isSelecting, setIsSelecting] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [animationComplete, setAnimationComplete] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleEnterClick = () => {
@@ -85,25 +86,22 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
     
     setIsSelecting(true);
     setSelectedArchetype(archetypeId);
-    setAnimationComplete(false);
     
-    // Animação completa antes de permitir prosseguir
+    // Animação de empilhamento (800ms)
     setTimeout(() => {
-      setIsSelecting(false);
-      setAnimationComplete(true);
+      setShowNotification(true);
     }, 800);
   };
 
-  const handleNext = () => {
+  const handleNotificationComplete = () => {
+    setShowNotification(false);
+    
     if (!nickname.trim() || nickname.trim().length < 3) {
       setShowError(true);
-      setTimeout(() => setShowError(false), 3000);
       return;
     }
 
-    if (!selectedArchetype || !animationComplete) {
-      return;
-    }
+    if (!selectedArchetype) return;
 
     const archetype = archetypes.find(a => a.id === selectedArchetype);
     onUpdateProfile({
@@ -122,6 +120,16 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
+      <NotificationGamified 
+        isVisible={showNotification}
+        xpGained={50}
+        coinsGained={100}
+        badge="Primeiro Passo"
+        title="Personagem Criado!"
+        subtitle="Sua jornada começa agora"
+        onComplete={handleNotificationComplete}
+      />
+
       {/* Status Bar - iOS Style */}
       <div className="flex justify-between items-center text-xs text-foreground/70 px-6 py-2">
         <span className="font-medium">9:41</span>
@@ -282,14 +290,12 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
                     <div
                       key={archetype.id}
                       onClick={() => handleArchetypeSelect(archetype.id)}
-                      className={`relative p-5 rounded-3xl border cursor-pointer transition-all duration-700 ease-out ${
+                      className={`relative rounded-3xl border cursor-pointer transition-all duration-700 ease-out overflow-hidden ${
                         isSelected 
-                          ? 'border-primary/50 scale-105 z-20' 
+                          ? 'border-primary/50 scale-105 z-20 p-5' 
                           : isOther && isSelecting
-                          ? 'opacity-0 pointer-events-none'
-                          : isOther
-                          ? 'opacity-0 pointer-events-none'
-                          : 'border-white/10 hover:border-white/20 hover:scale-[1.02]'
+                          ? 'opacity-0 max-h-0 m-0 p-0 border-0 pointer-events-none'
+                          : 'border-white/10 hover:border-white/20 hover:scale-[1.02] p-5 max-h-[500px]'
                       }`}
                       style={{
                         background: isSelected 
@@ -353,38 +359,6 @@ const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1C
                     </div>
                   );
                 })}
-              </div>
-            </div>
-          )}
-
-          {/* Premium Continue Button - Só aparece quando arquétipo selecionado E animação completa */}
-          {showArchetypes && nickname.trim().length >= 3 && selectedArchetype && animationComplete && !isSelecting && (
-            <div className="animate-bounce-in">
-              <button 
-                onClick={handleNext}
-                className="w-full px-8 py-5 rounded-2xl font-bold text-lg relative overflow-hidden group"
-                style={{
-                  background: 'var(--gradient-primary)',
-                  boxShadow: 'var(--shadow-glow-primary)',
-                  textShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                  border: '1px solid rgba(120, 255, 120, 0.3)'
-                }}
-              >
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  <Zap className="w-5 h-5" />
-                  Começar Jornada
-                  <div className="ml-2 px-3 py-1 bg-white/20 rounded-full text-sm">
-                    +50 XP
-                  </div>
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              </button>
-              
-              {/* Trust indicators */}
-              <div className="mt-4 text-center animate-fade-up" style={{animationDelay: '0.2s'}}>
-                <p className="text-xs text-muted-foreground">
-                  Junte-se a <span className="text-primary font-bold">+1.847 pessoas</span> esta semana
-                </p>
               </div>
             </div>
           )}

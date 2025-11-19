@@ -88,7 +88,7 @@ const Step4Calculator = ({
 
   const dailyCostInReais = inputMode === 'packs'
     ? packsPerDay * pricePerUnit
-    : (actualCigarettesPerDay / CIGARETTES_PER_PACK) * pricePerUnit;
+    : cigarettesPerDay * pricePerUnit;
 
   const monthlyCigarettes = actualCigarettesPerDay * 30;
   const yearlyCigarettes = actualCigarettesPerDay * 365;
@@ -214,14 +214,14 @@ const Step4Calculator = ({
             <div className="stat-card">
               <label className="block text-foreground font-semibold mb-4 flex items-center gap-2">
                 <DollarSign className="w-5 h-5 text-gold" />
-                Preço {inputMode === 'cigarettes' ? 'por maço' : 'por maço'} (R$)
+                Preço {inputMode === 'cigarettes' ? 'por cigarro' : 'por maço'} (R$)
               </label>
               
               <input
                 type="range"
                 min={0}
-                max={30}
-                step={0.5}
+                max={inputMode === 'cigarettes' ? 5 : 30}
+                step={inputMode === 'cigarettes' ? 0.1 : 0.5}
                 value={pricePerUnit}
                 onChange={(e) => setPricePerUnit(Number(e.target.value))}
                 className="w-full mb-4"
@@ -236,6 +236,11 @@ const Step4Calculator = ({
                   R$ {pricePerUnit.toFixed(2)}
                 </div>
                 {inputMode === 'cigarettes' && pricePerUnit > 0 && (
+                  <p className="text-sm text-muted-foreground">
+                    ≈ R$ {(pricePerUnit * CIGARETTES_PER_PACK).toFixed(2)} por maço
+                  </p>
+                )}
+                {inputMode === 'packs' && pricePerUnit > 0 && (
                   <p className="text-sm text-muted-foreground">
                     ≈ R$ {(pricePerUnit / CIGARETTES_PER_PACK).toFixed(2)} por cigarro
                   </p>

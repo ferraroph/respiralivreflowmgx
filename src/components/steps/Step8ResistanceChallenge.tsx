@@ -60,38 +60,38 @@ const Step8ResistanceChallenge: React.FC<Step8ResistanceChallengeProps> = ({ onN
   };
 
   const getTimerColor = () => {
-    if (timeLeft <= 5) return 'text-green-400';
-    if (timeLeft <= 10) return 'text-yellow-400';
-    return 'text-red-400';
+    if (timeLeft <= 5) return 'text-primary';
+    if (timeLeft <= 10) return 'text-gold';
+    return 'text-destructive';
   };
 
   if (currentPhase === 'instructions') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="max-w-2xl w-full">
-          <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl">
+          <div className="premium-card p-8">
             <div className="text-center mb-8">
-              <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                <Shield className="w-12 h-12 text-white" />
+              <div className="w-24 h-24 bg-gradient-to-br from-primary to-primary-glow rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg animate-float">
+                <Shield className="w-12 h-12 text-background" />
               </div>
-              <h2 className="text-3xl font-bold text-white mb-4">Desafio de Resistência</h2>
-              <p className="text-white/80 text-lg leading-relaxed">
+              <h2 className="text-3xl font-bold text-foreground mb-4">Desafio de Resistência</h2>
+              <p className="text-muted-foreground text-lg leading-relaxed">
                 Teste sua força de vontade! Clique no botão de resistência o máximo de vezes possível em 30 segundos.
                 Cada clique representa sua determinação para vencer o vício.
               </p>
             </div>
 
             <div className="space-y-4 mb-8">
-              <div className="flex items-center space-x-3 text-white/90">
-                <Target className="w-5 h-5 text-purple-400" />
+              <div className="flex items-center space-x-3 text-foreground/90">
+                <Target className="w-5 h-5 text-primary" />
                 <span>Meta: 50+ cliques para bônus máximo</span>
               </div>
-              <div className="flex items-center space-x-3 text-white/90">
-                <Zap className="w-5 h-5 text-yellow-400" />
+              <div className="flex items-center space-x-3 text-foreground/90">
+                <Zap className="w-5 h-5 text-gold" />
                 <span>Cada clique = 10 pontos de resistência</span>
               </div>
-              <div className="flex items-center space-x-3 text-white/90">
-                <Clock className="w-5 h-5 text-blue-400" />
+              <div className="flex items-center space-x-3 text-foreground/90">
+                <Clock className="w-5 h-5 text-primary" />
                 <span>Tempo limite: 30 segundos</span>
               </div>
             </div>
@@ -99,14 +99,14 @@ const Step8ResistanceChallenge: React.FC<Step8ResistanceChallengeProps> = ({ onN
             <div className="flex space-x-4">
               <button
                 onClick={startChallenge}
-                className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2"
+                className="flex-1 btn-premium flex items-center justify-center space-x-2"
               >
                 <Shield className="w-5 h-5" />
                 <span>Iniciar Desafio</span>
               </button>
               <button
                 onClick={skipChallenge}
-                className="bg-white/20 hover:bg-white/30 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 border border-white/30"
+                className="bg-white/5 hover:bg-white/10 text-foreground font-semibold py-4 px-6 rounded-2xl transition-all duration-300 border border-white/10"
               >
                 Pular Desafio
               </button>
@@ -119,34 +119,34 @@ const Step8ResistanceChallenge: React.FC<Step8ResistanceChallengeProps> = ({ onN
 
   if (currentPhase === 'challenge') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="max-w-2xl w-full">
-          <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl text-center">
+          <div className="premium-card p-8 text-center">
             <div className={`text-6xl font-bold mb-4 ${getTimerColor()} transition-colors duration-300`}>
               {timeLeft}s
             </div>
             
             <div className="mb-8">
-              <div className="text-2xl font-bold text-white mb-2">Nível de Resistência: {resistanceLevel}</div>
-              <div className="text-xl text-purple-300">Pontos: {points}</div>
+              <div className="text-2xl font-bold text-foreground mb-2">Nível de Resistência: {resistanceLevel}</div>
+              <div className="text-xl text-primary">Pontos: {points}</div>
             </div>
 
             <button
               onClick={handleResistanceClick}
               disabled={!isActive}
-              className="w-48 h-48 bg-gradient-to-br from-red-500 to-purple-600 hover:from-red-600 hover:to-purple-700 text-white font-bold text-2xl rounded-full transition-all duration-200 shadow-2xl hover:shadow-3xl transform hover:scale-110 active:scale-95 mx-auto mb-8 flex items-center justify-center"
+              className="w-48 h-48 bg-gradient-to-br from-destructive to-primary hover:from-destructive hover:to-primary-glow text-white font-bold text-2xl rounded-full transition-all duration-200 shadow-2xl hover:shadow-3xl transform hover:scale-110 active:scale-95 mx-auto mb-8 flex items-center justify-center border-4 border-white/10"
             >
               <Shield className="w-16 h-16" />
             </button>
 
-            <div className="w-full bg-white/20 rounded-full h-4 mb-4">
+            <div className="w-full bg-white/5 rounded-full h-4 mb-4 border border-white/10">
               <div 
-                className="bg-gradient-to-r from-purple-500 to-pink-500 h-4 rounded-full transition-all duration-300"
+                className="bg-gradient-to-r from-primary to-primary-glow h-4 rounded-full transition-all duration-300 shadow-glow-primary"
                 style={{ width: `${(resistanceLevel / 10) * 100}%` }}
               ></div>
             </div>
 
-            <p className="text-white/80">Clique no escudo para aumentar sua resistência!</p>
+            <p className="text-muted-foreground">Clique no escudo para aumentar sua resistência!</p>
           </div>
         </div>
       </div>
@@ -158,36 +158,29 @@ const Step8ResistanceChallenge: React.FC<Step8ResistanceChallengeProps> = ({ onN
     const bonusPoints = showBonus ? 100 : 0;
     
     return (
-      <div className="min-h-screen flex items-center justify-center p-6" style={{
-        background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%)'
-      }}>
+      <div className="min-h-screen bg-background flex items-center justify-center p-6">
         <div className="max-w-md mx-auto text-center">
           {/* Ícone Verde Circular */}
-          <div className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center animate-bounce-in" style={{
-            background: '#22C55E'
-          }}>
-            <Award className="w-10 h-10 text-white" />
+          <div className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center animate-bounce-in bg-primary shadow-glow-primary">
+            <Award className="w-10 h-10 text-background" />
           </div>
           
           {/* Título */}
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h2 className="text-3xl font-bold text-foreground mb-4">
             Desafio Concluído!
           </h2>
           
           {/* Mensagem */}
-          <p className="text-white/80 text-base mb-8 leading-relaxed">
+          <p className="text-muted-foreground text-base mb-8 leading-relaxed">
             Você demonstrou uma resistência incrível! Sua força de vontade está se fortalecendo.
           </p>
           
           {/* Card de Resultados */}
-          <div className="rounded-3xl p-6 mb-8" style={{
-            background: 'rgba(79, 70, 229, 0.4)',
-            backdropFilter: 'blur(10px)'
-          }}>
-            <div className="text-2xl font-bold text-white mb-2">Nível Final: {resistanceLevel}</div>
-            <div className="text-xl mb-4" style={{ color: '#a78bfa' }}>Pontos Ganhos: {finalPoints}</div>
+          <div className="premium-card p-6 mb-8">
+            <div className="text-2xl font-bold text-foreground mb-2">Nível Final: {resistanceLevel}</div>
+            <div className="text-xl mb-4 text-primary">Pontos Ganhos: {finalPoints}</div>
             {showBonus && (
-              <div className="text-lg font-semibold flex items-center justify-center gap-2" style={{ color: '#22C55E' }}>
+              <div className="text-lg font-semibold flex items-center justify-center gap-2 text-gold">
                 <Sparkles className="w-5 h-5" />
                 Bônus de Conclusão: +{bonusPoints} pontos!
               </div>
@@ -197,11 +190,7 @@ const Step8ResistanceChallenge: React.FC<Step8ResistanceChallengeProps> = ({ onN
           {/* Botão CTA */}
           <button
             onClick={completeAndCollect}
-            className="w-full rounded-2xl font-semibold py-4 px-6 flex items-center justify-center gap-2 transition-all duration-300 hover:scale-105"
-            style={{
-              background: '#22C55E',
-              color: 'white'
-            }}
+            className="w-full btn-premium flex items-center justify-center gap-2"
           >
             <Award className="w-5 h-5" />
             <span>Concluir e Coletar Pontos</span>

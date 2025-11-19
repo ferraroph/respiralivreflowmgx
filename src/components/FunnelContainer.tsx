@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { UserProfile } from '@/types/funnel';
 import Step1CharacterCreation from './steps/Step1CharacterCreation';
-import Step2RealityCheck from './steps/Step2RealityCheck';
 import Step3GoalSelection from './steps/Step3GoalSelection';
 import Step4Calculator from './steps/Step4Calculator';
 import Step6BreathingChallenge from './steps/Step6BreathingChallenge';
@@ -203,22 +202,20 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
       case 1:
         return <Step1CharacterCreation userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} />;
       case 2:
-        return <Step2RealityCheck userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
+        return <Step4Calculator onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} onUpdateProgress={handleProgressUpdate} characterData={characterData} />;
       case 3:
         return <Step3GoalSelection userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
       case 4:
-        return <Step4Calculator onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} onUpdateProgress={handleProgressUpdate} characterData={characterData} />;
-      case 5:
         return <Step6BreathingChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
-      case 6:
+      case 5:
         return <Step7MindfulnessChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
-      case 7:
+      case 6:
         return <Step8ResistanceChallenge onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} />;
-      case 8:
+      case 7:
         return <Step9FocusChallenge onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} />;
-      case 9:
+      case 8:
         return <Step10BossChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
-      case 10:
+      case 9:
         return <Step11FinalOffer userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
       default:
         return <Step1CharacterCreation userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} />;
