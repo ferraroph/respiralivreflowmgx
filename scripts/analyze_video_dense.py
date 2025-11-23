@@ -52,7 +52,7 @@ def get_output_paths(video_path, group_name=None):
                 # Caminho Final (Lapidado)
                 # Alteração: Salvar diretamente na pasta do projeto, sem subpasta 'final'
                 final_dir = project_output_dir
-                final_path = final_dir.joinpath(f"analise_lapidada_{safe_name}.md")
+                final_path = final_dir.joinpath(f"analise_{safe_name}.md")
                 
                 return raw_dir, raw_video_path, raw_audio_path, final_dir, final_path
     except ValueError:
@@ -67,7 +67,7 @@ def get_output_paths(video_path, group_name=None):
         fallback_dir.joinpath('raw', safe_name, f"brute_video_{safe_name}.md"),
         fallback_dir.joinpath('raw', safe_name, f"brute_audio_{safe_name}.md"),
         fallback_dir,
-        fallback_dir.joinpath(f"analise_lapidada_{safe_name}.md")
+        fallback_dir.joinpath(f"analise_{safe_name}.md")
     )
 
 def upload_and_wait(video_path):
@@ -123,9 +123,12 @@ def analyze_video_group(group_key, video_files):
     
     # Nome do grupo
     first_video = sorted_videos[0]
-    clean_name = re.sub(r'^[\d\.]+[_\-\s]*', '', first_video.stem)
-    if not clean_name: clean_name = f"Grupo_{group_key}"
-    final_group_name = f"{group_key}_{clean_name}"
+    if len(sorted_videos) == 1:
+        final_group_name = first_video.stem
+    else:
+        clean_name = re.sub(r'^[\d\.]+[_\-\s]*', '', first_video.stem)
+        if not clean_name: clean_name = f"Grupo_{group_key}"
+        final_group_name = f"{group_key}_{clean_name}"
     
     # Obter caminhos
     raw_dir, raw_video_path, raw_audio_path, final_dir, final_path = get_output_paths(first_video, final_group_name)
@@ -153,17 +156,20 @@ def analyze_video_group(group_key, video_files):
         prompt_video = """
         ATUE COMO UM ESPECIALISTA EM VISÃO COMPUTACIONAL E ANÁLISE FORENSE.
         
-        Tarefa: Análise visual EXTREMAMENTE DETALHADA, frame a frame, cena a cena.
+        REGRA CARDINAL: PROIBIDO USAR EMOJIS. NÃO USE EMOJIS EM LUGAR NENHUM.
+        REGRA DE DENSIDADE: O OUTPUT DEVE SER EXTREMAMENTE DENSO E TÉCNICO. NÃO RESUMA.
         
-        Gere um log técnico estruturado contendo:
-        1. TIMESTAMPS precisos.
-        2. DESCRIÇÃO VISUAL PURA: O que está na tela? Objetos, cores, iluminação, layout.
-        3. MICRO-EXPRESSÕES: Se houver humanos, descreva cada mudança facial mínima.
-        4. OCR: Transcreva todo texto que aparecer na tela.
-        5. MUDANÇAS DE CONTEXTO: Quando a cena muda? O que mudou?
+        Tarefa: Análise visual frame a frame, cena a cena.
+        
+        Gere um log técnico BRUTO e EXAUSTIVO contendo:
+        1. TIMESTAMPS precisos para cada micro-evento.
+        2. DESCRIÇÃO VISUAL PURA: Descreva TUDO que está na tela. Objetos, cores, texturas, iluminação, layout, posicionamento.
+        3. MICRO-EXPRESSÕES: Descreva cada movimento facial, olhar, tensão muscular.
+        4. OCR COMPLETO: Transcreva TODO e QUALQUER texto que aparecer na tela, por menor que seja.
+        5. MUDANÇAS DE CONTEXTO: Detalhe cada corte e transição.
         
         NÃO ANALISE O ÁUDIO AINDA. FOQUE 100% NO VISUAL.
-        SEJA PROLIXO NOS DETALHES VISUAIS.
+        SEJA PROLIXO. PREFIRA PECAR PELO EXCESSO DE INFORMAÇÃO DO QUE PELA FALTA.
         """
         video_response = generate_content_safe(model, [video_file, prompt_video])
         if video_response:
@@ -174,14 +180,17 @@ def analyze_video_group(group_key, video_files):
         prompt_audio = """
         ATUE COMO UM ENGENHEIRO DE ÁUDIO E MÚSICO COM OUVIDO ABSOLUTO.
         
-        Tarefa: Análise auditiva EXTREMAMENTE DETALHADA.
+        REGRA CARDINAL: PROIBIDO USAR EMOJIS. NÃO USE EMOJIS EM LUGAR NENHUM.
+        REGRA DE DENSIDADE: O OUTPUT DEVE SER EXTREMAMENTE DENSO E TÉCNICO. NÃO RESUMA.
         
-        Gere um log técnico estruturado contendo:
+        Tarefa: Análise auditiva EXAUSTIVA.
+        
+        Gere um log técnico BRUTO contendo:
         1. TIMESTAMPS precisos.
-        2. CAMADAS DE ÁUDIO: Separe voz, música de fundo, efeitos sonoros (SFX), ruídos ambientes.
-        3. ANÁLISE VOCAL: Tom de voz, entonação, pausas, respiração, emoção na voz.
-        4. ANÁLISE MUSICAL: Se houver música, qual o gênero? Instrumentos? Tempo? Emoção que passa?
-        5. QUALIDADE TÉCNICA: Há distorção? Eco? Mudança de volume?
+        2. CAMADAS DE ÁUDIO: Separe e descreva detalhadamente voz, música, SFX, ruídos.
+        3. ANÁLISE VOCAL: Tom, timbre, velocidade, pausas, respiração, intenção, emoção.
+        4. ANÁLISE MUSICAL: Gênero, instrumentos, ritmo, harmonia, sensação.
+        5. TRANSCRIÇÃO: Se possível, transcreva o que é dito.
         
         IGNORE O VISUAL. FOQUE 100% NO QUE SE OUVE.
         """
@@ -205,7 +214,8 @@ def analyze_video_group(group_key, video_files):
     prompt_final = f"""
     ATUE COMO UM DIRETOR DE CINEMA E ANALISTA DE DADOS SÊNIOR.
     
-    Você tem em mãos dois relatórios brutos de análise técnica (Visual e Áudio) de um vídeo.
+    REGRA CARDINAL: PROIBIDO USAR EMOJIS. NÃO USE EMOJIS EM LUGAR NENHUM.
+    OBJETIVO: Criar um relatório EXTREMAMENTE DETALHADO que combine os dados visuais e auditivos.
     
     INPUTS:
     --- INICIO RELATÓRIO VISUAL ---
@@ -215,17 +225,14 @@ def analyze_video_group(group_key, video_files):
     --- INICIO RELATÓRIO ÁUDIO ---
     {full_audio_raw[:50000]}
     --- FIM RELATÓRIO ÁUDIO ---
-    (Nota: Os inputs podem estar truncados se forem gigantescos, foque no que tem).
     
     TAREFA:
-    1. VERIFICAÇÃO DE COERÊNCIA: O áudio bate com o visual? (Ex: Boca mexendo sem voz, ou som de explosão sem fogo).
-    2. CRIAÇÃO DO DOCUMENTO FINAL "LAPIDADO":
-       - Crie uma narrativa cronológica unificada.
-       - Para cada momento, descreva a EXPERIÊNCIA COMPLETA (O que se vê + O que se ouve).
-       - Destaque pontos de atenção, falhas, ou momentos de brilhantismo.
-       - Use uma estrutura profissional e fácil de ler.
+    1. CONSOLIDAÇÃO: Una os dados visuais e auditivos em uma linha do tempo única e detalhada.
+    2. DENSIDADE MÁXIMA: NÃO RESUMA. O usuário precisa de TODOS os detalhes técnicos capturados nos logs brutos.
+    3. NARRATIVA TÉCNICA: Descreva a experiência completa minuto a minuto, segundo a segundo.
+    4. ANÁLISE CRÍTICA: Aponte falhas, acertos, dissonâncias entre áudio e vídeo.
     
-    O OBJETIVO É TER UMA ANÁLISE QUE PERMITA RECONSTRUIR O VÍDEO MENTALMENTE SEM ASSISTI-LO.
+    O RELATÓRIO DEVE SER LONGO, DETALHADO E TÉCNICO. NÃO OMITA NADA.
     """
     
     # Usando o modelo apenas com texto agora para consolidar
