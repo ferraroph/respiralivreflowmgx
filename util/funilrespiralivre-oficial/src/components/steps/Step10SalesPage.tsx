@@ -235,7 +235,7 @@ export const Step10SalesPage = ({ userProfile }: Step10SalesPageProps) => {
 
           {/* CTA Principal */}
           <button
-            onClick={() => window.open('https://pay.hotmart.com/...', '_blank')}
+            onClick={() => window.open('https://pay.lirapaybr.com/ONGGfeNn', '_blank')}
             className="w-full relative overflow-hidden group"
             style={{
               background: 'linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(var(--success)) 50%, hsl(var(--primary)) 100%)',

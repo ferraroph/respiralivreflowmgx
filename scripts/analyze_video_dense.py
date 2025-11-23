@@ -1,162 +1,277 @@
 import os
 import time
 import sys
+import re
 import google.generativeai as genai
 from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
 
-def get_output_path(video_path):
+# Configuração do Modelo
+MODEL_NAME = "gemini-3-pro-preview" 
+
+def get_output_paths(video_path, group_name=None):
     """
-    Determina o caminho de saída baseado na estrutura de pastas exigida:
-    Input: .../docs/analises/input/NOME_DA_PASTA/video.mp4
-    Output: .../docs/analises/output/NOME_DA_PASTA/analise_<nome_video>.md
+    Define a estrutura de pastas:
+    Output Root: .../docs/analises/output/NOME_DA_PASTA_INPUT/
+    
+    Estrutura Interna:
+    /raw/NOME_VIDEO/brute_video_NOME.md
+    /raw/NOME_VIDEO/brute_audio_NOME.md
+    /final/analise_lapidada_NOME.md
     """
     video_path = Path(video_path).resolve()
     
-    # Tenta encontrar o padrão 'docs/analises/input' no caminho
+    # Tenta encontrar a raiz 'docs/analises/input'
     try:
         parts = video_path.parts
         if 'input' in parts:
             input_index = parts.index('input')
-            # Verifica se estamos dentro de docs/analises (opcional, mas bom para segurança)
-            if input_index > 1 and parts[input_index-1] == 'analises' and parts[input_index-2] == 'docs':
-                # A pasta "pai" do vídeo é o elemento logo após 'input'
-                # Ex: .../input/analise funil 1/video.mp4 -> parent_folder = "analise funil 1"
-                # Se o vídeo estiver diretamente em input, isso pode falhar ou ser vazio, vamos tratar.
-                
-                relative_path = video_path.relative_to(Path(*parts[:input_index+1]))
-                # relative_path agora é "analise funil 1/video.mp4"
-                
-                # Construir o caminho de output substituindo 'input' por 'output' na base
+            if input_index > 1 and parts[input_index-1] == 'analises':
+                # Base: .../docs/analises/output
                 base_output_dir = Path(*parts[:input_index]).joinpath('output')
                 
-                # O arquivo de saída mantém a estrutura de subpastas encontrada dentro de input
-                output_file_dir = base_output_dir.joinpath(relative_path.parent)
-                output_file_name = f"analise_{video_path.stem}.md"
+                # Subpasta do projeto (ex: analise funil 2)
+                relative_path = video_path.relative_to(Path(*parts[:input_index+1]))
+                project_folder = relative_path.parts[0] # ex: "analise funil 2"
                 
-                return output_file_dir, output_file_dir.joinpath(output_file_name)
+                project_output_dir = base_output_dir.joinpath(project_folder)
+                
+                # Nome base para o vídeo/grupo
+                if group_name:
+                    safe_name = re.sub(r'[^\w\s-]', '', group_name).strip().replace(' ', '_')
+                else:
+                    safe_name = video_path.stem
+
+                # Caminhos RAW
+                raw_dir = project_output_dir.joinpath('raw', safe_name)
+                raw_video_path = raw_dir.joinpath(f"brute_video_{safe_name}.md")
+                raw_audio_path = raw_dir.joinpath(f"brute_audio_{safe_name}.md")
+                
+                # Caminho Final (Lapidado)
+                # Alteração: Salvar diretamente na pasta do projeto, sem subpasta 'final'
+                final_dir = project_output_dir
+                final_path = final_dir.joinpath(f"analise_lapidada_{safe_name}.md")
+                
+                return raw_dir, raw_video_path, raw_audio_path, final_dir, final_path
     except ValueError:
         pass
 
-    # Fallback: Se não seguir a estrutura, salva na mesma pasta do vídeo ou numa pasta 'output' local
-    print(f"Aviso: O vídeo {video_path.name} não está na estrutura padrão docs/analises/input.")
+    # Fallback
+    print(f"Aviso: Estrutura de pastas fora do padrão. Usando local relativo.")
     fallback_dir = video_path.parent.joinpath('output_analysis')
-    return fallback_dir, fallback_dir.joinpath(f"analise_{video_path.stem}.md")
+    safe_name = video_path.stem
+    return (
+        fallback_dir.joinpath('raw', safe_name),
+        fallback_dir.joinpath('raw', safe_name, f"brute_video_{safe_name}.md"),
+        fallback_dir.joinpath('raw', safe_name, f"brute_audio_{safe_name}.md"),
+        fallback_dir,
+        fallback_dir.joinpath(f"analise_lapidada_{safe_name}.md")
+    )
 
-def analyze_video(video_path, prompt_type="dense"):
+def upload_and_wait(video_path):
+    print(f"--- Uploading: {video_path.name} ---")
+    try:
+        video_file = genai.upload_file(path=video_path)
+        print(f"Upload concluído. URI: {video_file.uri}")
+        
+        print("Aguardando processamento...")
+        while video_file.state.name == "PROCESSING":
+            print(".", end="", flush=True)
+            time.sleep(2)
+            video_file = genai.get_file(video_file.name)
+            
+        if video_file.state.name == "FAILED":
+            print("\nFalha no processamento do arquivo pelo Google.")
+            return None
+            
+        print(f"\nPronto.")
+        return video_file
+    except Exception as e:
+        print(f"Erro no upload: {e}")
+        return None
+
+def generate_content_safe(model, contents, retries=3):
+    for attempt in range(retries):
+        try:
+            response = model.generate_content(
+                contents,
+                request_options={"timeout": 600}
+            )
+            return response.text
+        except Exception as e:
+            print(f"\nErro na geração (tentativa {attempt+1}/{retries}): {e}")
+            time.sleep(5)
+    return None
+
+def analyze_video_group(group_key, video_files):
     if not os.getenv("GOOGLE_API_KEY"):
-        print("Erro: A variável de ambiente GOOGLE_API_KEY não está definida.")
+        print("Erro: GOOGLE_API_KEY não definida.")
         return
 
     genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+    # Usando o modelo solicitado
+    model = genai.GenerativeModel(model_name=MODEL_NAME) 
 
-    video_file_path = Path(video_path)
-    if not video_file_path.exists():
-        print(f"Erro: Arquivo não encontrado: {video_path}")
-        return
-
-    # Determinar e criar diretório de saída
-    output_dir, output_file_path = get_output_path(video_file_path)
-    output_dir.mkdir(parents=True, exist_ok=True)
+    sorted_videos = sorted(video_files, key=lambda p: p.name)
     
-    print(f"--- Processando: {video_file_path.name} ---")
-    print(f"--- Output será salvo em: {output_file_path} ---")
-
-    print(f"Iniciando upload...")
+    # Nome do grupo
+    first_video = sorted_videos[0]
+    clean_name = re.sub(r'^[\d\.]+[_\-\s]*', '', first_video.stem)
+    if not clean_name: clean_name = f"Grupo_{group_key}"
+    final_group_name = f"{group_key}_{clean_name}"
     
-    # 1. Upload do vídeo para a File API
-    try:
-        video_file = genai.upload_file(path=video_file_path)
-    except Exception as e:
-        print(f"Erro no upload: {e}")
-        return
+    # Obter caminhos
+    raw_dir, raw_video_path, raw_audio_path, final_dir, final_path = get_output_paths(first_video, final_group_name)
+    
+    # Criar diretórios
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    final_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"Upload concluído. URI: {video_file.uri}")
+    print(f"\n=== Processando Grupo {group_key}: {clean_name} ===")
+    print(f"RAW Video: {raw_video_path}")
+    print(f"RAW Audio: {raw_audio_path}")
+    print(f"FINAL: {final_path}")
 
-    # 2. Aguardar processamento
-    print("Aguardando processamento do vídeo no servidor...")
-    while video_file.state.name == "PROCESSING":
-        print(".", end="", flush=True)
-        time.sleep(2)
-        video_file = genai.get_file(video_file.name)
+    full_video_raw = ""
+    full_audio_raw = ""
 
-    if video_file.state.name == "FAILED":
-        print("\nO processamento do vídeo falhou.")
-        return
-
-    print(f"\nVídeo pronto. Estado: {video_file.state.name}")
-
-    # 3. Configurar o Modelo
-    model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest")
-
-    # 4. Definir o Prompt
-    base_prompt = """
-    Você é um especialista em análise forense de vídeo e visão computacional.
-    Analise este vídeo com precisão extrema. Não perca nenhum detalhe.
-    """
-
-    if prompt_type == "dense":
-        prompt = base_prompt + """
-        Gere um relatório CRONOLÓGICO DETALHADO (Timestamp a Timestamp).
-        Para cada segmento ou evento visual relevante:
-        1. Timestamp exato.
-        2. Descrição visual densa (objetos, cores, iluminação, posição).
-        3. Micro-expressões faciais ou linguagem corporal (se houver humanos).
-        4. Texto visível (OCR) ou elementos de interface.
-        5. Contexto macro (o que está acontecendo na cena geral).
+    for i, video_path in enumerate(sorted_videos):
+        print(f"\n--- Parte {i+1}/{len(sorted_videos)}: {video_path.name} ---")
         
-        Seja técnico e exaustivo.
+        video_file = upload_and_wait(video_path)
+        if not video_file: continue
+
+        # 1. Análise Visual Bruta (Frame a Frame / Cena)
+        print("-> Gerando Análise Visual Bruta...")
+        prompt_video = """
+        ATUE COMO UM ESPECIALISTA EM VISÃO COMPUTACIONAL E ANÁLISE FORENSE.
+        
+        Tarefa: Análise visual EXTREMAMENTE DETALHADA, frame a frame, cena a cena.
+        
+        Gere um log técnico estruturado contendo:
+        1. TIMESTAMPS precisos.
+        2. DESCRIÇÃO VISUAL PURA: O que está na tela? Objetos, cores, iluminação, layout.
+        3. MICRO-EXPRESSÕES: Se houver humanos, descreva cada mudança facial mínima.
+        4. OCR: Transcreva todo texto que aparecer na tela.
+        5. MUDANÇAS DE CONTEXTO: Quando a cena muda? O que mudou?
+        
+        NÃO ANALISE O ÁUDIO AINDA. FOQUE 100% NO VISUAL.
+        SEJA PROLIXO NOS DETALHES VISUAIS.
         """
-    else:
-        prompt = base_prompt + f"\n{prompt_type}"
+        video_response = generate_content_safe(model, [video_file, prompt_video])
+        if video_response:
+            full_video_raw += f"## Parte {i+1} - Visual\n{video_response}\n\n"
+        
+        # 2. Análise de Áudio Bruta (Engenharia de Som / Ouvido Absoluto)
+        print("-> Gerando Análise de Áudio Bruta...")
+        prompt_audio = """
+        ATUE COMO UM ENGENHEIRO DE ÁUDIO E MÚSICO COM OUVIDO ABSOLUTO.
+        
+        Tarefa: Análise auditiva EXTREMAMENTE DETALHADA.
+        
+        Gere um log técnico estruturado contendo:
+        1. TIMESTAMPS precisos.
+        2. CAMADAS DE ÁUDIO: Separe voz, música de fundo, efeitos sonoros (SFX), ruídos ambientes.
+        3. ANÁLISE VOCAL: Tom de voz, entonação, pausas, respiração, emoção na voz.
+        4. ANÁLISE MUSICAL: Se houver música, qual o gênero? Instrumentos? Tempo? Emoção que passa?
+        5. QUALIDADE TÉCNICA: Há distorção? Eco? Mudança de volume?
+        
+        IGNORE O VISUAL. FOQUE 100% NO QUE SE OUVE.
+        """
+        audio_response = generate_content_safe(model, [video_file, prompt_audio])
+        if audio_response:
+            full_audio_raw += f"## Parte {i+1} - Áudio\n{audio_response}\n\n"
 
-    print("\n--- Gerando Análise... ---")
+    # Salvar RAWs
+    with open(raw_video_path, "w", encoding="utf-8") as f: f.write(full_video_raw)
+    with open(raw_audio_path, "w", encoding="utf-8") as f: f.write(full_audio_raw)
+
+    # 3. Verificação e Lapidação (O "Checklist Foda")
+    print("\n-> Realizando Verificação Cruzada e Lapidação Final...")
     
-    try:
-        response = model.generate_content(
-            [video_file, prompt],
-            request_options={"timeout": 600}
-        )
-        
-        with open(output_file_path, "w", encoding="utf-8") as f:
-            f.write(f"# Análise de Vídeo: {video_file_path.name}\n\n")
-            f.write(response.text)
+    # Para a lapidação, passamos os textos brutos gerados para o modelo processar
+    # Isso evita ter que re-enviar o vídeo e economiza tokens de vídeo, usando tokens de texto (mais baratos/rápidos)
+    # Mas para garantir a factualidade, o ideal seria o modelo ter o vídeo E o texto.
+    # Como o vídeo ainda está no cache (se não expirou), podemos tentar usar o último video_file ou apenas o texto se for muito longo.
+    # Vamos usar apenas o texto RAW para consolidar, assumindo que a extração bruta foi boa.
+    
+    prompt_final = f"""
+    ATUE COMO UM DIRETOR DE CINEMA E ANALISTA DE DADOS SÊNIOR.
+    
+    Você tem em mãos dois relatórios brutos de análise técnica (Visual e Áudio) de um vídeo.
+    
+    INPUTS:
+    --- INICIO RELATÓRIO VISUAL ---
+    {full_video_raw[:50000]} 
+    --- FIM RELATÓRIO VISUAL ---
+    
+    --- INICIO RELATÓRIO ÁUDIO ---
+    {full_audio_raw[:50000]}
+    --- FIM RELATÓRIO ÁUDIO ---
+    (Nota: Os inputs podem estar truncados se forem gigantescos, foque no que tem).
+    
+    TAREFA:
+    1. VERIFICAÇÃO DE COERÊNCIA: O áudio bate com o visual? (Ex: Boca mexendo sem voz, ou som de explosão sem fogo).
+    2. CRIAÇÃO DO DOCUMENTO FINAL "LAPIDADO":
+       - Crie uma narrativa cronológica unificada.
+       - Para cada momento, descreva a EXPERIÊNCIA COMPLETA (O que se vê + O que se ouve).
+       - Destaque pontos de atenção, falhas, ou momentos de brilhantismo.
+       - Use uma estrutura profissional e fácil de ler.
+    
+    O OBJETIVO É TER UMA ANÁLISE QUE PERMITA RECONSTRUIR O VÍDEO MENTALMENTE SEM ASSISTI-LO.
+    """
+    
+    # Usando o modelo apenas com texto agora para consolidar
+    final_response = generate_content_safe(model, [prompt_final])
+    
+    if final_response:
+        with open(final_path, "w", encoding="utf-8") as f:
+            f.write(f"# Análise Lapidada: {final_group_name}\n\n{final_response}")
+        print(f"Sucesso! Análise Final salva em: {final_path}")
+    else:
+        print("Erro ao gerar análise final.")
 
-        print(f"\nSucesso! Relatório salvo em: {output_file_path}")
-        
-    except Exception as e:
-        print(f"\nErro na geração: {e}")
-
-def process_input(input_path, prompt_type="dense"):
+def process_input(input_path):
     path = Path(input_path)
+    if not path.exists():
+        print("Caminho não encontrado.")
+        return
+
+    # Coletar vídeos
+    videos = []
     if path.is_file():
-        analyze_video(path, prompt_type)
-    elif path.is_dir():
-        print(f"Varrendo diretório: {path}")
+        videos = [path]
+    else:
         video_extensions = {'.mp4', '.mov', '.avi', '.mkv', '.webm'}
         videos = [p for p in path.rglob('*') if p.suffix.lower() in video_extensions]
-        
-        if not videos:
-            print("Nenhum vídeo encontrado neste diretório.")
-            return
+    
+    if not videos:
+        print("Nenhum vídeo encontrado.")
+        return
 
-        for video in videos:
-            analyze_video(video, prompt_type)
-    else:
-        print("Caminho inválido.")
+    # Agrupar
+    groups = {}
+    for video in videos:
+        match = re.match(r'^(\d+)', video.name)
+        key = match.group(1) if match else "ungrouped"
+        if key not in groups: groups[key] = []
+        groups[key].append(video)
+
+    # Executar
+    for key, video_list in groups.items():
+        if key == "ungrouped":
+            for v in video_list: analyze_video_group(v.stem, [v])
+        else:
+            analyze_video_group(key, video_list)
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        # Se nenhum argumento for passado, tenta usar o diretório padrão docs/analises/input
         default_input = Path("docs/analises/input")
         if default_input.exists():
-            print(f"Nenhum argumento passado. Usando padrão: {default_input}")
             process_input(default_input)
         else:
-            print("Uso: python analyze_video_dense.py <caminho_do_video_ou_pasta> [tipo_prompt]")
+            print("Uso: python analyze_video_dense.py <caminho>")
     else:
-        v_path = sys.argv[1]
-        p_type = sys.argv[2] if len(sys.argv) > 2 else "dense"
-        process_input(v_path, p_type)
+        process_input(sys.argv[1])
