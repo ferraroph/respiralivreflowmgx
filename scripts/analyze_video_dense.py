@@ -125,6 +125,7 @@ def analyze_video_group(group_key, video_files):
     first_video = sorted_videos[0]
     if len(sorted_videos) == 1:
         final_group_name = first_video.stem
+        clean_name = final_group_name
     else:
         clean_name = re.sub(r'^[\d\.]+[_\-\s]*', '', first_video.stem)
         if not clean_name: clean_name = f"Grupo_{group_key}"
