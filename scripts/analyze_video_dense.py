@@ -6,7 +6,7 @@ import google.generativeai as genai
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 # Configuração do Modelo
 MODEL_NAME = "gemini-3-pro-preview" 
@@ -83,14 +83,14 @@ def upload_and_wait(video_path):
             video_file = genai.get_file(video_file.name)
             
         if video_file.state.name == "FAILED":
-            print("\nFalha no processamento do arquivo pelo Google.")
-            return None
+            raise Exception("Falha no processamento do arquivo pelo Google (State=FAILED).")
             
         print(f"\nPronto.")
         return video_file
     except Exception as e:
-        print(f"Erro no upload: {e}")
-        return None
+        print(f"\nERRO CRÍTICO NO UPLOAD: {e}")
+        print("Abortando execução para evitar erros em cascata.")
+        sys.exit(1)
 
 def generate_content_safe(model, contents, retries=3):
     for attempt in range(retries):
@@ -102,8 +102,13 @@ def generate_content_safe(model, contents, retries=3):
             return response.text
         except Exception as e:
             print(f"\nErro na geração (tentativa {attempt+1}/{retries}): {e}")
+            if "API_KEY_INVALID" in str(e) or "API key expired" in str(e) or "403" in str(e):
+                 print("ERRO DE API KEY DETECTADO. ABORTANDO IMEDIATAMENTE.")
+                 sys.exit(1)
             time.sleep(5)
-    return None
+    
+    print("Falha após todas as tentativas. Abortando.")
+    sys.exit(1)
 
 def analyze_video_group(group_key, video_files):
     if not os.getenv("GOOGLE_API_KEY"):
