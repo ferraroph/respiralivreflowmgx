@@ -4,7 +4,7 @@ Aqui está o relatório unificado "Director's Cut", consolidando as análises t�
 
 ---
 
-# 🎬 RELATÓRIO DE RECONSTRUÇÃO DE EXPERIÊNCIA DO USUÁRIO (UX CINEMATICS)
+#  RELATÓRIO DE RECONSTRUÇÃO DE EXPERIÊNCIA DO USUÁRIO (UX CINEMATICS)
 **Projeto:** App "Respira Livre" (Protótipo/MVP)
 **Formato:** Screen Recording (iOS) com Voiceover Externo
 **Analista Responsável:** Director & Sr. Data Analyst
