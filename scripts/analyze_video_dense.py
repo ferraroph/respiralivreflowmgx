@@ -7,13 +7,47 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Configuração
-# A chave agora é carregada automaticamente do arquivo .env via load_dotenv()
+def get_output_path(video_path):
+    """
+    Determina o caminho de saída baseado na estrutura de pastas exigida:
+    Input: .../docs/analises/input/NOME_DA_PASTA/video.mp4
+    Output: .../docs/analises/output/NOME_DA_PASTA/analise_<nome_video>.md
+    """
+    video_path = Path(video_path).resolve()
+    
+    # Tenta encontrar o padrão 'docs/analises/input' no caminho
+    try:
+        parts = video_path.parts
+        if 'input' in parts:
+            input_index = parts.index('input')
+            # Verifica se estamos dentro de docs/analises (opcional, mas bom para segurança)
+            if input_index > 1 and parts[input_index-1] == 'analises' and parts[input_index-2] == 'docs':
+                # A pasta "pai" do vídeo é o elemento logo após 'input'
+                # Ex: .../input/analise funil 1/video.mp4 -> parent_folder = "analise funil 1"
+                # Se o vídeo estiver diretamente em input, isso pode falhar ou ser vazio, vamos tratar.
+                
+                relative_path = video_path.relative_to(Path(*parts[:input_index+1]))
+                # relative_path agora é "analise funil 1/video.mp4"
+                
+                # Construir o caminho de output substituindo 'input' por 'output' na base
+                base_output_dir = Path(*parts[:input_index]).joinpath('output')
+                
+                # O arquivo de saída mantém a estrutura de subpastas encontrada dentro de input
+                output_file_dir = base_output_dir.joinpath(relative_path.parent)
+                output_file_name = f"analise_{video_path.stem}.md"
+                
+                return output_file_dir, output_file_dir.joinpath(output_file_name)
+    except ValueError:
+        pass
+
+    # Fallback: Se não seguir a estrutura, salva na mesma pasta do vídeo ou numa pasta 'output' local
+    print(f"Aviso: O vídeo {video_path.name} não está na estrutura padrão docs/analises/input.")
+    fallback_dir = video_path.parent.joinpath('output_analysis')
+    return fallback_dir, fallback_dir.joinpath(f"analise_{video_path.stem}.md")
 
 def analyze_video(video_path, prompt_type="dense"):
     if not os.getenv("GOOGLE_API_KEY"):
         print("Erro: A variável de ambiente GOOGLE_API_KEY não está definida.")
-        print("Defina com: $env:GOOGLE_API_KEY='sua_chave'")
         return
 
     genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
@@ -23,13 +57,25 @@ def analyze_video(video_path, prompt_type="dense"):
         print(f"Erro: Arquivo não encontrado: {video_path}")
         return
 
-    print(f"--- Iniciando upload de: {video_file_path.name} ---")
+    # Determinar e criar diretório de saída
+    output_dir, output_file_path = get_output_path(video_file_path)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    print(f"--- Processando: {video_file_path.name} ---")
+    print(f"--- Output será salvo em: {output_file_path} ---")
+
+    print(f"Iniciando upload...")
     
     # 1. Upload do vídeo para a File API
-    video_file = genai.upload_file(path=video_file_path)
+    try:
+        video_file = genai.upload_file(path=video_file_path)
+    except Exception as e:
+        print(f"Erro no upload: {e}")
+        return
+
     print(f"Upload concluído. URI: {video_file.uri}")
 
-    # 2. Aguardar processamento (o Google precisa processar o vídeo antes de usar)
+    # 2. Aguardar processamento
     print("Aguardando processamento do vídeo no servidor...")
     while video_file.state.name == "PROCESSING":
         print(".", end="", flush=True)
@@ -42,12 +88,10 @@ def analyze_video(video_path, prompt_type="dense"):
 
     print(f"\nVídeo pronto. Estado: {video_file.state.name}")
 
-    # 3. Configurar o Modelo (Gemini 1.5 Pro é o melhor para vídeo atualmente disponível na API pública)
-    # O 'Gemini 3 Pro' que você vê no VS Code pode ser uma preview interna, mas na API usamos o 1.5 Pro ou Flash
-    # que tem janela de contexto de 1M+ tokens.
+    # 3. Configurar o Modelo
     model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest")
 
-    # 4. Definir o Prompt Baseado na Intensidade
+    # 4. Definir o Prompt
     base_prompt = """
     Você é um especialista em análise forense de vídeo e visão computacional.
     Analise este vídeo com precisão extrema. Não perca nenhum detalhe.
@@ -68,29 +112,51 @@ def analyze_video(video_path, prompt_type="dense"):
     else:
         prompt = base_prompt + f"\n{prompt_type}"
 
-    print("\n--- Iniciando Análise (isso pode levar um minuto dependendo da complexidade) ---")
+    print("\n--- Gerando Análise... ---")
     
-    # Chamada ao modelo passando o objeto de vídeo
-    response = model.generate_content(
-        [video_file, prompt],
-        request_options={"timeout": 600} # Timeout maior para vídeos longos
-    )
+    try:
+        response = model.generate_content(
+            [video_file, prompt],
+            request_options={"timeout": 600}
+        )
+        
+        with open(output_file_path, "w", encoding="utf-8") as f:
+            f.write(f"# Análise de Vídeo: {video_file_path.name}\n\n")
+            f.write(response.text)
 
-    # Salvar relatório
-    output_filename = f"analise_{video_file_path.stem}.md"
-    with open(output_filename, "w", encoding="utf-8") as f:
-        f.write(f"# Análise de Vídeo: {video_file_path.name}\n\n")
-        f.write(response.text)
+        print(f"\nSucesso! Relatório salvo em: {output_file_path}")
+        
+    except Exception as e:
+        print(f"\nErro na geração: {e}")
 
-    print(f"\nAnálise concluída! Relatório salvo em: {output_filename}")
-    
-    # Limpeza (opcional, deletar do servidor do Google para não ocupar espaço na cota)
-    # genai.delete_file(video_file.name)
+def process_input(input_path, prompt_type="dense"):
+    path = Path(input_path)
+    if path.is_file():
+        analyze_video(path, prompt_type)
+    elif path.is_dir():
+        print(f"Varrendo diretório: {path}")
+        video_extensions = {'.mp4', '.mov', '.avi', '.mkv', '.webm'}
+        videos = [p for p in path.rglob('*') if p.suffix.lower() in video_extensions]
+        
+        if not videos:
+            print("Nenhum vídeo encontrado neste diretório.")
+            return
+
+        for video in videos:
+            analyze_video(video, prompt_type)
+    else:
+        print("Caminho inválido.")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Uso: python analyze_video_dense.py <caminho_do_video> [tipo_prompt]")
+        # Se nenhum argumento for passado, tenta usar o diretório padrão docs/analises/input
+        default_input = Path("docs/analises/input")
+        if default_input.exists():
+            print(f"Nenhum argumento passado. Usando padrão: {default_input}")
+            process_input(default_input)
+        else:
+            print("Uso: python analyze_video_dense.py <caminho_do_video_ou_pasta> [tipo_prompt]")
     else:
         v_path = sys.argv[1]
         p_type = sys.argv[2] if len(sys.argv) > 2 else "dense"
-        analyze_video(v_path, p_type)
+        process_input(v_path, p_type)
