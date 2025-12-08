@@ -26,7 +26,7 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 - [ ] Implementar novo "Desafio de Resistência" (Mecânica Shooter/Foco).
 
 **PRIORIDADE 2 (OTIMIZAR DEPOIS):**
-- [ ] Ajustar range de preços na calculadora (limitar cigarro avulso a R$ 4.00).
+- [x] Ajustar range de preços na calculadora (limitar cigarro avulso a R$ 4.00).
 - [ ] Adicionar opções de "Outros Tipos de Consumo" (Vape, Pod, Narguilé).
 - [ ] Refinamentos de UI/UX e Copywriting.
 
