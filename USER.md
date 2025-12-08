@@ -6,13 +6,6 @@ VOCÊ SEMPRE VAI COLOCAR A PORRA DAS ALTERAÇÕES QUE VOCÊ FEZ EM CADA TASK do 
 
 # EXECUTAR (EXECUTE APENAS O QUE EU DEIXEI ABAIXO... SEMPRE ATUALIZANDO O ARQUIVO DE STATUS)
 
-## 1. VISÃO GERAL E PRIORIDADES
-
-**PRIORIDADE 1 (CRÍTICO - CONSERTAR AGORA):**
-
-- [ ] Corrigir sistema de roteamento do botão "Voltar" (Evitar retorno para Home).
-- [ ] Implementar scroll automático para o topo da página (window.scrollTo) em todas as transições.
-
 ---
 
 # ALTERAR VELOCIDADE DO SCROLL MANUALMENTE
