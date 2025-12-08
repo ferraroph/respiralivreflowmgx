@@ -55,3 +55,7 @@ O Desafio Mindfulness atual é uma "meditação passiva" onde o usuário apenas 
 2. **Validação em tempo real ou apenas ao avançar?** Sugestão: **Tempo real** mostrando contador de caracteres e indicador de qualidade (cores), incentivando respostas mais reflexivas.
 
 3. **Permitir pular fases individuais?** Opção A: Não permitir (força engajamento) / Opção B: Permitir mas reduz pontuação / **Opção C (recomendada):** Requerer mínimo de 3 caracteres por fase para avançar.
+
+---
+
+# FEEDBACK DO USUÁRIO (NÃO É PRA COLOCAR O FEEDBACK BRUTO, E SIM, PARA FORMATAR COMO FEEDBACK FORMAL)
