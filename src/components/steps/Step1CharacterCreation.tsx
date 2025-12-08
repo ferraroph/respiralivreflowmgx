@@ -7,6 +7,7 @@ interface Step1CharacterCreationProps {
   userProfile: UserProfile;
   onUpdateProfile: (updates: Partial<UserProfile>) => void;
   onNext: () => void;
+  devInitialState?: { showArchetypes?: boolean };
 }
 
 const archetypes = [
@@ -56,10 +57,10 @@ const archetypes = [
   }
 ];
 
-const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext }: Step1CharacterCreationProps) => {
-  const [nickname, setNickname] = useState(userProfile.nickname || '');
+const Step1CharacterCreation = ({ userProfile, onUpdateProfile, onNext, devInitialState }: Step1CharacterCreationProps) => {
+  const [nickname, setNickname] = useState(userProfile.nickname || (devInitialState?.showArchetypes ? 'DevUser' : ''));
   const [selectedArchetype, setSelectedArchetype] = useState<string | null>(userProfile.archetype);
-  const [showArchetypes, setShowArchetypes] = useState(false);
+  const [showArchetypes, setShowArchetypes] = useState(devInitialState?.showArchetypes || false);
   const [isSelecting, setIsSelecting] = useState(false);
   const [showError, setShowError] = useState(false);
   const [showNotification, setShowNotification] = useState(false);

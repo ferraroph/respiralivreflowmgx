@@ -6,14 +6,15 @@ interface Step9FocusChallengeProps {
   onNext: () => void;
   onBack?: () => void;
   onUpdateScore: (points: number) => void;
+  devInitialState?: { phase?: 'instructions' | 'challenge' | 'completed' };
 }
 
-const Step9FocusChallenge: React.FC<Step9FocusChallengeProps> = ({ onNext, onBack, onUpdateScore }) => {
-  const [currentPhase, setCurrentPhase] = useState<'instructions' | 'challenge' | 'completed'>('instructions');
-  const [timeLeft, setTimeLeft] = useState(45);
-  const [focusLevel, setFocusLevel] = useState(0);
-  const [points, setPoints] = useState(0);
-  const [isActive, setIsActive] = useState(false);
+const Step9FocusChallenge: React.FC<Step9FocusChallengeProps> = ({ onNext, onBack, onUpdateScore, devInitialState }) => {
+  const [currentPhase, setCurrentPhase] = useState<'instructions' | 'challenge' | 'completed'>(devInitialState?.phase || 'instructions');
+  const [timeLeft, setTimeLeft] = useState(devInitialState?.phase === 'completed' ? 0 : 45);
+  const [focusLevel, setFocusLevel] = useState(devInitialState?.phase === 'completed' ? 100 : 0);
+  const [points, setPoints] = useState(devInitialState?.phase === 'completed' ? 250 : 0);
+  const [isActive, setIsActive] = useState(devInitialState?.phase === 'challenge');
   const [showBonus, setShowBonus] = useState(false);
   const [targetPosition, setTargetPosition] = useState({ x: 50, y: 50 });
   const [hits, setHits] = useState(0);

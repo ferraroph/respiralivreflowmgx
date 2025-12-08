@@ -8,12 +8,13 @@ interface Step6BreathingChallengeProps {
   onUpdateProfile: (updates: Partial<UserProfile>) => void;
   onNext: () => void;
   onBack?: () => void;
+  devInitialState?: { phase?: 'instructions' | 'challenge' | 'completed' };
 }
 
-const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack }: Step6BreathingChallengeProps) => {
-  const [phase, setPhase] = useState<'instructions' | 'challenge' | 'completed'>('instructions');
-  const [isActive, setIsActive] = useState(false);
-  const [timeElapsed, setTimeElapsed] = useState(0);
+const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack, devInitialState }: Step6BreathingChallengeProps) => {
+  const [phase, setPhase] = useState<'instructions' | 'challenge' | 'completed'>(devInitialState?.phase || 'instructions');
+  const [isActive, setIsActive] = useState(devInitialState?.phase === 'challenge');
+  const [timeElapsed, setTimeElapsed] = useState(devInitialState?.phase === 'completed' ? 60 : 0);
   const [breathPhase, setBreathPhase] = useState<'inhale' | 'hold' | 'exhale'>('inhale');
   const [breathCount, setBreatheCount] = useState(0);
   const [points, setPoints] = useState(0);

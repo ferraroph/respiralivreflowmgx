@@ -10,7 +10,16 @@ import Step9FocusChallenge from './steps/Step9FocusChallenge';
 import Step10BossChallenge from './steps/Step10BossChallenge';
 import Step11FinalOffer from './steps/Step11FinalOffer';
 import CheckpointModal from './CheckpointModal';
+import DevNavigation from './DevNavigation';
 import { UserTrackingService, UserProgress, LeadData } from '../lib/supabase';
+
+// ============================================================================
+// DEV NAVIGATION - CONTROLE DE ATIVAÇÃO
+// ============================================================================
+// Para DESATIVAR a navegação de desenvolvimento, mude para: false
+// IMPORTANTE: Veja USER.md para mais detalhes
+const DEV_NAVIGATION_ENABLED = true;
+// ============================================================================
 
 interface FunnelContainerProps {
   onScoreUpdate: (score: number) => void;
@@ -18,6 +27,8 @@ interface FunnelContainerProps {
 
 const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [currentSubStep, setCurrentSubStep] = useState(1);
+  const [internalState, setInternalState] = useState<any>({});
   const [totalScore, setTotalScore] = useState(0);
   const [characterData, setCharacterData] = useState<any>({});
   const [progressData, setProgressData] = useState<any>({});
@@ -122,12 +133,100 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
   const handleNext = () => {
     const nextStep = currentStep + 1;
     setCurrentStep(nextStep);
+    setCurrentSubStep(1); // Reset sub-step ao avançar
+    setInternalState({}); // Reset internal state
   };
 
   const handleBack = () => {
     const prevStep = Math.max(1, currentStep - 1);
     setCurrentStep(prevStep);
+    setCurrentSubStep(1); // Reset sub-step ao voltar
+    setInternalState({}); // Reset internal state
   };
+
+  // ============================================================================
+  // DEV NAVIGATION - Funções de navegação de desenvolvimento
+  // ============================================================================
+  // Importa o mapa de etapas para calcular o total
+  const TOTAL_STEPS = 9;
+
+  /**
+   * Navega diretamente para qualquer etapa/sub-etapa do funil
+   * @param step - Número da etapa principal (1-9)
+   * @param subStep - Número da sub-etapa (opcional, default 1)
+   * @param newInternalState - Estado interno para injetar no componente (opcional)
+   */
+  const handleDevNavigateToStep = (step: number, subStep?: number, newInternalState?: any) => {
+    if (step >= 1 && step <= TOTAL_STEPS) {
+      setCurrentStep(step);
+      setCurrentSubStep(subStep || 1);
+      setInternalState(newInternalState || {});
+      console.log(`[DEV] Navegando para etapa ${step}.${subStep || 1}`, newInternalState);
+    }
+  };
+
+  /**
+   * Injeta dados mock para evitar erros ao pular etapas
+   * Preenche characterData com valores padrão realistas
+   */
+  const injectMockData = () => {
+    const mockCharacterData = {
+      // Dados do personagem (Step 1)
+      nickname: 'DevUser',
+      avatar: '🧪',
+      archetype: 'tech-lover',
+      level: 5,
+      respirCoins: 500,
+      streak: 7,
+      league: 'bronze',
+      
+      // Dados do fumante (Step 2 - Calculadora)
+      dailyCigarettes: 20,
+      cigarettePrice: 12,
+      monthlySpend: 7200,
+      yearlySpend: 86400,
+      yearsSmokingSince: 10,
+      totalSpentLifetime: 864000,
+      
+      // Metas e motivações (Step 3)
+      quitGoal: 'gradual',
+      motivations: ['health', 'money', 'family'],
+      selectedDream: {
+        id: 'dream-viagem',
+        name: 'Viagem dos Sonhos',
+        price: 15000,
+        image: '✈️',
+        category: 'experiencia',
+        description: 'Uma viagem incrível',
+        emotionalBenefit: 'Liberdade e novas experiências'
+      },
+      
+      // Desafios completados
+      completedChallenges: ['breathing-1', 'mindfulness-1'],
+      badges: ['primeiro-passo', 'respirador'],
+      joinedSquad: false
+    };
+
+    const mockProgressData = {
+      calculatorCompleted: true,
+      breathingChallengeCompleted: true,
+      mindfulnessChallengeCompleted: true,
+      resistanceChallengeCompleted: true,
+      focusChallengeCompleted: true,
+      bossDefeated: false
+    };
+
+    setCharacterData(mockCharacterData);
+    setProgressData(mockProgressData);
+    setTotalScore(2500);
+
+    console.log('[DEV] Dados mock injetados com sucesso!', {
+      characterData: mockCharacterData,
+      progressData: mockProgressData,
+      totalScore: 2500
+    });
+  };
+  // ============================================================================
 
   const handleScoreUpdate = (points: number) => {
     setTotalScore(prev => prev + points);
@@ -205,25 +304,25 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
 
     switch (currentStep) {
       case 1:
-        return <Step1CharacterCreation userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} />;
+        return <Step1CharacterCreation userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} devInitialState={internalState} />;
       case 2:
-        return <Step4Calculator onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} onUpdateProgress={handleProgressUpdate} characterData={characterData} />;
+        return <Step4Calculator onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} onUpdateProgress={handleProgressUpdate} characterData={characterData} devInitialState={internalState} />;
       case 3:
-        return <Step3GoalSelection userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
+        return <Step3GoalSelection userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
       case 4:
-        return <Step6BreathingChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
+        return <Step6BreathingChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
       case 5:
-        return <Step7MindfulnessChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
+        return <Step7MindfulnessChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
       case 6:
-        return <Step8ResistanceChallenge onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} />;
+        return <Step8ResistanceChallenge onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} devInitialState={internalState} />;
       case 7:
-        return <Step9FocusChallenge onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} />;
+        return <Step9FocusChallenge onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} devInitialState={internalState} />;
       case 8:
-        return <Step10BossChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
+        return <Step10BossChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
       case 9:
         return <Step11FinalOffer userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
       default:
-        return <Step1CharacterCreation userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} />;
+        return <Step1CharacterCreation userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} devInitialState={internalState} />;
     }
   };
 
@@ -237,6 +336,16 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
         onContinue={handleContinueFromCheckpoint}
         onRestart={handleRestartFromBeginning}
       />
+
+      {/* DEV NAVIGATION - Para desativar, mude DEV_NAVIGATION_ENABLED para false */}
+      {DEV_NAVIGATION_ENABLED && (
+        <DevNavigation
+          currentStep={currentStep}
+          currentSubStep={currentSubStep}
+          onNavigateToStep={handleDevNavigateToStep}
+          onInjectMockData={injectMockData}
+        />
+      )}
     </>
   );
 };

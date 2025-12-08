@@ -8,15 +8,16 @@ interface Step10BossChallengeProps {
   onUpdateProfile: (updates: Partial<UserProfile>) => void;
   onNext: () => void;
   onBack?: () => void;
+  devInitialState?: { phase?: 'intro' | 'instructions' | 'challenge' | 'victory' };
 }
 
-const Step10BossChallenge = ({ userProfile, onUpdateProfile, onNext, onBack }: Step10BossChallengeProps) => {
-  const [phase, setPhase] = useState<'intro' | 'instructions' | 'challenge' | 'quicktime' | 'victory'>('intro');
-  const [isActive, setIsActive] = useState(false);
-  const [timeElapsed, setTimeElapsed] = useState(0);
-  const [bossHealth, setBossHealth] = useState(100);
-  const [playerHealth, setPlayerHealth] = useState(100);
-  const [points, setPoints] = useState(0);
+const Step10BossChallenge = ({ userProfile, onUpdateProfile, onNext, onBack, devInitialState }: Step10BossChallengeProps) => {
+  const [phase, setPhase] = useState<'intro' | 'instructions' | 'challenge' | 'quicktime' | 'victory'>(devInitialState?.phase || 'intro');
+  const [isActive, setIsActive] = useState(devInitialState?.phase === 'challenge');
+  const [timeElapsed, setTimeElapsed] = useState(devInitialState?.phase === 'victory' ? 60 : 0);
+  const [bossHealth, setBossHealth] = useState(devInitialState?.phase === 'victory' ? 0 : 100);
+  const [playerHealth, setPlayerHealth] = useState(devInitialState?.phase === 'victory' ? 75 : 100);
+  const [points, setPoints] = useState(devInitialState?.phase === 'victory' ? 500 : 0);
   const [quickTimeEvents, setQuickTimeEvents] = useState(0);
   const [showQuickTime, setShowQuickTime] = useState(false);
   const [quickTimeButton, setQuickTimeButton] = useState<'attack' | 'defend' | 'special'>('attack');

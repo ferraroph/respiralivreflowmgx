@@ -6,14 +6,15 @@ interface Step8ResistanceChallengeProps {
   onNext: () => void;
   onBack?: () => void;
   onUpdateScore: (points: number) => void;
+  devInitialState?: { phase?: 'instructions' | 'challenge' | 'completed' };
 }
 
-const Step8ResistanceChallenge: React.FC<Step8ResistanceChallengeProps> = ({ onNext, onBack, onUpdateScore }) => {
-  const [currentPhase, setCurrentPhase] = useState<'instructions' | 'challenge' | 'completed'>('instructions');
-  const [timeLeft, setTimeLeft] = useState(30);
-  const [resistanceLevel, setResistanceLevel] = useState(0);
-  const [points, setPoints] = useState(0);
-  const [isActive, setIsActive] = useState(false);
+const Step8ResistanceChallenge: React.FC<Step8ResistanceChallengeProps> = ({ onNext, onBack, onUpdateScore, devInitialState }) => {
+  const [currentPhase, setCurrentPhase] = useState<'instructions' | 'challenge' | 'completed'>(devInitialState?.phase || 'instructions');
+  const [timeLeft, setTimeLeft] = useState(devInitialState?.phase === 'completed' ? 0 : 30);
+  const [resistanceLevel, setResistanceLevel] = useState(devInitialState?.phase === 'completed' ? 100 : 0);
+  const [points, setPoints] = useState(devInitialState?.phase === 'completed' ? 200 : 0);
+  const [isActive, setIsActive] = useState(devInitialState?.phase === 'challenge');
   const [showBonus, setShowBonus] = useState(false);
 
   useEffect(() => {

@@ -8,6 +8,7 @@ interface Step4CalculatorProps {
   onUpdateScore: (points: number) => void;
   onUpdateProgress: (data: any) => void;
   characterData: any;
+  devInitialState?: { showResults?: boolean };
 }
 
 type InputMode = 'cigarettes' | 'packs';
@@ -71,13 +72,14 @@ const Step4Calculator = ({
   onBack,
   onUpdateScore, 
   onUpdateProgress,
-  characterData 
+  characterData,
+  devInitialState 
 }: Step4CalculatorProps) => {
   const [inputMode, setInputMode] = useState<InputMode>('cigarettes');
   const [cigarettesPerDay, setCigarettesPerDay] = useState(20);
   const [packsPerDay, setPacksPerDay] = useState(1);
-  const [pricePerUnit, setPricePerUnit] = useState(0);
-  const [showResults, setShowResults] = useState(false);
+  const [pricePerUnit, setPricePerUnit] = useState(devInitialState?.showResults ? 12 : 0);
+  const [showResults, setShowResults] = useState(devInitialState?.showResults || false);
 
   const CIGARETTES_PER_PACK = 20;
 
