@@ -1,0 +1,3 @@
+Essa pasta é destinada a ser usada apenas para trackear o planejamento e execução, com o seguinte objetivo:
+
+SE UM CHAT FIZER MERDA NESSA PORRA, VAI TER O PLANEJAMENTO E O RELATÓRIO DO QUE DEU ERRADO NAQUELE PLANEJAMENTO PARA QUE O PRÓXIMO CHAT ENTENDA O QUE DEU ERRADO E NÃO COMETA O MESMO ERRO
