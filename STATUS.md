@@ -4,8 +4,17 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 ## 1. VISÃO GERAL E PRIORIDADES
 
 **PRIORIDADE 1 (CRÍTICO - CONSERTAR AGORA):**
-- [ ] Corrigir sistema de roteamento do botão "Voltar" (Evitar retorno para Home).
-- [ ] Implementar scroll automático para o topo da página (window.scrollTo) em todas as transições.
+- [x] Corrigir sistema de roteamento do botão "Voltar" (Evitar retorno para Home).
+  - **CORREÇÃO REALIZADA (08/12/2025):** 
+    - Modificado `Step4Calculator.tsx` para usar `handleBackAction()` inteligente
+    - Se está mostrando resultados → volta para a tela de input
+    - Se está no input → volta para a etapa anterior do funil
+    - **Backup:** `bkps/Step4Calculator.tsx.bkp_20251208_*`
+- [x] Implementar scroll automático para o topo da página (window.scrollTo) em todas as transições.
+  - **CORREÇÃO REALIZADA (08/12/2025):**
+    - Adicionado `useEffect` em `FunnelContainer.tsx` que dispara `window.scrollTo({ top: 0, behavior: 'smooth' })` em cada mudança de `currentStep`
+    - Adicionado scroll adicional em `Step4Calculator.tsx` ao mostrar resultados e ao voltar para input
+    - **Backups:** `bkps/FunnelContainer.tsx.bkp_20251208_*`, `bkps/StepWrapper.tsx.bkp_20251208_*`
 - [ ] Corrigir fluxo da "Escolha de Missão" (Remover botão confirmar, adicionar auto-navegação).
 - [ ] Implementar novo "Desafio Mindfulness" (Técnica Grounding 5-4-3-2-1).
 - [ ] Implementar novo "Desafio de Resistência" (Mecânica Shooter/Foco).

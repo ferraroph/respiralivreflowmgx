@@ -36,11 +36,6 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
     onScoreUpdate(totalScore);
   }, [totalScore, onScoreUpdate]);
 
-  // Auto-scroll para o topo em cada mudança de step
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentStep]);
-
   useEffect(() => {
     // Save progress whenever it changes
     if (!isLoading) {

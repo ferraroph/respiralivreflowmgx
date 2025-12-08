@@ -105,8 +105,6 @@ const Step4Calculator = ({
     }
     
     setShowResults(true);
-    // Scroll para o topo ao mostrar resultados
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     onUpdateScore(75);
     onUpdateProgress({
       calculatorData: {
@@ -122,22 +120,11 @@ const Step4Calculator = ({
     });
   };
 
-  // Função de voltar inteligente: se está mostrando resultados, volta para o input
-  // Se está no input, volta para a etapa anterior do funil
-  const handleBackAction = () => {
-    if (showResults) {
-      setShowResults(false);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (onBack) {
-      onBack();
-    }
-  };
-
   return (
     <StepWrapper 
       title="💰 Calculadora de Impacto"
       subtitle="Descubra quanto você realmente gasta e o que está perdendo"
-      onBack={handleBackAction}
+      onBack={onBack}
     >
       <div className="space-y-6">
         {!showResults ? (
