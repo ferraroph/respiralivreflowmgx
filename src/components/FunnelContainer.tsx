@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { UserProfile } from '@/types/funnel';
 import Step1CharacterCreation from './steps/Step1CharacterCreation';
 import Step3GoalSelection from './steps/Step3GoalSelection';
@@ -10,7 +10,7 @@ import Step9FocusChallenge from './steps/Step9FocusChallenge';
 import Step10BossChallenge from './steps/Step10BossChallenge';
 import Step11FinalOffer from './steps/Step11FinalOffer';
 import CheckpointModal from './CheckpointModal';
-import DevNavigation from './DevNavigation';
+import DevNavigation, { getDevModeActive } from './DevNavigation';
 import { UserTrackingService, UserProgress, LeadData } from '../lib/supabase';
 
 // ============================================================================
@@ -37,6 +37,18 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
   const [savedProgress, setSavedProgress] = useState<UserProgress | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
+  
+  // Modo Dev - quando ativo, desabilita o CheckpointModal
+  const [devModeActive, setDevModeActive] = useState<boolean>(() => getDevModeActive());
+
+  // Callback para quando o modo dev muda no DevNavigation
+  const handleDevModeChange = useCallback((isActive: boolean) => {
+    setDevModeActive(isActive);
+    // Se ativar o modo dev enquanto o checkpoint está aberto, fecha ele
+    if (isActive && showCheckpoint) {
+      setShowCheckpoint(false);
+    }
+  }, [showCheckpoint]);
 
   useEffect(() => {
     initializeUser();
@@ -66,7 +78,10 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
 
       const progress = await UserTrackingService.getOrCreateUserProgress(user?.id);
       
-      if (progress && progress.current_step > 1) {
+      // Só mostra o checkpoint se o modo dev estiver DESATIVADO
+      const isDevMode = getDevModeActive();
+      
+      if (progress && progress.current_step > 1 && !isDevMode) {
         setSavedProgress(progress);
         setShowCheckpoint(true);
       } else if (progress) {
@@ -330,8 +345,9 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
     <>
       {renderCurrentStep()}
       
+      {/* CheckpointModal - Só aparece se modo dev estiver DESATIVADO */}
       <CheckpointModal
-        isOpen={showCheckpoint}
+        isOpen={showCheckpoint && !devModeActive}
         progress={savedProgress || { current_step: 1, total_score: 0, character_data: {}, progress_data: {} }}
         onContinue={handleContinueFromCheckpoint}
         onRestart={handleRestartFromBeginning}
@@ -344,6 +360,7 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
           currentSubStep={currentSubStep}
           onNavigateToStep={handleDevNavigateToStep}
           onInjectMockData={injectMockData}
+          onDevModeChange={handleDevModeChange}
         />
       )}
     </>

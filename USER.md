@@ -43,9 +43,37 @@ const DEV_NAVIGATION_ENABLED = import.meta.env.DEV; // Só ativo em desenvolvime
 ## Como usar?
 
 1. **Clique no botão "DEV"** no canto inferior direito da tela
-2. **Clique em "⚡ Injetar Dados Mock"** para preencher dados necessários (evita erros!)
-3. **Escolha o modo de visualização:** Simples (grid) ou Detalhado (lista)
-4. **Clique no número** da etapa/sub-etapa para a qual deseja ir (ex: 4.2)
+2. **Ative o Modo Dev** usando o toggle switch no painel (verde = ativo)
+3. **Clique em "⚡ Injetar Dados Mock"** para preencher dados necessários (evita erros!)
+4. **Escolha o modo de visualização:** Simples (grid) ou Detalhado (lista)
+5. **Clique no número** da etapa/sub-etapa para a qual deseja ir (ex: 4.2)
+
+## 🔴🟢 Toggle do Modo Dev
+
+O botão flutuante muda de cor para indicar o estado:
+
+| Cor | Estado | Comportamento |
+|-----|--------|---------------|
+| 🟢 Verde | **ATIVO** | Checkpoint Modal desabilitado, navegação livre |
+| 🔴 Vermelho | **DESATIVADO** | Checkpoint Modal funciona normalmente |
+
+### Como funciona:
+
+- **Por padrão:** Modo dev está **DESATIVADO** (vermelho)
+- **Ao ativar:** A preferência é salva no `localStorage` e persiste entre sessões
+- **Efeito:** Quando ativado, o popup de "Bem-vindo de volta" (CheckpointModal) não aparece
+
+### Onde fica salvo:
+
+```
+localStorage.getItem('respiraLivre_devModeActive')
+```
+
+Para limpar manualmente (console do navegador):
+
+```js
+localStorage.removeItem('respiraLivre_devModeActive')
+```
 
 ## Mapa Completo de Etapas
 

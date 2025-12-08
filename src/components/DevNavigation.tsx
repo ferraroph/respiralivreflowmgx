@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Code2, Zap } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ChevronDown, ChevronUp, Code2, Zap, ToggleLeft, ToggleRight } from 'lucide-react';
 
 // ============================================================================
 // MAPA DE ETAPAS DO FUNIL
@@ -14,6 +14,9 @@ export interface StepInfo {
   description: string;  // Descrição detalhada
   internalState?: Record<string, unknown>;  // Estado interno para injetar (ex: {showArchetypes: true})
 }
+
+// Chave para salvar no localStorage
+const DEV_MODE_STORAGE_KEY = 'respiraLivre_devModeActive';
 
 export const FUNNEL_STEPS_MAP: StepInfo[] = [
   // Step 1 - Criação do Personagem (2 sub-etapas)
@@ -66,7 +69,17 @@ interface DevNavigationProps {
   currentSubStep?: number;
   onNavigateToStep: (step: number, subStep?: number, internalState?: Record<string, unknown>) => void;
   onInjectMockData: () => void;
+  onDevModeChange?: (isActive: boolean) => void;
 }
+
+/**
+ * Retorna se o modo dev está ativo (salvo no localStorage)
+ */
+export const getDevModeActive = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  const stored = localStorage.getItem(DEV_MODE_STORAGE_KEY);
+  return stored === 'true';
+};
 
 /**
  * DevNavigation - Componente para navegação de desenvolvimento
@@ -77,15 +90,31 @@ interface DevNavigationProps {
  * Permite:
  * - Navegar diretamente para qualquer etapa/sub-etapa do funil
  * - Injetar dados mock para evitar erros por falta de dados
+ * - Toggle para ativar/desativar modo dev (desativa checkpoint modal)
  */
 const DevNavigation: React.FC<DevNavigationProps> = ({
   currentStep,
   currentSubStep = 1,
   onNavigateToStep,
-  onInjectMockData
+  onInjectMockData,
+  onDevModeChange
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [viewMode, setViewMode] = useState<'simple' | 'detailed'>('simple');
+  const [devModeActive, setDevModeActive] = useState<boolean>(() => getDevModeActive());
+
+  // Notifica o parent quando o modo dev muda
+  useEffect(() => {
+    onDevModeChange?.(devModeActive);
+  }, [devModeActive, onDevModeChange]);
+
+  // Toggle do modo dev
+  const handleToggleDevMode = () => {
+    const newValue = !devModeActive;
+    setDevModeActive(newValue);
+    localStorage.setItem(DEV_MODE_STORAGE_KEY, String(newValue));
+    console.log(`[DEV] Modo Dev ${newValue ? 'ATIVADO' : 'DESATIVADO'}`);
+  };
 
   // Agrupa steps por número principal
   const groupedSteps = FUNNEL_STEPS_MAP.reduce((acc, step) => {
@@ -100,21 +129,25 @@ const DevNavigation: React.FC<DevNavigationProps> = ({
 
   return (
     <div className="fixed bottom-4 right-4 z-[9999]">
-      {/* Toggle Button */}
+      {/* Toggle Button - Muda de cor baseado no devModeActive */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 
+        className={`flex items-center gap-2 
                    text-white px-4 py-2 rounded-full shadow-lg hover:shadow-xl 
-                   transition-all duration-300 hover:scale-105 border-2 border-white/30"
-        title="Navegação Dev"
+                   transition-all duration-300 hover:scale-105 border-2 border-white/30
+                   ${devModeActive 
+                     ? 'bg-gradient-to-r from-green-500 to-emerald-600' 
+                     : 'bg-gradient-to-r from-red-500 to-rose-600'
+                   }`}
+        title={`Navegação Dev - ${devModeActive ? 'ATIVO' : 'DESATIVADO'}`}
       >
         <Code2 size={18} />
         <span className="font-bold text-sm">DEV</span>
         <span className="bg-white/20 px-2 py-0.5 rounded-full text-xs font-mono">
           {currentStep}.{currentSubStep}
         </span>
-        <span className="text-white/60 text-[10px]">
-          ({TOTAL_SUB_STEPS} telas)
+        <span className={`text-[10px] font-bold ${devModeActive ? 'text-green-200' : 'text-red-200'}`}>
+          {devModeActive ? 'ON' : 'OFF'}
         </span>
         {isExpanded ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
       </button>
@@ -124,15 +157,47 @@ const DevNavigation: React.FC<DevNavigationProps> = ({
         <div className="absolute bottom-14 right-0 w-80 max-h-[70vh] bg-gray-900/95 backdrop-blur-xl 
                         rounded-2xl border border-white/20 shadow-2xl overflow-hidden
                         animate-in slide-in-from-bottom-2 duration-200 flex flex-col">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-amber-500/20 to-orange-600/20 px-4 py-3 
-                          border-b border-white/10 shrink-0">
-            <h3 className="text-white font-bold text-sm flex items-center gap-2">
-              <Code2 size={16} className="text-amber-400" />
-              Navegação de Desenvolvimento
-            </h3>
+          {/* Header com Toggle Switch */}
+          <div className={`px-4 py-3 border-b border-white/10 shrink-0 ${
+            devModeActive 
+              ? 'bg-gradient-to-r from-green-500/20 to-emerald-600/20' 
+              : 'bg-gradient-to-r from-red-500/20 to-rose-600/20'
+          }`}>
+            <div className="flex items-center justify-between">
+              <h3 className="text-white font-bold text-sm flex items-center gap-2">
+                <Code2 size={16} className={devModeActive ? 'text-green-400' : 'text-red-400'} />
+                Modo Desenvolvedor
+              </h3>
+              
+              {/* Toggle Switch */}
+              <button
+                onClick={handleToggleDevMode}
+                className={`relative w-14 h-7 rounded-full transition-all duration-300 ${
+                  devModeActive 
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-600' 
+                    : 'bg-gradient-to-r from-red-500 to-rose-600'
+                }`}
+                title={devModeActive ? 'Desativar Modo Dev' : 'Ativar Modo Dev'}
+              >
+                <span 
+                  className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-md transition-all duration-300 ${
+                    devModeActive ? 'right-1' : 'left-1'
+                  }`}
+                />
+                <span className={`absolute inset-0 flex items-center ${devModeActive ? 'justify-start pl-1.5' : 'justify-end pr-1.5'}`}>
+                  {devModeActive 
+                    ? <ToggleRight size={12} className="text-white/70" />
+                    : <ToggleLeft size={12} className="text-white/70" />
+                  }
+                </span>
+              </button>
+            </div>
+            
             <p className="text-white/60 text-xs mt-1">
-              {TOTAL_SUB_STEPS} telas em {TOTAL_STEPS} etapas principais
+              {devModeActive 
+                ? '✅ Checkpoint desabilitado • Navegação livre' 
+                : '❌ Checkpoint ativo • Comportamento normal'
+              }
             </p>
           </div>
 
