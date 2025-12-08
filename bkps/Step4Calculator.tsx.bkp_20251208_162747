@@ -235,7 +235,7 @@ const Step4Calculator = ({
               <input
                 type="range"
                 min={0}
-                max={inputMode === 'cigarettes' ? 4 : 30}
+                max={inputMode === 'cigarettes' ? 5 : 30}
                 step={inputMode === 'cigarettes' ? 0.1 : 0.5}
                 value={pricePerUnit}
                 onChange={(e) => setPricePerUnit(Number(e.target.value))}

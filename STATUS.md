@@ -81,7 +81,11 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 **Bugs e Correções:**
 - [x] **BUG CRÍTICO:** Botão "Voltar" na tela de resultados retornava para o início do app. (Corrigido: Agora volta para a tela de input da calculadora).
 - [x] **BUG CRÍTICO:** Tela não rolava para o topo ao exibir resultados. (Corrigido: Implementado auto-scroll).
-- [ ] **OTIMIZAÇÃO:** Ajustar valor máximo do slider de preço por cigarro para R$ 4.00 (Realista).
+- [x] **OTIMIZAÇÃO:** Ajustar valor máximo do slider de preço por cigarro para R$ 4.00 (Realista).
+  - **CORREÇÃO REALIZADA (08/12/2025):**
+    - Modificado `Step4Calculator.tsx` linha 242: alterado `max` do slider de preço por cigarro de `5` para `4`
+    - Agora o slider de preço por cigarro vai de R$ 0.00 até R$ 4.00 (mais realista com o mercado)
+    - **Backup:** `bkps/Step4Calculator.tsx.bkp_20251208_162747`
 
 ### ETAPA 3: ESCOLHA DE MISSÃO
 **Arquivo:** `src/components/steps/Step3GoalSelection.tsx`
