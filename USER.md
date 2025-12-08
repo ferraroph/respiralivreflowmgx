@@ -139,6 +139,22 @@ Edite o arquivo `src/components/DevNavigation.tsx` e adicione ao array `FUNNEL_S
 | `src/components/FunnelContainer.tsx` | Integração, constante `DEV_NAVIGATION_ENABLED`, funções de navegação |
 | Todos os `src/components/steps/Step*.tsx` | Recebem `devInitialState` para iniciar em sub-etapa específica |
 
+## 🔧 Detalhes Técnicos
+
+### Por que a navegação entre sub-etapas funciona?
+
+Cada componente de step tem uma prop `key` única que inclui o `currentSubStep`:
+
+```tsx
+<Step7MindfulnessChallenge key={`step5-${currentSubStep}`} ... />
+```
+
+Isso força o React a **remontar completamente** o componente quando a sub-etapa muda, aplicando o novo `devInitialState`.
+
+**Sem a key:** Navegar de 5.1 → 5.2 não funcionaria porque o React reutilizaria o mesmo componente (já que `currentStep` continua sendo 5).
+
+**Com a key:** O React entende que é um componente "diferente" e remonta do zero com o novo estado inicial.
+
 ---
 
 # ALTERAR VELOCIDADE DO SCROLL MANUALMENTE

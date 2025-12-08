@@ -319,25 +319,25 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
 
     switch (currentStep) {
       case 1:
-        return <Step1CharacterCreation userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} devInitialState={internalState} />;
+        return <Step1CharacterCreation key={`step1-${currentSubStep}`} userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} devInitialState={internalState} />;
       case 2:
-        return <Step4Calculator onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} onUpdateProgress={handleProgressUpdate} characterData={characterData} devInitialState={internalState} />;
+        return <Step4Calculator key={`step2-${currentSubStep}`} onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} onUpdateProgress={handleProgressUpdate} characterData={characterData} devInitialState={internalState} />;
       case 3:
-        return <Step3GoalSelection userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
+        return <Step3GoalSelection key={`step3-${currentSubStep}`} userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
       case 4:
-        return <Step6BreathingChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
+        return <Step6BreathingChallenge key={`step4-${currentSubStep}`} userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
       case 5:
-        return <Step7MindfulnessChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
+        return <Step7MindfulnessChallenge key={`step5-${currentSubStep}`} userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
       case 6:
-        return <Step8ResistanceChallenge onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} devInitialState={internalState} />;
+        return <Step8ResistanceChallenge key={`step6-${currentSubStep}`} onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} devInitialState={internalState} />;
       case 7:
-        return <Step9FocusChallenge onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} devInitialState={internalState} />;
+        return <Step9FocusChallenge key={`step7-${currentSubStep}`} onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} devInitialState={internalState} />;
       case 8:
-        return <Step10BossChallenge userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
+        return <Step10BossChallenge key={`step8-${currentSubStep}`} userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
       case 9:
-        return <Step11FinalOffer userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
+        return <Step11FinalOffer key={`step9-${currentSubStep}`} userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
       default:
-        return <Step1CharacterCreation userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} devInitialState={internalState} />;
+        return <Step1CharacterCreation key={`step-default-${currentSubStep}`} userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} devInitialState={internalState} />;
     }
   };
 
