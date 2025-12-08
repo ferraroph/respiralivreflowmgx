@@ -1,26 +1,34 @@
-Pesquisar contexto para Mindfulness
+# ETAPA 5
 
-Leitura [](file:///c%3A/Users/phell/Desktop/IDE%27s/3.%20Funnels/respiralivreflow-mgx4/PRD.md#1-1), linhas 1 para 300
+## PROMP DO USUÁRIO
 
-Leitura [](file:///c%3A/Users/phell/Desktop/IDE%27s/3.%20Funnels/respiralivreflow-mgx4/src/components/steps/Step7MindfulnessChallenge.tsx#1-1), linhas 1 para 300
+```
+LEIA O ARQUIVO `STATUS.md` e depois leia o arquivo `PRD.md` para entender melhor.
 
-Leitura [](file:///c%3A/Users/phell/Desktop/IDE%27s/3.%20Funnels/respiralivreflow-mgx4/src/components/steps/Step6BreathingChallenge.tsx#1-1), linhas 1 para 300
+VOCÊ SEMPRE VAI COLOCAR A PORRA DAS ALTERAÇÕES QUE VOCÊ FEZ EM CADA TASK do arquivo de STATUS E FAZER BACKUPS (VAI CITAR AONDE TA ESSES BACKUPS TAMBÉM, AO FAZER ISSO. OS BKPS FICAM NA PASTA `bkps`)
 
-Leia [](file:///c%3A/Users/phell/Desktop/IDE%27s/3.%20Funnels/respiralivreflow-mgx4/src/types/funnel.ts)
+# EXECUTAR (EXECUTE APENAS O QUE EU DEIXEI ABAIXO... SEMPRE ATUALIZANDO O ARQUIVO DE STATUS)
 
-Leia [](file:///c%3A/Users/phell/Desktop/IDE%27s/3.%20Funnels/respiralivreflow-mgx4/src/hooks/useFunnelState.ts)
+## INSTRUÇÕES
 
-Leia [](file:///c%3A/Users/phell/Desktop/IDE%27s/3.%20Funnels/respiralivreflow-mgx4/src/components/StepWrapper.tsx)
+AGORA VAMOS PLANEJAR, POIS AINDA NÃO ESTÁ CERTO O QUE IRÁ SER FEITO NESSA ETAPA ABAIXO:
 
-Leitura [](file:///c%3A/Users/phell/Desktop/IDE%27s/3.%20Funnels/respiralivreflow-mgx4/PRD.md#300-300), linhas 300 para 600
+### ETAPA 5: DESAFIO MINDFULNESS (GROUNDING)
+**Arquivo:** `src/components/steps/Step7MindfulnessChallenge.tsx`
+**Status Geral:** REPROVADO (NECESSITA REFAÇÃO TOTAL)
 
-Leitura [](file:///c%3A/Users/phell/Desktop/IDE%27s/3.%20Funnels/respiralivreflow-mgx4/src/components/steps/Step7MindfulnessChallenge.tsx#300-300), linhas 300 para 363
+**Checklist de Requisitos (NOVA VERSÃO - TÉCNICA 5-4-3-2-1):**
+- [ ] **Conceito:** Substituir meditação passiva por exercício ativo de escrita (Grounding).
+- [ ] **Fase 1 (Visão):** Input para digitar 5 coisas que o usuário vê.
+- [ ] **Fase 2 (Audição):** Input para digitar 4 coisas que o usuário escuta.
+- [ ] **Fase 3 (Tato):** Input para digitar 3 coisas que o usuário sente.
+- [ ] **Fase 4 (Olfato):** Input para digitar 2 coisas que o usuário cheira.
+- [ ] **Fase 5 (Paladar):** Input para digitar 1 coisa que o usuário prova.
+- [ ] **Sistema de Pontuação:**
+    - Pontuação baseada na quantidade de caracteres digitados (evitar respostas de 1 letra).
+    - Feedback visual de progresso.
 
-Leitura [](file:///c%3A/Users/phell/Desktop/IDE%27s/3.%20Funnels/respiralivreflow-mgx4/src/components/steps/Step6BreathingChallenge.tsx#270-270), linhas 270 para 319
-
-Leitura [](file:///c%3A/Users/phell/Desktop/IDE%27s/3.%20Funnels/respiralivreflow-mgx4/PRD.md#600-600), linhas 600 para 900
-
-Leia [](file:///c%3A/Users/phell/Desktop/IDE%27s/3.%20Funnels/respiralivreflow-mgx4/src/components/ui)
+```
 
 ## Plano: Refação do Desafio Mindfulness (Grounding 5-4-3-2-1)
 
