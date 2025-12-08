@@ -15,7 +15,13 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
     - Adicionado `useEffect` em `FunnelContainer.tsx` que dispara `window.scrollTo({ top: 0, behavior: 'smooth' })` em cada mudança de `currentStep`
     - Adicionado scroll adicional em `Step4Calculator.tsx` ao mostrar resultados e ao voltar para input
     - **Backups:** `bkps/FunnelContainer.tsx.bkp_20251208_*`, `bkps/StepWrapper.tsx.bkp_20251208_*`
-- [ ] Corrigir fluxo da "Escolha de Missão" (Remover botão confirmar, adicionar auto-navegação).
+- [x] Corrigir fluxo da "Escolha de Missão" (Remover botão confirmar, adicionar auto-navegação).
+  - **CORREÇÃO REALIZADA (08/12/2025):**
+    - Modificado `Step3GoalSelection.tsx` para auto-navegação ao clicar no card
+    - Removida a função `handleConfirm()` (não mais necessária)
+    - Removido o botão "Confirmar Meta" do layout
+    - Agora ao clicar em um card de missão, já inicia automaticamente a confirmação e avança para a próxima etapa
+    - **Backup:** `bkps/Step3GoalSelection.tsx.bkp_20251208_162350`
 - [ ] Implementar novo "Desafio Mindfulness" (Técnica Grounding 5-4-3-2-1).
 - [ ] Implementar novo "Desafio de Resistência" (Mecânica Shooter/Foco).
 
@@ -79,7 +85,7 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 
 ### ETAPA 3: ESCOLHA DE MISSÃO
 **Arquivo:** `src/components/steps/Step3GoalSelection.tsx`
-**Status Geral:** EM AJUSTES
+**Status Geral:** APROVADO
 
 **Checklist de Requisitos:**
 - [x] **Layout:**
@@ -90,8 +96,8 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
     - Card 2: Redução Gradual (Azul, Recomendado).
     - Card 3: Redução de Danos (Verde, Fácil).
 - [x] **Interação e Fluxo:**
-    - **CORREÇÃO:** Remover necessidade de clicar em botão "Confirmar Meta" após seleção. (Realizado).
-    - **CORREÇÃO:** Implementar avanço automático para próxima etapa ao clicar no card. (Realizado).
+    - **CORREÇÃO (08/12/2025):** Removido botão "Confirmar Meta" após seleção.
+    - **CORREÇÃO (08/12/2025):** Implementado avanço automático para próxima etapa ao clicar no card.
     - Feedback visual de seleção (Borda verde/Destaque).
 
 ### ETAPA 4: DESAFIO DA RESPIRAÇÃO

@@ -60,23 +60,26 @@ const Step3GoalSelection = ({ userProfile, onUpdateProfile, onNext, onBack, devI
   const [isConfirming, setIsConfirming] = useState(devInitialState?.showConfirmation || false);
 
   const handleGoalSelect = (goalId: string) => {
-    // Auto-navegação: ao clicar no card, já seleciona e avança automaticamente
     setSelectedGoal(goalId);
-    setIsConfirming(true);
-    
-    setTimeout(() => {
-      const goal = goals.find(g => g.id === goalId)!;
-      const xpBonus = goalId === 'immediate' ? 150 : goalId === 'gradual' ? 100 : 75;
-      const coinBonus = goalId === 'immediate' ? 500 : goalId === 'gradual' ? 200 : 100;
-      
-      onUpdateProfile({
-        quitGoal: goalId as any,
-        xp: userProfile.xp + xpBonus,
-        respirCoins: userProfile.respirCoins + coinBonus,
-        badges: [...userProfile.badges, `Meta ${goal.title}`]
-      });
-      onNext();
-    }, 1500);
+  };
+
+  const handleConfirm = () => {
+    if (selectedGoal) {
+      setIsConfirming(true);
+      setTimeout(() => {
+        const goal = goals.find(g => g.id === selectedGoal)!;
+        const xpBonus = selectedGoal === 'immediate' ? 150 : selectedGoal === 'gradual' ? 100 : 75;
+        const coinBonus = selectedGoal === 'immediate' ? 500 : selectedGoal === 'gradual' ? 200 : 100;
+        
+        onUpdateProfile({
+          quitGoal: selectedGoal as any,
+          xp: userProfile.xp + xpBonus,
+          respirCoins: userProfile.respirCoins + coinBonus,
+          badges: [...userProfile.badges, `Meta ${goal.title}`]
+        });
+        onNext();
+      }, 1500);
+    }
   };
 
   if (isConfirming) {
@@ -192,6 +195,19 @@ const Step3GoalSelection = ({ userProfile, onUpdateProfile, onNext, onBack, devI
             </div>
           ))}
         </div>
+
+        {selectedGoal && (
+          <button
+            onClick={handleConfirm}
+            className="w-full premium-button text-lg flex items-center justify-center gap-3"
+          >
+            <Target className="w-6 h-6" />
+            Confirmar Meta
+            <div className="ml-2 px-3 py-1 bg-white/20 rounded-full text-sm">
+              +{selectedGoal === 'immediate' ? 150 : selectedGoal === 'gradual' ? 100 : 75} XP
+            </div>
+          </button>
+        )}
       </div>
     </div>
   );
