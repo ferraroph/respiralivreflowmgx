@@ -7,8 +7,8 @@
 
 ### 1.1 Situação Atual
 Existem duas versões do funil do Desafio da Respiração:
-- **Funil Novo (Raiz)**: Hospedado em respiralivrreflow.vercel.app
-- **Funil Antigo (Referência)**: Hospedado em respiralivrreflow.lovable.app
+- **Funil Novo**: Raiz/workspace `\` (Hospedado em respiralivrreflow.vercel.app)
+- **Funil Antigo (Referência)**: `util\funilrespiralivre-oficial` (Hospedado em respiralivrreflow.lovable.app)
 
 O funil novo apresenta múltiplos problemas de UX, design e implementação técnica que comprometem a experiência gamificada e a retenção do usuário.
 
