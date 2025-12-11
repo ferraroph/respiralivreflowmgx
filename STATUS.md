@@ -104,23 +104,45 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
     - **CORREÇÃO (08/12/2025):** Implementado avanço automático para próxima etapa ao clicar no card.
     - Feedback visual de seleção (Borda verde/Destaque).
 
-### ETAPA 4: DESAFIO DA RESPIRAÇÃO
+### ETAPA 4: DESAFIO DA RESPIRAÇÃO ⚠️ EM OTIMIZAÇÃO
 **Arquivo:** `src/components/steps/Step6BreathingChallenge.tsx`
-**Status Geral:** APROVADO
+**PRD de Referência:** `docs/dev/etapa_5/PRD_1_Claude.md`
+**Arquivo TASKS:** `TASKS.md`
+**Status Geral:** EM OTIMIZAÇÃO (11/12/2025)
 
-**Checklist de Requisitos:**
-- [x] **Tela de Introdução:**
-    - Título: "Desafio da Respiração".
-    - Instruções de como funciona (3 passos).
-    - Lista de recompensas.
-- [x] **Gameplay:**
-    - Fase 1: Inspire (Círculo Verde, Texto "Inspire").
-    - Fase 2: Segure (Círculo Amarelo, Texto "Segure").
-    - Fase 3: Expire (Círculo Azul/Roxo, Texto "Expire").
-    - Botão "Pular Desafio" disponível.
-- [x] **Conclusão:**
-    - Tela de sucesso com pontuação e bônus.
-    - Botão "Concluir e Coletar Pontos".
+> **NOTA:** Esta etapa está sendo otimizada com base no PRD_1_Claude.md.
+> O funil de referência é: `util/funilrespiralivre-oficial/src/components/challenges/Challenge1Breathing.tsx`
+
+**Checklist de Requisitos - TELA DE TUTORIAL:**
+- [x] **REQ-TUT-001 (CRÍTICO):** Corrigir ortografia "Como Funcionar:" → "Como Funciona" ✅ (11/12/2025)
+- [ ] **REQ-TUT-002 (ALTA):** Adicionar efeito de glow pulsante no ícone de vento
+- [x] **REQ-TUT-003 (MÉDIA):** Container de "Como Funciona" existe (manter)
+- [ ] **REQ-TUT-004 (ALTA):** Otimizar box de recompensas com valores do funil antigo
+
+**Checklist de Requisitos - TELA DE EXECUÇÃO:**
+- [ ] **REQ-EXEC-001 (CRÍTICO):** Animação sincronizada - REVISÃO NECESSÁRIA:
+  - Timing: 4s inspirar, 2s pausar, 4s expirar, 2s pausar (12s ciclo)
+  - Ponto 0 (scale-125) como ponto inicial
+  - Anel de progresso acompanhando círculo
+  - Countdown inicial "PREPARE-SE" → 3 → 2 → 1
+  - Número de respirações no centro após 1º ciclo
+- [x] **REQ-EXEC-002 (ALTA):** Aumentar tamanho do círculo (w-40 → w-64) ✅ (11/12/2025)
+- [x] **REQ-EXEC-003 (CRÍTICO):** Corrigir hierarquia de botões ✅ (11/12/2025)
+- [x] **REQ-EXEC-004 (ALTA):** Melhorar distribuição de elementos ✅ (11/12/2025)
+- [ ] **REQ-EXEC-005 (ALTA):** Implementar feedback de dopamina (contador XP animado)
+- [ ] **REQ-EXEC-006 (BAIXA):** Som opcional
+
+**Checklist de Requisitos - TELA DE CONCLUSÃO:**
+- [ ] **REQ-CONC-001 (ALTA):** Redesign completo (consistência visual)
+
+**Bugs Identificados (11/12/2025):**
+- ❌ Linha 122: Erro ortográfico "Como Funcionar:"
+- ❌ Linha 48-56: Animação não sincroniza corretamente (lógica de cyclePosition bugada)
+- ❌ Linhas 228-247: Hierarquia de botões invertida (Pular em amarelo no topo!)
+- ❌ Linha 206: Círculo muito pequeno (w-40 h-40)
+- ❌ Linhas 254-311: Tela de conclusão com inline styles (inconsistente)
+
+**Backup Pendente:** `bkps/Step6BreathingChallenge.tsx.bkp_YYYYMMDD_HHMMSS`
 
 ### ETAPA 5: DESAFIO MINDFULNESS (GROUNDING)
 **Arquivo:** `src/components/steps/Step7MindfulnessChallenge.tsx`

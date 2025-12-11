@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { UserProfile } from '@/types/funnel';
-import { Wind, Play, Pause, SkipForward, Trophy, Timer, Zap, Sparkles, ChevronRight } from 'lucide-react';
+import { Wind, Play, SkipForward, Trophy, Timer, Zap, Sparkles, ChevronRight } from 'lucide-react';
 import { StepWrapper } from '../StepWrapper';
 
 interface Step6BreathingChallengeProps {
@@ -8,70 +8,111 @@ interface Step6BreathingChallengeProps {
   onUpdateProfile: (updates: Partial<UserProfile>) => void;
   onNext: () => void;
   onBack?: () => void;
-  devInitialState?: { phase?: 'instructions' | 'challenge' | 'completed' };
+  devInitialState?: { phase?: 'instructions' | 'challenge' | 'completed' | 'countdown' };
 }
 
 const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack, devInitialState }: Step6BreathingChallengeProps) => {
-  const [phase, setPhase] = useState<'instructions' | 'challenge' | 'completed'>(devInitialState?.phase || 'instructions');
+  const [phase, setPhase] = useState<'instructions' | 'countdown' | 'challenge' | 'completed'>(devInitialState?.phase || 'instructions');
   const [isActive, setIsActive] = useState(devInitialState?.phase === 'challenge');
   const [timeElapsed, setTimeElapsed] = useState(devInitialState?.phase === 'completed' ? 60 : 0);
-  const [breathPhase, setBreathPhase] = useState<'inhale' | 'hold' | 'exhale'>('inhale');
+  const [breathPhase, setBreathPhase] = useState<'inhale' | 'hold' | 'exhale' | 'hold2'>('inhale');
   const [breathCount, setBreatheCount] = useState(0);
   const [points, setPoints] = useState(0);
   const [showSkip, setShowSkip] = useState(false);
+  const [timer, setTimer] = useState(4); // Countdown timer dentro de cada fase
+  const [countdownValue, setCountdownValue] = useState<'PREPARE-SE' | '3' | '2' | '1'>('PREPARE-SE');
+  const [isFirstInhale, setIsFirstInhale] = useState(true); // Para começar do ponto 0
 
   const MINIMUM_TIME = 10; // 10 seconds minimum
-  const BREATH_CYCLE = 8; // 4 seconds each phase
+  // Timing correto conforme PRD: 4s inspire, 2s segure, 4s expire, 2s segure = 12s ciclo
+  const INHALE_TIME = 4;
+  const HOLD_TIME = 2;
+  const EXHALE_TIME = 4;
+  const HOLD2_TIME = 2;
+
+  // Countdown effect: PREPARE-SE → 3 → 2 → 1 → challenge
+  useEffect(() => {
+    if (phase !== 'countdown') return;
+
+    const countdownSequence: Array<'PREPARE-SE' | '3' | '2' | '1'> = ['PREPARE-SE', '3', '2', '1'];
+    let currentIndex = 0;
+    setCountdownValue('PREPARE-SE');
+
+    const interval = setInterval(() => {
+      currentIndex++;
+      if (currentIndex < countdownSequence.length) {
+        setCountdownValue(countdownSequence[currentIndex]);
+      } else {
+        // Fim do countdown - iniciar challenge
+        clearInterval(interval);
+        setPhase('challenge');
+        setIsActive(true);
+        setBreathPhase('inhale');
+        setTimer(INHALE_TIME);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [phase]);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    
-    if (isActive && phase === 'challenge') {
-      interval = setInterval(() => {
-        setTimeElapsed(prev => {
-          const newTime = prev + 1;
-          
-          // Show skip button after minimum time
-          if (newTime >= MINIMUM_TIME) {
-            setShowSkip(true);
-          }
-          
-          // Calculate points (more points for longer duration)
-          if (newTime >= MINIMUM_TIME) {
-            const bonusPoints = Math.floor((newTime - MINIMUM_TIME) / 5) * 10;
-            setPoints(100 + bonusPoints);
-          }
-          
-          return newTime;
-        });
+    if (phase !== 'challenge' || !isActive) return;
+
+    const interval = setInterval(() => {
+      // Incrementar tempo total
+      setTimeElapsed(prev => {
+        const newTime = prev + 1;
         
-        // Breath cycle animation
-        const cyclePosition = timeElapsed % BREATH_CYCLE;
-        if (cyclePosition < 3) {
-          setBreathPhase('inhale');
-        } else if (cyclePosition < 5) {
-          setBreathPhase('hold');
-        } else {
-          setBreathPhase('exhale');
+        // Show skip button after minimum time
+        if (newTime >= MINIMUM_TIME && !showSkip) {
+          setShowSkip(true);
         }
         
-        // Count completed breaths
-        if (timeElapsed % BREATH_CYCLE === 0 && timeElapsed > 0) {
-          setBreatheCount(prev => prev + 1);
+        // Calculate points (5 XP por segundo, conforme referência)
+        const calculatedPoints = Math.min(newTime * 5, 300);
+        setPoints(calculatedPoints);
+        
+        return newTime;
+      });
+
+      // Timer countdown dentro de cada fase - ciclo completo 4-2-4-2
+      setTimer(prev => {
+        if (prev <= 1) {
+          // Transição entre fases
+          if (breathPhase === 'inhale') {
+            setIsFirstInhale(false); // Não é mais o primeiro inhale
+            setBreathPhase('hold');
+            return HOLD_TIME;
+          } else if (breathPhase === 'hold') {
+            setBreathPhase('exhale');
+            return EXHALE_TIME;
+          } else if (breathPhase === 'exhale') {
+            setBreathPhase('hold2');
+            return HOLD2_TIME;
+          } else {
+            // hold2 -> volta para inhale (ciclo completo)
+            setBreathPhase('inhale');
+            setBreatheCount(c => c + 1);
+            return INHALE_TIME;
+          }
         }
-      }, 1000);
-    }
-    
+        return prev - 1;
+      });
+    }, 1000);
+
     return () => clearInterval(interval);
-  }, [isActive, phase, timeElapsed]);
+  }, [phase, isActive, breathPhase, showSkip]);
 
   const handleStart = () => {
-    setPhase('challenge');
-    setIsActive(true);
+    setPhase('countdown');
+    setCountdownValue('PREPARE-SE');
     setTimeElapsed(0);
     setBreatheCount(0);
     setPoints(0);
     setShowSkip(false);
+    setTimer(INHALE_TIME);
+    setBreathPhase('inhale');
+    setIsFirstInhale(true); // Reset para começar do ponto 0
   };
 
   const handleSkip = () => {
@@ -119,7 +160,10 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
           </div>
 
           <div className="premium-card p-6 mb-6">
-            <h2 className="text-xl font-bold text-foreground mb-4">Como Funcionar:</h2>
+            <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+              <Zap className="w-5 h-5 text-primary" />
+              Como Funciona
+            </h2>
             <div className="space-y-3 text-sm text-muted-foreground">
               <div className="flex items-start gap-3">
                 <div className="w-6 h-6 premium-card bg-gradient-to-br from-primary/20 to-primary/10 border-primary/30 flex items-center justify-center flex-shrink-0">
@@ -175,78 +219,235 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
     );
   }
 
+  // Fase Countdown: PREPARE-SE → 3 → 2 → 1 dentro do círculo
+  if (phase === 'countdown') {
+    return (
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+        <div className="relative flex items-center justify-center">
+          {/* Anel luminoso sutil no countdown */}
+          <svg 
+            className="absolute pointer-events-none"
+            width="292" 
+            height="292" 
+            viewBox="0 0 292 292"
+            style={{ 
+              filter: 'drop-shadow(0 0 8px rgba(34, 197, 94, 0.5)) drop-shadow(0 0 16px rgba(34, 197, 94, 0.3))'
+            }}
+          >
+            <circle
+              cx="146"
+              cy="146"
+              r="140"
+              fill="none"
+              stroke="rgba(34, 197, 94, 0.3)"
+              strokeWidth="6"
+            />
+          </svg>
+          
+          {/* Círculo no ponto 0 (scale 1.0 = posição inicial) */}
+          <div 
+            className="w-64 h-64 rounded-full bg-gradient-to-br from-primary/60 to-success/60 flex items-center justify-center shadow-2xl"
+          >
+            <div className="text-white text-center">
+              <div className="text-4xl font-bold animate-pulse">
+                {countdownValue}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (phase === 'challenge') {
-    const breathScale = breathPhase === 'inhale' ? 'scale-150' : breathPhase === 'hold' ? 'scale-125' : 'scale-100';
-    const breathColor = breathPhase === 'inhale' ? 'from-primary to-success' : breathPhase === 'hold' ? 'from-gold to-warning' : 'from-blue-500 to-purple-500';
+    // Cores por fase (referência do funil antigo) - incluindo hold2
+    const getPhaseColor = () => {
+      switch (breathPhase) {
+        case 'inhale': return 'from-primary to-success';
+        case 'hold': return 'from-gold to-warning';
+        case 'exhale': return 'from-blue-500 to-purple-500';
+        case 'hold2': return 'from-gold to-warning';
+      }
+    };
+
+    // Cor sólida para o progress ring
+    const getRingColor = () => {
+      switch (breathPhase) {
+        case 'inhale': return '#22c55e'; // success/green
+        case 'hold': return '#eab308'; // gold
+        case 'exhale': return '#8b5cf6'; // purple
+        case 'hold2': return '#eab308'; // gold
+      }
+    };
+
+    // Texto da fase em CAIXA ALTA (conforme PRD) - incluindo hold2
+    const getPhaseText = () => {
+      switch (breathPhase) {
+        case 'inhale': return 'INSPIRE';
+        case 'hold': return 'SEGURE';
+        case 'exhale': return 'EXPIRE';
+        case 'hold2': return 'SEGURE';
+      }
+    };
+
+    // Duração da animação conforme a fase atual
+    const getPhaseDuration = () => {
+      switch (breathPhase) {
+        case 'inhale': return INHALE_TIME;
+        case 'hold': return HOLD_TIME;
+        case 'exhale': return EXHALE_TIME;
+        case 'hold2': return HOLD2_TIME;
+      }
+    };
+
+    // Scale conforme fase com animação CSS suave
+    // inhale: 1.0 → 1.5 (cresce - 4s)
+    // hold: mantém 1.5 (2s)
+    // exhale: 1.5 → 1.0 (diminui - 4s)
+    // hold2: mantém 1.0 (2s)
+    const getScaleValue = () => {
+      switch (breathPhase) {
+        case 'inhale': return 1.5;
+        case 'hold': return 1.5;
+        case 'exhale': return 1.0;
+        case 'hold2': return 1.0;
+      }
+    };
+
+    // Calcular progresso do anel baseado no timer atual da fase (0 a 100)
+    const getProgressPercent = () => {
+      const phaseDuration = getPhaseDuration();
+      // timer começa no máximo e vai até 1, então invertemos
+      return ((phaseDuration - timer + 1) / phaseDuration) * 100;
+    };
+
+    const scaleValue = getScaleValue();
+    const progressPercent = Math.min(getProgressPercent(), 100);
+    const phaseDuration = getPhaseDuration();
+    
+    // SVG progress ring - FORA do círculo com gap de 8px
+    const circleSize = 256; // w-64 = 256px
+    const ringGap = 12; // gap entre círculo e anel
+    const ringStrokeWidth = 6; // espessura do anel luminoso
+    const ringSize = circleSize + (ringGap * 2) + ringStrokeWidth; // tamanho total do SVG
+    const ringRadius = (circleSize / 2) + ringGap; // raio do anel
+    const circumference = ringRadius * 2 * Math.PI;
+    const strokeDashoffset = circumference - (progressPercent / 100) * circumference;
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background to-primary/5 flex flex-col">
-        <div className="flex-1 flex flex-col justify-center p-6 max-w-md mx-auto w-full">
-          
-          {/* Timer and Stats */}
-          <div className="text-center mb-8">
-            <div className="premium-card p-4 mb-4">
-              <div className="flex items-center justify-between text-sm">
-                <div className="flex items-center gap-2">
-                  <Timer className="w-4 h-4 text-primary" />
-                  <span className="text-primary font-bold">{timeElapsed}s</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-gold" />
-                  <span className="text-gold font-bold">{points} pts</span>
-                </div>
+      <div className="min-h-screen bg-background flex flex-col p-4">
+        {/* Timer and Stats - Card Premium no Topo (como no backup original) */}
+        <div className="w-full max-w-md mx-auto mb-4">
+          <div className="premium-card p-4">
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-2">
+                <Timer className="w-4 h-4 text-primary" />
+                <span className="text-primary font-bold">{timeElapsed}s</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-gold" />
+                <span className="text-gold font-bold">{points} pts</span>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Breathing Animation */}
-          <div className="flex-1 flex items-center justify-center mb-8">
-            <div className="relative">
-              <div className={`
-                w-40 h-40 rounded-full bg-gradient-to-br ${breathColor} 
-                transition-all duration-1000 ease-in-out ${breathScale}
-                shadow-lg animate-glow-pulse
-              `}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Wind className="w-16 h-16 text-white" />
-                </div>
-              </div>
-              
-              {/* Breath Instructions */}
-              <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 text-center">
-                <p className="text-2xl font-bold text-foreground capitalize">
-                  {breathPhase === 'inhale' ? 'Inspire' : breathPhase === 'hold' ? 'Segure' : 'Expire'}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {breathCount} respirações completas
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="space-y-3">
-            {showSkip && (
-              <button
-                onClick={handleSkip}
-                className="w-full premium-button bg-gradient-to-r from-warning/80 to-warning text-lg flex items-center justify-center gap-3"
-              >
-                <SkipForward className="w-6 h-6" />
-                Pular Desafio
-                {timeElapsed < MINIMUM_TIME && (
-                  <span className="text-xs opacity-75">(Sem pontos)</span>
-                )}
-              </button>
-            )}
+        {/* Círculo de Respiração com Anel Luminoso EXTERNO */}
+        <div className="flex-1 flex items-center justify-center">
+          <div className="relative flex items-center justify-center">
+            {/* Anel Luminoso SVG - FORA do círculo */}
+            <svg 
+              className="absolute pointer-events-none"
+              width={ringSize * scaleValue} 
+              height={ringSize * scaleValue} 
+              viewBox={`0 0 ${ringSize} ${ringSize}`}
+              style={{ 
+                filter: `drop-shadow(0 0 12px ${getRingColor()}) drop-shadow(0 0 24px ${getRingColor()}80)`,
+                transition: `all ${phaseDuration}s cubic-bezier(0.4, 0, 0.2, 1)`
+              }}
+            >
+              {/* Anel de fundo sutil */}
+              <circle
+                cx={ringSize / 2}
+                cy={ringSize / 2}
+                r={ringRadius}
+                fill="none"
+                stroke="rgba(255,255,255,0.08)"
+                strokeWidth={ringStrokeWidth}
+              />
+              {/* Anel de progresso luminoso - sentido horário */}
+              <circle
+                cx={ringSize / 2}
+                cy={ringSize / 2}
+                r={ringRadius}
+                fill="none"
+                stroke={getRingColor()}
+                strokeWidth={ringStrokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={strokeDashoffset}
+                style={{ 
+                  transition: `stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.5s ease`,
+                  transform: 'rotate(-90deg)',
+                  transformOrigin: 'center'
+                }}
+              />
+            </svg>
             
-            {timeElapsed >= MINIMUM_TIME && (
+            {/* Círculo Principal - animação suave com ease-in-out */}
+            <div 
+              className={`w-64 h-64 rounded-full bg-gradient-to-br ${getPhaseColor()} flex items-center justify-center shadow-2xl`}
+              style={{ 
+                transform: `scale(${scaleValue})`,
+                transition: `transform ${phaseDuration}s cubic-bezier(0.4, 0, 0.2, 1)`
+              }}
+            >
+              <div className="text-white text-center">
+                <div className="text-3xl font-bold mb-2">{getPhaseText()}</div>
+                <div className="text-6xl font-bold">{timer}</div>
+                {/* Mostrar número de respirações após primeiro ciclo */}
+                {breathCount > 0 && (
+                  <div className="text-sm mt-2 opacity-80">
+                    {breathCount} {breathCount === 1 ? 'respiração' : 'respirações'}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons - Espaço SEMPRE reservado para não mudar posição do círculo */}
+        <div className="w-full max-w-md mx-auto pb-8" style={{ minHeight: '140px' }}>
+          <div className="space-y-3">
+            {/* BOTÃO PRINCIPAL - Verde, NO TOPO - só aparece após tempo mínimo */}
+            {timeElapsed >= MINIMUM_TIME ? (
               <button
                 onClick={handleComplete}
-                className="w-full premium-button text-lg flex items-center justify-center gap-3"
+                className="w-full bg-gradient-to-r from-primary via-success to-primary text-white px-6 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-lg shadow-primary/30 flex items-center justify-center gap-2"
+                style={{
+                  backgroundSize: '200% 200%',
+                  animation: 'gradient-shift 3s ease infinite',
+                  textShadow: '0 2px 8px rgba(0,0,0,0.3)'
+                }}
               >
-                <Trophy className="w-6 h-6" />
-                Concluir e Coletar: {points} pts
+                <Trophy className="w-5 h-5" />
+                Concluir e Coletar: +{points} XP
               </button>
+            ) : (
+              <div className="w-full h-14" /> /* Espaço reservado para o botão */
+            )}
+            
+            {/* BOTÃO SECUNDÁRIO - Cinza discreto, EMBAIXO - só aparece após showSkip */}
+            {showSkip ? (
+              <button
+                onClick={handleSkip}
+                className="w-full bg-muted/30 backdrop-blur-sm px-6 py-3 rounded-2xl font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center justify-center gap-2"
+              >
+                <SkipForward className="w-4 h-4" />
+                Pular Desafio (Sem Recompensas)
+              </button>
+            ) : (
+              <div className="w-full h-12" /> /* Espaço reservado para o botão */
             )}
           </div>
         </div>
