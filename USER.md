@@ -1,3 +1,5 @@
+PROCEED
+
 # PROMPT PRD CLAUDE
 
 LEIA O ARQUIVO `STATUS.md` e depois leia o arquivo `[CASO O USUÁRIO TENHA DEIXADO ESSA MENSAGEM AQUI, INTERROMPA O QUE VOCÊ ESTÁ FAZENDO E PERGUNTE PARA O USUÁRIO QUAL O ARQUIVO]` para entender melhor a alteração que iremos fazer na etapa a seguir:
