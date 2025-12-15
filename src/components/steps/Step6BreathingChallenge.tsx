@@ -224,40 +224,64 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
   }
 
   // Fase Countdown: PREPARE-SE em cima + número (3, 2, 1) em baixo JUNTOS
+  // Layout IGUAL ao challenge para manter consistência
   if (phase === 'countdown') {
+    // Mesmas dimensões do challenge para manter layout consistente
+    const circleSize = 256; // w-64 = 256px
+    const ringGap = 12;
+    const ringStrokeWidth = 6;
+    const ringSize = circleSize + (ringGap * 2) + ringStrokeWidth;
+    const ringRadius = (circleSize / 2) + ringGap;
+    
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-        <div className="relative flex items-center justify-center">
-          {/* Anel luminoso sutil no countdown */}
-          <svg 
-            className="absolute pointer-events-none"
-            width="292" 
-            height="292" 
-            viewBox="0 0 292 292"
-            style={{ 
-              filter: 'drop-shadow(0 0 8px rgba(34, 197, 94, 0.5)) drop-shadow(0 0 16px rgba(34, 197, 94, 0.3))'
-            }}
-          >
-            <circle
-              cx="146"
-              cy="146"
-              r="140"
-              fill="none"
-              stroke="rgba(34, 197, 94, 0.3)"
-              strokeWidth="6"
-            />
-          </svg>
-          
-          {/* Círculo no ponto 0 - PREPARE-SE em cima + número em baixo JUNTOS */}
-          <div 
-            className="w-64 h-64 rounded-full bg-gradient-to-br from-primary/60 to-success/60 flex items-center justify-center shadow-2xl"
-          >
-            <div className="text-white text-center">
-              {/* PREPARE-SE sempre em cima */}
-              <div className="text-3xl font-bold mb-2">PREPARE-SE</div>
-              {/* Número do countdown embaixo */}
-              <div className="text-6xl font-bold">{countdownNumber}</div>
+      <div className="min-h-screen bg-background flex flex-col p-4">
+        {/* Espaço do header/stats - mesmo do challenge */}
+        <div className="w-full max-w-md mx-auto mb-4">
+          <div className="h-14" /> {/* Espaço reservado igual ao stats card */}
+        </div>
+
+        {/* Círculo centralizado - mesmo layout do challenge */}
+        <div className="flex-1 flex items-center justify-center">
+          <div className="relative flex items-center justify-center">
+            {/* Anel luminoso sutil no countdown */}
+            <svg 
+              className="absolute pointer-events-none"
+              width={ringSize} 
+              height={ringSize} 
+              viewBox={`0 0 ${ringSize} ${ringSize}`}
+              style={{ 
+                filter: 'drop-shadow(0 0 8px rgba(34, 197, 94, 0.5)) drop-shadow(0 0 16px rgba(34, 197, 94, 0.3))'
+              }}
+            >
+              <circle
+                cx={ringSize / 2}
+                cy={ringSize / 2}
+                r={ringRadius}
+                fill="none"
+                stroke="rgba(34, 197, 94, 0.3)"
+                strokeWidth={ringStrokeWidth}
+              />
+            </svg>
+            
+            {/* Círculo no ponto 0 (scale 1.0) - PREPARE-SE em cima + número em baixo JUNTOS */}
+            <div 
+              className="w-64 h-64 rounded-full bg-gradient-to-br from-primary/60 to-success/60 flex items-center justify-center shadow-2xl"
+            >
+              <div className="text-white text-center">
+                {/* PREPARE-SE sempre em cima */}
+                <div className="text-3xl font-bold mb-2">PREPARE-SE</div>
+                {/* Número do countdown embaixo */}
+                <div className="text-6xl font-bold">{countdownNumber}</div>
+              </div>
             </div>
+          </div>
+        </div>
+
+        {/* Espaço dos botões - SEMPRE reservado para não mudar posição do círculo */}
+        <div className="w-full max-w-md mx-auto pb-8" style={{ minHeight: '140px' }}>
+          <div className="space-y-3">
+            <div className="w-full h-14" /> {/* Espaço reservado botão principal */}
+            <div className="w-full h-12" /> {/* Espaço reservado botão secundário */}
           </div>
         </div>
       </div>
@@ -306,16 +330,19 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
     };
 
     // Scale conforme fase com animação CSS suave
-    // inhale: 1.0 → 1.5 (cresce - 4s)
-    // hold: mantém 1.5 (2s)
-    // exhale: 1.5 → 1.0 (diminui - 4s)
-    // hold2: mantém 1.0 (2s)
+    // PONTO 0 = 1.0 (tamanho do countdown)
+    // PONTO +10 (inhale máximo) = 1.25
+    // PONTO -10 (exhale mínimo) = 0.75
+    // inhale: 1.0 → 1.25 (cresce - 4s)
+    // hold: mantém 1.25 (2s)
+    // exhale: 1.25 → 0.75 (diminui - 4s)
+    // hold2: mantém 0.75 (2s)
     const getScaleValue = () => {
       switch (breathPhase) {
-        case 'inhale': return 1.5;
-        case 'hold': return 1.5;
-        case 'exhale': return 1.0;
-        case 'hold2': return 1.0;
+        case 'inhale': return 1.25; // ponto +10
+        case 'hold': return 1.25;
+        case 'exhale': return 0.75; // ponto -10
+        case 'hold2': return 0.75;
       }
     };
 
