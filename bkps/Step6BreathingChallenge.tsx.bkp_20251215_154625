@@ -20,9 +20,8 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
   const [points, setPoints] = useState(0);
   const [showSkip, setShowSkip] = useState(false);
   const [timer, setTimer] = useState(4); // Countdown timer dentro de cada fase
-  const [countdownNumber, setCountdownNumber] = useState(3); // Número do countdown (3, 2, 1)
+  const [countdownValue, setCountdownValue] = useState<'PREPARE-SE' | '3' | '2' | '1'>('PREPARE-SE');
   const [isFirstInhale, setIsFirstInhale] = useState(true); // Para começar do ponto 0
-  const [phaseStartTime, setPhaseStartTime] = useState<number>(0); // Timestamp do início da fase para animação suave
 
   const MINIMUM_TIME = 10; // 10 seconds minimum
   // Timing correto conforme PRD: 4s inspire, 2s segure, 4s expire, 2s segure = 12s ciclo
@@ -31,27 +30,26 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
   const EXHALE_TIME = 4;
   const HOLD2_TIME = 2;
 
-  // Countdown effect: PREPARE-SE + número (3, 2, 1) JUNTOS - countdown de 3 segundos
+  // Countdown effect: PREPARE-SE → 3 → 2 → 1 → challenge
   useEffect(() => {
     if (phase !== 'countdown') return;
 
-    // Começar com número 3 (PREPARE-SE sempre visível em cima)
-    setCountdownNumber(3);
+    const countdownSequence: Array<'PREPARE-SE' | '3' | '2' | '1'> = ['PREPARE-SE', '3', '2', '1'];
+    let currentIndex = 0;
+    setCountdownValue('PREPARE-SE');
 
     const interval = setInterval(() => {
-      setCountdownNumber(prev => {
-        if (prev <= 1) {
-          // Fim do countdown - iniciar challenge
-          clearInterval(interval);
-          setPhase('challenge');
-          setIsActive(true);
-          setBreathPhase('inhale');
-          setTimer(INHALE_TIME);
-          setPhaseStartTime(Date.now()); // Marcar início da fase para animação suave
-          return 1;
-        }
-        return prev - 1;
-      });
+      currentIndex++;
+      if (currentIndex < countdownSequence.length) {
+        setCountdownValue(countdownSequence[currentIndex]);
+      } else {
+        // Fim do countdown - iniciar challenge
+        clearInterval(interval);
+        setPhase('challenge');
+        setIsActive(true);
+        setBreathPhase('inhale');
+        setTimer(INHALE_TIME);
+      }
     }, 1000);
 
     return () => clearInterval(interval);
@@ -80,8 +78,7 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
       // Timer countdown dentro de cada fase - ciclo completo 4-2-4-2
       setTimer(prev => {
         if (prev <= 1) {
-          // Transição entre fases - resetar phaseStartTime para animação do anel começar em 0%
-          setPhaseStartTime(Date.now());
+          // Transição entre fases
           if (breathPhase === 'inhale') {
             setIsFirstInhale(false); // Não é mais o primeiro inhale
             setBreathPhase('hold');
@@ -108,7 +105,7 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
 
   const handleStart = () => {
     setPhase('countdown');
-    setCountdownNumber(3); // Começar em 3
+    setCountdownValue('PREPARE-SE');
     setTimeElapsed(0);
     setBreatheCount(0);
     setPoints(0);
@@ -116,7 +113,6 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
     setTimer(INHALE_TIME);
     setBreathPhase('inhale');
     setIsFirstInhale(true); // Reset para começar do ponto 0
-    setPhaseStartTime(Date.now());
   };
 
   const handleSkip = () => {
@@ -223,7 +219,7 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
     );
   }
 
-  // Fase Countdown: PREPARE-SE em cima + número (3, 2, 1) em baixo JUNTOS
+  // Fase Countdown: PREPARE-SE → 3 → 2 → 1 dentro do círculo
   if (phase === 'countdown') {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
@@ -248,15 +244,14 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
             />
           </svg>
           
-          {/* Círculo no ponto 0 - PREPARE-SE em cima + número em baixo JUNTOS */}
+          {/* Círculo no ponto 0 (scale 1.0 = posição inicial) */}
           <div 
             className="w-64 h-64 rounded-full bg-gradient-to-br from-primary/60 to-success/60 flex items-center justify-center shadow-2xl"
           >
             <div className="text-white text-center">
-              {/* PREPARE-SE sempre em cima */}
-              <div className="text-3xl font-bold mb-2">PREPARE-SE</div>
-              {/* Número do countdown embaixo */}
-              <div className="text-6xl font-bold">{countdownNumber}</div>
+              <div className="text-4xl font-bold animate-pulse">
+                {countdownValue}
+              </div>
             </div>
           </div>
         </div>
@@ -319,7 +314,15 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
       }
     };
 
+    // Calcular progresso do anel baseado no timer atual da fase (0 a 100)
+    const getProgressPercent = () => {
+      const phaseDuration = getPhaseDuration();
+      // timer começa no máximo e vai até 1, então invertemos
+      return ((phaseDuration - timer + 1) / phaseDuration) * 100;
+    };
+
     const scaleValue = getScaleValue();
+    const progressPercent = Math.min(getProgressPercent(), 100);
     const phaseDuration = getPhaseDuration();
     
     // SVG progress ring - FORA do círculo com gap de 8px
@@ -329,6 +332,7 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
     const ringSize = circleSize + (ringGap * 2) + ringStrokeWidth; // tamanho total do SVG
     const ringRadius = (circleSize / 2) + ringGap; // raio do anel
     const circumference = ringRadius * 2 * Math.PI;
+    const strokeDashoffset = circumference - (progressPercent / 100) * circumference;
     
     return (
       <div className="min-h-screen bg-background flex flex-col p-4">
@@ -351,7 +355,7 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
         {/* Círculo de Respiração com Anel Luminoso EXTERNO */}
         <div className="flex-1 flex items-center justify-center">
           <div className="relative flex items-center justify-center">
-            {/* Anel Luminoso SVG - FORA do círculo - ANIMAÇÃO SUAVE CSS */}
+            {/* Anel Luminoso SVG - FORA do círculo */}
             <svg 
               className="absolute pointer-events-none"
               width={ringSize * scaleValue} 
@@ -371,7 +375,7 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
                 stroke="rgba(255,255,255,0.08)"
                 strokeWidth={ringStrokeWidth}
               />
-              {/* Anel de progresso luminoso - ANIMAÇÃO SUAVE usando CSS animation */}
+              {/* Anel de progresso luminoso - sentido horário */}
               <circle
                 cx={ringSize / 2}
                 cy={ringSize / 2}
@@ -381,20 +385,13 @@ const Step6BreathingChallenge = ({ userProfile, onUpdateProfile, onNext, onBack,
                 strokeWidth={ringStrokeWidth}
                 strokeLinecap="round"
                 strokeDasharray={circumference}
-                strokeDashoffset={circumference}
+                strokeDashoffset={strokeDashoffset}
                 style={{ 
-                  animation: `ringProgress ${phaseDuration}s linear forwards`,
+                  transition: `stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.5s ease`,
                   transform: 'rotate(-90deg)',
                   transformOrigin: 'center'
                 }}
-                key={`${breathPhase}-${phaseStartTime}`} /* Key para resetar animação a cada fase */
               />
-              <style>{`
-                @keyframes ringProgress {
-                  from { stroke-dashoffset: ${circumference}; }
-                  to { stroke-dashoffset: 0; }
-                }
-              `}</style>
             </svg>
             
             {/* Círculo Principal - animação suave com ease-in-out */}
