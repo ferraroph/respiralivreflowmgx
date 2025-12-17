@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { UserProfile } from '@/types/funnel';
-import { Brain, Play, SkipForward, Trophy, Timer, Zap, Target, Sparkles, ChevronRight } from 'lucide-react';
+import { Brain, Eye, Ear, Hand, Trophy, Zap, Sparkles, ChevronRight, Play, CheckCircle2 } from 'lucide-react';
 import { StepWrapper } from '../StepWrapper';
 
 interface Step7MindfulnessChallengeProps {
@@ -11,346 +11,313 @@ interface Step7MindfulnessChallengeProps {
   devInitialState?: { phase?: 'instructions' | 'challenge' | 'completed' };
 }
 
-const Step7MindfulnessChallenge = ({ userProfile, onUpdateProfile, onNext, onBack, devInitialState }: Step7MindfulnessChallengeProps) => {
+const Step7MindfulnessChallenge: React.FC<Step7MindfulnessChallengeProps> = ({ 
+  userProfile, 
+  onUpdateProfile, 
+  onNext, 
+  onBack, 
+  devInitialState 
+}) => {
   const [phase, setPhase] = useState<'instructions' | 'challenge' | 'completed'>(devInitialState?.phase || 'instructions');
-  const [isActive, setIsActive] = useState(devInitialState?.phase === 'challenge');
-  const [timeElapsed, setTimeElapsed] = useState(devInitialState?.phase === 'completed' ? 60 : 0);
-  const [focusLevel, setFocusLevel] = useState(100);
   const [points, setPoints] = useState(0);
-  const [showSkip, setShowSkip] = useState(false);
-  const [mindfulnessPhase, setMindfulnessPhase] = useState<'observe' | 'accept' | 'release'>('observe');
+  const [clickCount, setClickCount] = useState(0);
+  const [lastAction, setLastAction] = useState<string | null>(null);
+  
+  // PRD Req: Minimum 9 points to complete
+  const MIN_POINTS_TO_COMPLETE = 9;
+  const isComplete = points >= MIN_POINTS_TO_COMPLETE;
 
-  const MINIMUM_TIME = 10;
-  const CHALLENGE_DURATION = 60;
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    
-    if (isActive && phase === 'challenge') {
-      interval = setInterval(() => {
-        setTimeElapsed(prev => {
-          const newTime = prev + 1;
-          
-          // Show skip button after minimum time
-          if (newTime >= MINIMUM_TIME) {
-            setShowSkip(true);
-          }
-          
-          // Calculate points
-          if (newTime >= MINIMUM_TIME) {
-            const basePoints = 150;
-            const timeBonus = Math.floor((newTime - MINIMUM_TIME) / 5) * 15;
-            const focusBonus = Math.floor(focusLevel / 10) * 5;
-            setPoints(basePoints + timeBonus + focusBonus);
-          }
-          
-          // Cycle through mindfulness phases
-          const phaseTime = newTime % 15;
-          if (phaseTime < 5) {
-            setMindfulnessPhase('observe');
-          } else if (phaseTime < 10) {
-            setMindfulnessPhase('accept');
-          } else {
-            setMindfulnessPhase('release');
-          }
-          
-          // Simulate focus fluctuation
-          setFocusLevel(prev => {
-            const fluctuation = Math.random() * 10 - 5;
-            return Math.max(0, Math.min(100, prev + fluctuation));
-          });
-          
-          return newTime;
-        });
-      }, 1000);
-    }
-    
-    return () => clearInterval(interval);
-  }, [isActive, phase, focusLevel]);
+  // Colors based on PRD: Turquoise/Teal/Cyan
+  const THEME_G_FROM = 'from-teal-500';
+  const THEME_G_TO = 'to-cyan-500';
+  const THEME_TEXT = 'text-cyan-400';
+  const THEME_BG_ACCENT = 'bg-cyan-500/10';
+  const THEME_BORDER = 'border-cyan-500/30';
 
   const handleStart = () => {
     setPhase('challenge');
-    setIsActive(true);
-    setTimeElapsed(0);
     setPoints(0);
-    setShowSkip(false);
-    setFocusLevel(100);
+    setClickCount(0);
   };
 
-  const handleSkip = () => {
-    if (timeElapsed < MINIMUM_TIME) {
-      completeChallenge(0);
-    } else {
-      completeChallenge(points);
+  const handleMainAction = () => {
+    addPoints(3, 'main'); // Botão Central = +3 (Média)
+  };
+
+  const handleSenseAction = (type: 'ver' | 'ouvir' | 'sentir') => {
+    let pts = 0;
+    switch(type) {
+      case 'ver': pts = 1; break;
+      case 'ouvir': pts = 3; break;
+      case 'sentir': pts = 5; break;
+    }
+    addPoints(pts, type);
+  };
+
+  const addPoints = (amount: number, type: string) => {
+    setPoints(prev => prev + amount);
+    setClickCount(prev => prev + 1);
+    setLastAction(type);
+    
+    // Haptic feedback if available (navigator.vibrate)
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate(50);
     }
   };
 
   const handleComplete = () => {
-    completeChallenge(points);
-  };
-
-  const completeChallenge = (earnedPoints: number) => {
-    setIsActive(false);
     setPhase('completed');
-    
-    setTimeout(() => {
-      onUpdateProfile({
-        xp: userProfile.xp + earnedPoints,
-        respirCoins: userProfile.respirCoins + Math.floor(earnedPoints / 3),
-        badges: earnedPoints > 0 ? [...userProfile.badges, 'Mente Mindful'] : userProfile.badges
-      });
-      onNext();
-    }, 2000);
   };
 
+  const handleFinalize = () => {
+    // Calculate final rewards
+    // PRD MVP: +150 XP, +50 Coins (Base) + Points derived
+    const baseXP = 150;
+    const baseCoins = 50;
+    
+    // Add points bonus
+    const totalXP = baseXP + (points * 2); 
+    const totalCoins = baseCoins + points;
+
+    onUpdateProfile({
+      xp: userProfile.xp + totalXP,
+      respirCoins: userProfile.respirCoins + totalCoins,
+      badges: isComplete ? [...(userProfile.badges || []), 'Mente Consciente'] : userProfile.badges
+    });
+    
+    onNext();
+  };
+
+  // --- PHASE: INSTRUCTIONS ---
   if (phase === 'instructions') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background to-purple-900/20 flex flex-col">
-        <div className="flex-1 flex flex-col justify-center p-6 max-w-md mx-auto w-full">
-          
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 mx-auto mb-6 premium-card bg-gradient-to-br from-purple-500/20 to-blue-500/20 border-purple-500/30 flex items-center justify-center animate-float">
-              <Brain className="w-10 h-10 text-purple-400" />
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-teal-950 to-slate-900 flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="bg-black/40 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <div className="relative mx-auto mb-6 w-24 h-24">
+                 <div className={`absolute inset-0 bg-gradient-to-br ${THEME_G_FROM} ${THEME_G_TO} rounded-full blur-lg opacity-50 animate-pulse`} />
+                 <div className={`relative w-full h-full bg-gradient-to-br ${THEME_G_FROM} ${THEME_G_TO} rounded-full flex items-center justify-center shadow-xl`}>
+                    <Brain className="w-12 h-12 text-white" />
+                 </div>
+                 <div className="absolute -top-2 -right-2 bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded-full shadow-lg">
+                   Nível 2
+                 </div>
+              </div>
+              
+              <h2 className="text-3xl font-bold text-white mb-2">Observação Consciente</h2>
+              <p className="text-white/60 text-sm">
+                Exercite sua presença através dos sentidos
+              </p>
             </div>
-            <h1 className="text-3xl font-bold text-gradient mb-4">
-              Desafio Mindfulness
-            </h1>
-            <p className="text-muted-foreground mb-2">
-              Nível 2 • Dificuldade: Moderado
-            </p>
-          </div>
 
-          <div className="premium-card p-6 mb-6 border-purple-500/30">
-            <h2 className="text-xl font-bold text-foreground mb-4">Técnica dos 3 Passos:</h2>
-            <div className="space-y-3 text-sm text-muted-foreground">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 premium-card bg-gradient-to-br from-blue-500/20 to-blue-500/10 border-blue-500/30 flex items-center justify-center flex-shrink-0">
-                  <span className="text-xs font-bold text-blue-400">1</span>
-                </div>
-                <div>
-                  <p className="font-bold text-blue-400">Observar</p>
-                  <p>Note seus pensamentos e sensações sem julgamento</p>
-                </div>
+            {/* How it works */}
+            <div className={`space-y-4 mb-8 ${THEME_BG_ACCENT} p-6 rounded-2xl border ${THEME_BORDER}`}>
+              <div className="flex items-center gap-2 mb-4">
+                <Zap className={`w-5 h-5 ${THEME_TEXT}`} />
+                <h3 className="text-white font-bold">Como Funciona</h3>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 premium-card bg-gradient-to-br from-purple-500/20 to-purple-500/10 border-purple-500/30 flex items-center justify-center flex-shrink-0">
-                  <span className="text-xs font-bold text-purple-400">2</span>
+              
+              <div className="space-y-4">
+                <div className="flex gap-4">
+                  <div className={`w-8 h-8 rounded-full ${THEME_BG_ACCENT} flex items-center justify-center shrink-0 border ${THEME_BORDER}`}>
+                    <span className={`font-bold ${THEME_TEXT}`}>1</span>
+                  </div>
+                  <p className="text-white/80 text-sm">Observe 5 coisas à sua volta (visuais, sonoras ou sensações).</p>
                 </div>
-                <div>
-                  <p className="font-bold text-purple-400">Aceitar</p>
-                  <p>Aceite o que está sentindo no momento presente</p>
+                <div className="flex gap-4">
+                  <div className={`w-8 h-8 rounded-full ${THEME_BG_ACCENT} flex items-center justify-center shrink-0 border ${THEME_BORDER}`}>
+                    <span className={`font-bold ${THEME_TEXT}`}>2</span>
+                  </div>
+                  <p className="text-white/80 text-sm">Registre cada observação usando os botões na tela.</p>
                 </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 premium-card bg-gradient-to-br from-green-500/20 to-green-500/10 border-green-500/30 flex items-center justify-center flex-shrink-0">
-                  <span className="text-xs font-bold text-green-400">3</span>
+                <div className="flex gap-4">
+                  <div className={`w-8 h-8 rounded-full ${THEME_BG_ACCENT} flex items-center justify-center shrink-0 border ${THEME_BORDER}`}>
+                    <span className={`font-bold ${THEME_TEXT}`}>3</span>
+                  </div>
+                  <p className="text-white/80 text-sm">Acumule pontos para completar o desafio.</p>
                 </div>
-                <div>
-                  <p className="font-bold text-green-400">Liberar</p>
-                  <p>Deixe os pensamentos passarem como nuvens no céu</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="premium-card p-4 mb-6 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-purple-500/20">
-            <h3 className="font-bold text-purple-400 mb-3 flex items-center gap-2">
-              <Trophy className="w-5 h-5" />
-              Recompensas Zen
-            </h3>
-            <div className="grid grid-cols-3 gap-3 text-center text-xs">
-              <div>
-                <div className="text-lg font-bold text-gold">150+</div>
-                <div className="text-muted-foreground">XP Base</div>
-              </div>
-              <div>
-                <div className="text-lg font-bold text-gold">50+</div>
-                <div className="text-muted-foreground">Coins</div>
-              </div>
-              <div>
-                <div className="text-lg font-bold text-success">1</div>
-                <div className="text-muted-foreground">Badge</div>
               </div>
             </div>
-          </div>
 
-          <button
-            onClick={handleStart}
-            className="w-full premium-button bg-gradient-to-r from-purple-500 to-blue-500 text-lg flex items-center justify-center gap-3"
+            {/* Rewards */}
+            <div className="flex items-center justify-between bg-black/30 p-4 rounded-xl border border-white/5 mb-8">
+              <span className="text-white/60 text-sm">Recompensas:</span>
+              <div className="flex gap-4">
+                <span className="text-green-400 font-bold text-sm">+150 XP</span>
+                <span className="text-yellow-400 font-bold text-sm">+50 Coins</span>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <button
+              onClick={handleStart}
+              className={`w-full bg-gradient-to-r ${THEME_G_FROM} ${THEME_G_TO} hover:brightness-110 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-cyan-500/25 flex items-center justify-center gap-2`}
+            >
+              <Play className="w-5 h-5 fill-current" />
+              Começar Desafio
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // --- PHASE: CHALLENGE (EXECUTION) ---
+  if (phase === 'challenge') {
+    return (
+      <div className="min-h-screen bg-black flex flex-col p-6 relative overflow-hidden">
+        {/* Background Ambient Effect */}
+        <div className={`absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b ${THEME_G_FROM} to-transparent opacity-10 pointer-events-none`} />
+
+        {/* Top Bar: Score */}
+        <div className="relative z-10 flex flex-col items-center mt-8 mb-12">
+          <h3 className="text-white/50 text-sm uppercase tracking-wider mb-2">Pontuação</h3>
+          <div className="flex items-end gap-2">
+             <span className={`text-6xl font-bold transition-all duration-300 ${isComplete ? 'text-green-400 scale-110' : 'text-white'}`}>
+               {points}
+             </span>
+             <span className="text-white/40 text-xl mb-2">/ {MIN_POINTS_TO_COMPLETE}</span>
+          </div>
+          {isComplete && (
+            <span className="text-green-400 text-sm font-medium mt-2 animate-bounce">
+              Meta atingida! Continue ou conclua.
+            </span>
+          )}
+        </div>
+
+        {/* Center: Main Button */}
+        <div className="flex-1 flex items-center justify-center mb-12">
+          <button 
+            onClick={handleMainAction}
+            className={`
+              relative w-64 h-64 rounded-full group focus:outline-none
+              transition-transform duration-100 active:scale-95
+            `}
           >
-            <Play className="w-6 h-6" />
-            Iniciar Meditação
+            {/* Glow Effect */}
+            <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${THEME_G_FROM} ${THEME_G_TO} blur-2xl opacity-20 group-hover:opacity-40 transition-opacity`} />
+            
+            {/* Button Body */}
+            <div className={`
+              absolute inset-4 rounded-full bg-gradient-to-br ${THEME_G_FROM} ${THEME_G_TO} p-1
+              shadow-2xl shadow-cyan-900/50
+            `}>
+              <div className="w-full h-full bg-black/90 rounded-full flex flex-col items-center justify-center border border-white/10 backdrop-blur-sm">
+                <Brain className={`w-12 h-12 ${THEME_TEXT} mb-2 group-hover:scale-110 transition-transform`} />
+                <span className="text-white font-bold text-lg">Notei 5 Coisas</span>
+                <span className={`text-xs ${THEME_TEXT} mt-1 opacity-60`}>+3 pontos</span>
+              </div>
+            </div>
+            
+            {/* Ripple Effect (simulated with CSS for now) */}
+            <div className="absolute inset-0 rounded-full border border-cyan-500/30 scale-110 opacity-0 group-active:scale-125 group-active:opacity-100 transition-all duration-300" />
           </button>
         </div>
-      </div>
-    );
-  }
 
-  if (phase === 'challenge') {
-    const phaseColors = {
-      observe: 'from-blue-500 to-blue-600',
-      accept: 'from-purple-500 to-purple-600',
-      release: 'from-green-500 to-green-600'
-    };
-    
-    const phaseTexts = {
-      observe: 'Observe seus pensamentos...',
-      accept: 'Aceite o momento presente...',
-      release: 'Libere e deixe fluir...'
-    };
-    
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-background to-purple-900/20 flex flex-col">
-        <div className="flex-1 flex flex-col justify-center p-6 max-w-md mx-auto w-full">
-          
-          {/* Stats */}
-          <div className="premium-card p-4 mb-6 border-purple-500/30">
-            <div className="flex items-center justify-between text-sm">
-              <div className="flex items-center gap-2">
-                <Timer className="w-4 h-4 text-purple-400" />
-                <span className="text-purple-400 font-bold">{timeElapsed}s</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Target className="w-4 h-4 text-blue-400" />
-                <span className="text-blue-400 font-bold">{Math.floor(focusLevel)}% foco</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-gold" />
-                <span className="text-gold font-bold">{points} pts</span>
-              </div>
-            </div>
-          </div>
+        {/* Bottom: Sensory Buttons */}
+        <div className="grid grid-cols-3 gap-4 mb-8">
+           {/* Ver */}
+           <button 
+             onClick={() => handleSenseAction('ver')}
+             className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 active:scale-95 transition-all"
+           >
+             <Eye className="w-6 h-6 text-blue-400" />
+             <span className="text-white text-xs font-bold">Ver</span>
+             <span className="text-white/40 text-xs">+1 pt</span>
+           </button>
 
-          {/* Mindfulness Visual */}
-          <div className="flex-1 flex items-center justify-center mb-8">
-            <div className="relative">
-              <div className={`
-                w-48 h-48 rounded-full bg-gradient-to-br ${phaseColors[mindfulnessPhase]}
-                transition-all duration-3000 ease-in-out animate-glow-pulse
-                flex items-center justify-center
-              `}>
-                <Brain className="w-20 h-20 text-white" />
-              </div>
-              
-              {/* Focus Level Ring */}
-              <div className="absolute inset-0 rounded-full border-4 border-transparent">
-                <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.1)"
-                    strokeWidth="2"
-                  />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.8)"
-                    strokeWidth="2"
-                    strokeDasharray={`${focusLevel * 2.83} 283`}
-                    className="transition-all duration-1000"
-                  />
-                </svg>
-              </div>
-              
-              <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 text-center">
-                <p className="text-xl font-bold text-foreground capitalize">
-                  {phaseTexts[mindfulnessPhase]}
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Ciclo {Math.floor(timeElapsed / 15) + 1}
-                </p>
-              </div>
-            </div>
-          </div>
+           {/* Ouvir */}
+           <button 
+             onClick={() => handleSenseAction('ouvir')}
+             className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 active:scale-95 transition-all"
+           >
+             <Ear className="w-6 h-6 text-purple-400" />
+             <span className="text-white text-xs font-bold">Ouvir</span>
+             <span className="text-white/40 text-xs">+3 pts</span>
+           </button>
 
-          {/* Action Buttons */}
-          <div className="space-y-3">
-            {showSkip && (
-              <button
-                onClick={handleSkip}
-                className="w-full premium-button bg-gradient-to-r from-warning/80 to-warning text-lg flex items-center justify-center gap-3"
-              >
-                <SkipForward className="w-6 h-6" />
-                Pular Desafio
-                {timeElapsed < MINIMUM_TIME && (
-                  <span className="text-xs opacity-75">(Sem pontos)</span>
-                )}
-              </button>
-            )}
-            
-            {timeElapsed >= MINIMUM_TIME && (
-              <button
-                onClick={handleComplete}
-                className="w-full premium-button bg-gradient-to-r from-purple-500 to-blue-500 text-lg flex items-center justify-center gap-3"
-              >
-                <Trophy className="w-6 h-6" />
-                Concluir e Coletar: {points} pts
-              </button>
-            )}
-          </div>
+           {/* Sentir */}
+           <button 
+             onClick={() => handleSenseAction('sentir')}
+             className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 active:scale-95 transition-all"
+           >
+             <div className="rotate-45">
+               <Hand className="w-6 h-6 text-pink-400 -rotate-45" />
+             </div>
+             <span className="text-white text-xs font-bold">Sentir</span>
+             <span className="text-white/40 text-xs">+5 pts</span>
+           </button>
+        </div>
+
+        {/* Footer: Complete Button */}
+        <div className="h-16 flex items-center justify-center">
+          {isComplete ? (
+            <button
+              onClick={handleComplete}
+              className="w-full bg-green-500 hover:bg-green-600 text-black font-bold py-4 px-6 rounded-xl animate-up-slide shadow-lg shadow-green-900/40 flex items-center justify-center gap-2"
+            >
+              <Trophy className="w-5 h-5 text-black" />
+              Concluir Desafio
+            </button>
+          ) : (
+            <p className="text-white/30 text-xs text-center animate-pulse">
+              Atinja {MIN_POINTS_TO_COMPLETE} pontos para liberar
+            </p>
+          )}
         </div>
       </div>
     );
   }
 
+  // --- PHASE: COMPLETED ---
   if (phase === 'completed') {
     const finalPoints = points;
-    const bonusPoints = Math.floor(points / 3);
-    const finalLevel = Math.floor(focusLevel / 10) + 1;
-    
+    // Calculation similar to Reference
+    const bonusXP = finalPoints * 2;
+    const bonusCoins = finalPoints;
+
     return (
-      <div className="min-h-screen flex items-center justify-center p-6" style={{
-        background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%)'
-      }}>
-        <div className="max-w-md mx-auto text-center">
-          {/* Ícone Verde Circular */}
-          <div className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center animate-bounce-in" style={{
-            background: '#22C55E'
-          }}>
-            <Trophy className="w-10 h-10 text-white" />
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-teal-950 to-slate-900 flex items-center justify-center p-6">
+        <div className="max-w-md w-full text-center">
+          {/* Success Icon */}
+          <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-green-500 flex items-center justify-center shadow-2xl shadow-green-500/20 animate-bounce-in">
+            <Trophy className="w-12 h-12 text-black" />
           </div>
           
-          {/* Título */}
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Desafio Concluído!
-          </h2>
-          
-          {/* Mensagem */}
-          <p className="text-white/80 text-base mb-8 leading-relaxed">
-            Você demonstrou uma resistência incrível! Sua força de vontade está se fortalecendo.
+          <h2 className="text-3xl font-bold text-white mb-4">Desafio Concluído!</h2>
+          <p className="text-white/80 text-lg mb-8">
+            Você exercitou sua presença! Sua consciência está mais afiada.
           </p>
           
-          {/* Card de Resultados */}
-          <div className="rounded-3xl p-6 mb-8" style={{
-            background: 'rgba(79, 70, 229, 0.4)',
-            backdropFilter: 'blur(10px)'
-          }}>
-            <div className="text-2xl font-bold text-white mb-2">Nível Final: {finalLevel}</div>
-            <div className="text-xl mb-4" style={{ color: '#a78bfa' }}>Pontos Ganhos: {finalPoints}</div>
-            {bonusPoints > 0 && (
-              <div className="text-lg font-semibold flex items-center justify-center gap-2" style={{ color: '#22C55E' }}>
-                <Sparkles className="w-5 h-5" />
-                Bônus de Conclusão: +{bonusPoints} pontos!
+          {/* Results Card */}
+          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/10 mb-8">
+            <div className="grid grid-cols-2 gap-8 mb-6">
+              <div>
+                <span className="text-white/60 text-sm block mb-1">Pontos</span>
+                <span className={`text-3xl font-bold ${THEME_TEXT}`}>{finalPoints}</span>
               </div>
-            )}
+              <div>
+                <span className="text-white/60 text-sm block mb-1">Bônus</span>
+                <span className="text-3xl font-bold text-yellow-400">MAX</span>
+              </div>
+            </div>
+            
+            <div className="flex items-center justify-center gap-3 bg-black/20 p-4 rounded-xl">
+               <Sparkles className="w-5 h-5 text-yellow-400" />
+               <span className="text-green-400 font-bold text-sm">+ {150 + bonusXP} XP</span>
+               <span className="text-white/20">|</span>
+               <span className="text-yellow-400 font-bold text-sm">+ {50 + bonusCoins} Coins</span>
+            </div>
           </div>
           
-          {/* Botão CTA */}
           <button
-            onClick={onNext}
-            className="w-full rounded-2xl font-semibold py-4 px-6 flex items-center justify-center gap-2 transition-all duration-300 hover:scale-105"
-            style={{
-              background: '#22C55E',
-              color: 'white'
-            }}
+            onClick={handleFinalize}
+            className="w-full bg-green-500 hover:bg-green-600 text-black font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-green-500/20 flex items-center justify-center gap-2 hover:scale-105"
           >
-            <Trophy className="w-5 h-5" />
-            <span>Concluir e Coletar Pontos</span>
-            <ChevronRight className="w-5 h-5" />
+            <span>Coletar Recompensas</span>
+            <CheckCircle2 className="w-5 h-5" />
           </button>
         </div>
       </div>

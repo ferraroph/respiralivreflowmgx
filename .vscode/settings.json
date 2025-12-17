@@ -9,6 +9,7 @@
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit"
     }
-  }
+  },
+  "terminal.integrated.accessibleViewFocusOnCommandExecution": true
 }
 
