@@ -1,12 +1,14 @@
-# ETAPA 5 - Desafio Mindfullness
+# PRD - RESPIRA LIVRE: OTIMIZAÇÃO DE DESAFIOS E PÁGINA DE CONVERSÃO
 
-## Redesign e Otimização da Experiência de Usuário
+## Sistema de Gamificação e Funil de Vendas - Análise Técnica Final
 
-**Versão:** 1.0  
-**Data de Criação:** 17 de Dezembro de 2025  
-**Produto:** Respira Livre - App de Cessação Tabágica  
-**Análise Baseada em:** Vídeos "Desafio_Mindfullness_Pt_1.mp4" e "Desafio_Mindfullness_Pt_2.mp4"  
-**Total de Frames Analisados:** 13.913 frames (24 FPS)
+**Versão:** 2.0 (Análise de Vídeos Finais)  
+**Data:** 18 de Dezembro de 2025  
+**Projeto:** Respira Livre - Aplicativo de Cessação do Tabagismo  
+**Domínios Analisados:**
+
+- respiralivrereflow.lovable.app (Versão Atual/Raiz)
+- respiralivrereflow.vercel.app (Versão de Referência)
 
 ---
 
@@ -14,550 +16,678 @@
 
 ### 1.1 Situação Atual
 
-O aplicativo Respira Livre atualmente possui múltiplos desafios gamificados destinados a auxiliar usuários no processo de cessação tabágica através de técnicas de mindfulness, foco e memória. Durante análise técnica em vídeo (4min09s + 5min30s), foram identificadas inconsistências críticas de design, UX problemática e oportunidades de melhoria baseadas em designs de referência já aprovados.
+O projeto Respira Livre possui dois ambientes de desenvolvimento com implementações distintas de desafios gamificados e páginas de conversão. Foram identificadas inconsistências críticas de design, bugs de lógica, e diferenças substanciais de copy e UX entre as versões.
 
-**Domínios Identificados:**
+**Análise Realizada:**
 
-- Versão em análise: `respiralivre flow.vercel.app`
-- Versão de referência: `respiralivre flow.lovable.app`
-
-**Status dos Desafios Analisados:**
-
-- Desafio Mindfulness: Design quebrado, texto inadequado, experiência entediante
-- Desafio Foco Laser: Design aprovado como referência perfeita
-- Desafio Resistência: UX problemática, muita informação, quebra de fluxo
-- Desafio Memória Livre: Design perfeito, aprovado para implementação
+- 4 vídeos analisados (total: 8min 41s)
+- 15.976 frames extraídos e processados
+- 36 frames-chave documentados
+- Correlação completa entre transcrição de áudio e evidências visuais
 
 ### 1.2 Objetivo do PRD
 
-Este documento especifica tecnicamente:
+Documentar tecnicamente todos os requisitos identificados para:
 
-1. Redesign completo do Desafio Mindfulness com nova mecânica de "Botão de Emergência"
-2. Padronização visual baseada nos designs aprovados (Foco Laser e Memória Livre)
-3. Correções críticas de UX nos desafios existentes
-4. Sistema de pontuação multi-sensorial inovador
-5. Fluxo de implementação priorizado
+1. Correção de bugs críticos no desafio "Memória Livre"
+2. Consolidação e otimização dos desafios gamificados
+3. Definição da estrutura final de níveis e progressão
+4. Padronização da página de conversão/vendas
+5. Eliminação de inconsistências de design entre versões
 
 ---
 
 ## 2. ANÁLISE COMPARATIVA DETALHADA
 
-### 2.1 Desafio Foco Laser (Design de Referência Aprovado)
+### 2.1 Versão Atual (lovable.app) - Funil Raiz
 
-**Referência:** Frame 240 (Parte 1, 00:10s) e Frame 4920 (Parte 2, 03:25s)  
-**Status:** APROVADO - "Perfeito. Eu quero esse design aqui."  
-**URL Referência:** `respiralivre flow.lovable.app`
+**APROVAÇÕES IDENTIFICADAS:**
 
-**Elementos Visuais Aprovados:**
+**Design Global:**
 
-- **Ícone:** Botão amarelo (#FFD700 aproximado) com símbolo de alvo concêntrico preto
-- **Badge de Nível:** "Nível 2" em vermelho no topo direito do ícone
-- **Título:** "Desafio: Foco Laser" em fonte bold, branco
-- **Subtítulo:** "Mantenha o foco, destr oia a distração" em fonte menor, cinza claro
-- **Seção "Como Funciona":**
-  - Ícone de raio amarelo
-  - Card com fundo escuro semi-transparente
-  - 3 passos numerados (círculos dourados)
-  - Texto descritivo claro e conciso
-- **Recompensas:**
-  - Card separado com bordas douradas
-  - "Recompensa: +150 XP +75 Coins"
-- **CTA Principal:** Botão amarelo full-width " Começar Desafio"
-- **Indicador de Progresso:** "Step: 6" em badge verde no canto inferior direito
+- Status: APROVADO - "tá perfeito, cara" (Vídeo 1, 00:04s)
+- Avaliação visual: Design mais limpo e profissional
+- Frame de referência: video1/`docs\Frames_PRD\frame_0096.png`
 
-**Paleta de Cores:**
+**Desafio: Memória Livre**
 
-- Primária: Amarelo vibrante (#FFD700)
-- Secundária: Dourado para elementos de destaque (#D4AF37)
-- Fundo: Preto (#000000) com gradiente sutil
-- Texto: Branco (#FFFFFF) e cinza claro (#CCCCCC)
-- Destaques: Verde para XP (#00FF00), Amarelo para Coins
+- Status: APROVADO COM RESSALVAS - "isso aqui, ó, tá muito bom, pô" (Vídeo 1, 00:54s)
+- Problemas críticos identificados (detalhados na seção 3.1)
+- Frame de referência: video1/`docs\Frames_PRD\frame_1296.png`
 
-**Estrutura de Layout:**
+**Página de Vendas - "Seu Perfil de Liberdade"**
 
-```
-┌─────────────────────────────┐
-│    [Ícone Amarelo + Badge]  │
-│                             │
-│    Desafio: Foco Laser      │
-│    Subtítulo descritivo     │
-│                             │
-│  ┌───────────────────────┐  │
-│  │  Como Funciona      │  │
-│  │                       │  │
-│  │ ① Passo 1 detalhado  │  │
-│  │ ② Passo 2 detalhado  │  │
-│  │ ③ Passo 3 detalhado  │  │
-│  └───────────────────────┘  │
-│                             │
-│  ┌───────────────────────┐  │
-│  │ Recompensa:           │  │
-│  │ +150 XP  +75 Coins    │  │
-│  └───────────────────────┘  │
-│                             │
-│  [ Começar Desafio]       │
-│                             │
-└─────────────────────────────┘
-```
+- Status: APROVADO - "Mais simples. Concreto." (Vídeo 3, 02:37s)
+- Design preferido sobre a versão Elite Liberdade
+- Elementos visuais:
+  - Card escuro com dados de perfil
+  - 1730 XP Total (amarelo)
+  - 730 Coins (verde)
+  - 6 Badges (verde)
+  - Nível de Prontidão: 100%
+- Frame de referência: video3/`docs\Frames_PRD\frame_3840.png`
+- Frame de referência: video4/`docs\Frames_PRD\frame_1896.png` (com diagnóstico)
 
-**Quote Literal do Usuário:**
+**REJEIÇÕES IDENTIFICADAS:**
 
-> "Ó, perfeito. Eu quero esse design aqui." - Timestamp 00:10s
+**Elemento no Topo da Página**
+
+- Status: REJEITADO - "tem esse negócio aqui nada a ver aqui em cima. Tá péssimo" (Vídeo 3, 02:18s)
+- Decisão: Excluir ou arquivar
+- Frame de referência: video3/`docs\Frames_PRD\frame_3312.png`
+
+**Desafio do Botão (Eliminar Inimigos)**
+
+- Status: ARQUIVADO - "vamos deixar na gaveta esse dali do botão" (Vídeo 1, 00:42s)
+- Razão: Já existem 3 desafios, evitar sobrecarga
+- Conceito será integrado em outros desafios
 
 ---
 
-### 2.2 Desafio Mindfulness (Design Atual - REJEITADO)
+### 2.2 Versão de Referência (vercel.app)
 
-**Referência:** Frame 456 (Parte 1, 00:19s), Frame 672 (Parte 1, 00:28s)  
-**Status:** REJEITADO - "Quebrou totalmente... tá péssimo o design"  
-**URL:** `respiralivre flow.vercel.app`
+**APROVAÇÕES IDENTIFICADAS:**
 
-**Problemas Identificados:**
+**Copy da Página de Vendas - Elite Liberdade**
 
-**P1 - Design Visual Inadequado:**
+- Status: APROVADO FORTEMENTE - "Nossa mano, muito bom... a copy tá perfeita, gostei da copy" (Vídeo 3, 02:53-56s + Vídeo 4, 00:01s)
+- Elementos aprovados:
+  - "🔓 OFERTA EXCLUSIVA DESBLOQUEADA" (badge vermelho)
+  - "Sua Classificação Desbloqueou"
+  - "70% DE DESCONTO" (verde, destaque principal)
+  - "Apenas para quem completou a jornada como você"
+  - Economia destacada: "Você economizou R$ 207.90"
+- Frame de referência: video3/`docs\Frames_PRD\frame_4224.png`
 
-- Frame 456, 00:00s: "Ó, tá vendo que quebrou totalmente ali, mano, o design já aqui, né? Já tá péssimo o design."
-- **Evidência:** Título em verde neon desalinhado com a paleta
-- **Evidência:** Fundo roxo escuro que cria ambiente "entediante"
-- **Impacto:** Primeira impressão negativa, baixo engajamento
+**Solução Personalizada**
 
-**P2 - Texto e Copy Inadequados:**
+- Status: APROVADO - "Solução personalizada é interessante" (Vídeo 4, 00:16s)
+- Elementos:
+  - "Coach IA personalizado 24/7 baseado no seu perfil"
+  - "Comunidade exclusiva de apoio com mentores certificados"
+  - "Garantia de 30 dias - sua liberdade ou seu dinheiro de volta"
+- Frame de referência: video4/`docs\Frames_PRD\frame_0480.png`
 
-- Frame 456, 00:22s: "Note seus pensamentos e sensações... tá péssimo isso aqui. Tá? Péssimo esse desafio."
-- Frame 3912 (Parte 2), 02:43s: "Aceite o momento presente. Olha que nada a ver, véi. Nada a ver."
-- **Evidência:** Textos vagos e não acionáveis
-- **Impacto:** Usuário não entende o que fazer
+**REJEIÇÕES IDENTIFICADAS:**
 
-**P3 - Estrutura Visual Confusa:**
+**Desafio de Foco - Design Geral**
 
-- Seção "Técnica dos 3 Passos" com passos numerados mas sem clareza de execução
-- Passos: "Observar", "Aceitar", "Liberar" - abstratos demais
-- Botão "Iniciar Meditação" roxo/azul gradiente (inconsistente com padrão)
+- Status: REJEITADO - "o design mudou totalmente aqui, tá péssimo" (Vídeo 2, 01:50s)
+- Problemas:
+  - Inconsistência visual total com versão raiz
+  - Background gradiente roxo/magenta não alinhado
+  - Estética "de vidro" criticada: "essa estética de vidro, tá péssima, entendeu? Tá horrível" (Vídeo 2, 02:20s)
+- Frame de referência: video2/`docs\Frames_PRD\frame_2736.png`
+- Frame de referência: video2/`docs\Frames_PRD\frame_3432.png`
 
-**P4 - Experiência de Usuário Problemática:**
+**Desafio Reflexo Rápido - Quick Time Event**
 
-- Frame 4440 (Parte 2), 02:52s: "Aqui, ó. Pô, tem a questão ali que ele não vai pra cima, tal."
-- Frame 4440, 03:01s: "Nossa, muita informação, péssima experiência de usuário."
-- **Evidência:** Overflow de conteúdo não scrollável
-- **Evidência:** Densidade de informação excessiva
+- Status: REJEITADO - "um evento de clique rápido, bem zoado, que tá péssimo. Nada a ver, cara." (Vídeo 3, 00:02s)
+- Frame de referência: video3/`docs\Frames_PRD\frame_0192.png`
 
-**Elementos Visuais Atuais:**
+**Batalha Final - Conceito de Boss "Sr. Ansiedade"**
 
-- Título: "Desafio Mindfulness" em verde (#00FF00 neon)
-- Subtítulo: "Nível 2 · Dificuldade: Moderado"
-- Card "Técnica dos 3 Passos" roxo escuro
-- Card "Recompensas Zen" roxo escuro
-- Botão: " Iniciar Meditação" roxo/azul gradiente
-- Paleta: Verde neon + Roxo escuro (rejeitada)
+- Status: REJEITADO PARCIALMENTE
+- Problemas:
+  - "Aqui já tá começando a ficar chato, sabe" (Vídeo 3, 00:20s)
+  - "péssimo isso aqui" (Vídeo 3, 00:27s)
+  - "Muita informação aqui, péssima experiência de usuário" (Vídeo 3, 01:51s)
+  - "um conceito bem ridículo, horrível, não gostei" (Vídeo 3, 01:54s)
+  - "muito tediante. Olha isso, tipo a pessoa literalmente tem que esperar" (Vídeo 3, 02:00s)
+- Conceito aprovado para reutilização: Boss + Quick Time Events podem ser combinados
+- Frames de referência: video3/`docs\Frames_PRD\frame_0720.png`, video3/`docs\Frames_PRD\frame_1296.png`, video3/`docs\Frames_PRD\frame_2736.png`
 
-**Quotes Literais do Usuário:**
+**Título "Elite Liberdade"**
 
-> "Ó, tá vendo que quebrou totalmente ali, mano, o design já aqui, né? Já tá péssimo o design." - 00:00s
-
-> "Vamos comparar o conceito dos dois. Note seus pensamentos e sensações... tá péssimo isso aqui. Tá? Péssimo esse desafio." - 00:22s
-
-> "Nossa, muita informação, péssimo de ler, péssima experiência de usuário." - Parte 2, 03:01s
-
-> "Aceite o momento presente. Olha que nada a ver, véi. Nada a ver." - Parte 2, 02:43s
-
----
-
-### 2.3 Desafio Memória Livre (Design Aprovado)
-
-**Referência:** Frame 6816 (Parte 2, 04:44s)  
-**Status:** APROVADO - "Isso aqui é perfeito, cara. Entendeu, mano?"  
-**URL:** `respiralivre flow.lovable.app`
-
-**Elementos Visuais Aprovados:**
-
-- **Ícone:** Botão rosa/magenta (#FF69B4 aproximado) com símbolo de cérebro preto
-- **Badge de Nível:** "Nível 3" em amarelo no topo direito do ícone
-- **Título:** "Desafio: Memória Livre" em fonte bold, branco
-- **Subtítulo:** "Treine sua mente, fortaleça sua vontade" em fonte menor, cinza claro
-- **Seção "Como Funciona":**
-  - Ícone de raio roxo
-  - 3 passos numerados (círculos roxos)
-  - Mecânica clara: memorizar sequência de 5 cores
-- **Recompensas:**
-  - "+200 XP +100 Coins" (valores maiores que Foco Laser)
-- **CTA Principal:** Botão rosa/magenta full-width " Começar Desafio"
-- **Indicador de Progresso:** "Step: 7"
-
-**Estrutura:** Idêntica ao Foco Laser, apenas com paleta rosa/magenta
-
-**Quote Literal do Usuário:**
-
-> "Isso aqui é perfeito, cara. Entendeu, mano? Esse desafio da Memória Livre, pode vir... eh... depois daquele desafio do mindfulness, né, que a pessoa já vai tá na vibe e tal, correto?" - Parte 2, 04:44s
+- Status: INDECISO - "Essa elite liberdade é meio, sei lá" (Vídeo 4, 00:42s)
+- Sugestão: Manter "Seu Perfil de Liberdade" mas integrar copy da versão referência
 
 ---
 
-### 2.4 Desafio Resistência (Design Atual - PARCIALMENTE REJEITADO)
+### 2.3 Decisão Final: Abordagem Híbrida
 
-**Referência:** Frame 4440 (Parte 2, 03:05s), Frame 5664 (Parte 2, 03:54s)  
-**Status:** ️ PARCIAL - Conceito rejeitado, mas distribuição de botões tem mérito
+**ESTRATÉGIA APROVADA:**
 
-**Elementos Aprovados:**
-
-- Distribuição de botões: "Iniciar Desafio" (verde) e "Pular Desafio" (cinza) lado a lado
-- Cor verde do botão primário
-
-**Problemas Identificados:**
-
-**P1 - Layout Problemático:**
-
-- Frame 4440, 03:01s: "Nossa, muita informação, péssimo de ler, péssima experiência de usuário."
-- Frame 4440, 02:52s: "Pô, tem a questão ali que ele não vai pra cima, tal."
-- **Evidência:** Texto muito longo sem scroll adequado
-
-**P2 - Dinâmica Quebrada:**
-
-- Frame 5664, 03:54s: "Isso aqui tá péssimo. Tá péssimo."
-- Frame 5664, 04:32s: "Isso aqui... eu não gostei, a pessoa tem que clicar no botão 'concluir', coletar pontos, daí pô, quebra a dinâmica ali."
-- **Evidência:** Requer clique manual para concluir ao invés de auto-completar
-
-**P3 - Conceito Não Adequado:**
-
-- Frame 5664, 03:49s: "Não, esquece que eu falei, não. Não pode ser no lugar desse aqui não. Péssimo. Péssimo."
-- **Decisão:** Desafio de Resistência deve ser deixado "na gaveta" por enquanto
-
-**Elementos Visuais:**
-
-- Título: "Desafio de Resistência"
-- Descrição longa (4-5 linhas)
-- 3 ícones informativos: Meta, Pontos por clique, Tempo limite
-- Botões: "Iniciar Desafio" (verde) e "Pular Desafio" (cinza escuro)
-
-**Tela de Execução:**
-
-- Timer vermelho grande "29s"
-- "Nível de Resistência: 0"
-- "Pontos: 0" em verde
-- Botão circular com gradiente (laranja → verde) e ícone de escudo
-- Instrução: "Clique no escudo para aumentar sua resistência!"
-
-**Nota sobre Botões:**
-
-> "Aqui eu gostei da distribuição dos botões, tipo 'iniciar desafio' e 'pular desafio', um do lado do outro, né? Mas eu ainda prefiro um abaixo do outro que nem tava no outro." - Parte 2, 03:05s
-
-**Decisão de Produto:**
-
-- Manter conceito "na gaveta" para desenvolvimento futuro
-- Extrair padrão de distribuição de botões para outros desafios
-- Preferência confirmada: botões em stack vertical vs horizontal
+- Design base: Versão atual (lovable.app)
+- Copy principal: Versão de referência (vercel.app)
+- Integração: "Dá pra aplicar a copy do de referência aqui no projeto atual" (Vídeo 4, 00:47s)
 
 ---
 
 ## 3. REQUISITOS FUNCIONAIS
 
-### 3.1 Novo Desafio Mindfulness - "Botão de Emergência"
+### 3.1 DESAFIO: MEMÓRIA LIVRE
 
-**REQ-MIND-001: Conceito Principal**
+#### 3.1.1 Estado Atual e Problemas Críticos
 
-- O novo Desafio Mindfulness deve ser redesenhado como "Botão de Emergência"
-- Objetivo: estimular presença e mindfulness através de observação ativa do ambiente
-- Mecânica: usuário deve notar coisas específicas no ambiente (visual, auditivo, sensorial) e registrar através de interação com botões
+**Interface Visualizada:**
+
+- Ícone: Cérebro roxo/rosa com badge "Nível 3" amarelo
+- Título: "Desafio: Memória Livre"
+- Subtítulo: "Treine sua mente, fortaleça sua vontade"
+- Como Funciona:
+  1. "Memorize a sequência de 5 cores"
+  2. "Repita a sequência corretamente"
+  3. "Você tem 15 segundos para completar"
+- Recompensa: +200 XP +100 Coins
+- Botão: "Começar Desafio" (roxo)
+- Frame de referência: video1/`docs\Frames_PRD\frame_0096.png`
+
+**Interface do Jogo:**
+
+- 4 botões coloridos em grid 2x2:
+  - Verde (top-left)
+  - Amarelo (top-right)
+  - Azul (bottom-left)
+  - Roxo (bottom-right)
+- Frame de referência: video1/`docs\Frames_PRD\frame_1600.png`
+
+**BUGS CRÍTICOS IDENTIFICADOS:**
+
+**REQ-MEM-001: Correção de Ativação Automática**
+
+- Problema: "Ó, tá vendo? Nada a ver, ó. Eu nem cliquei em nada aqui" (Vídeo 1, 01:18-19s)
+- Comportamento observado: Desafio avança automaticamente sem input do usuário
+- Evidência visual: Tela de erro "Não foi dessa vez!" aparece sem cliques
+- Comportamento esperado: Sistema DEVE aguardar input explícito do usuário antes de qualquer validação ou transição
 - Prioridade: CRÍTICA
-- Impacto: Substituição completa do desafio atual
-- Referência: Parte 1, 00:55s - 04:02s (conceito completo explicado)
-- Nota adicional: "Funciona com o objetivo de estimular a presença, né? O Mindfulness. Correto? Melhor do que isso daqui."
+- Frame de referência: video1/`docs\Frames_PRD\frame_1872.png`
+- Impacto: Impossibilita teste e uso adequado do desafio
 
-**REQ-MIND-002: Mecânica de Observação**
+**REQ-MEM-002: Correção de Execução Automática**
 
-- Usuário deve notar 5 coisas no ambiente (visual, auditivo, ou sensorial)
-- Sistema deve permitir múltiplas "séries" de 5 observações
-- Cada série completa = 1 unidade de progresso
-- Sistema deve incentivar honestidade: "tem que ser sempre cinco coisas diferentes, ela não pode escolher a mesma coisa"
+- Problema: "ele tá indo automático, tá bugando. Eu não tô clicando em nada, cara" (Vídeo 1, 01:27-31s)
+- Comportamento observado: Sequências executam sozinhas
+- Comportamento esperado: Nenhuma ação deve ocorrer sem interação explícita
 - Prioridade: CRÍTICA
-- Impacto: Core da mecânica do desafio
-- Referência: Parte 1, 01:09s - 02:22s
-- Nota adicional: "Então tem que ser fortificado que a honestidade da pessoa conta muito. Porque, tipo assim, isso vai forçar a pessoa a entrar em um estado de presença..."
+- Frame de referência: video1/`docs\Frames_PRD\frame_2088.png`
 
-**REQ-MIND-003: Sistema de Botões Multi-Sensorial**
+**REQ-MEM-003: Correção de Mensagens Automáticas**
 
-- Interface deve conter:
-  - 1 botão central grande (círculo)
-  - 3 botões menores específicos: "Ver", "Ouvir", "Sentir" (gosto/cheiro)
-- Todos os botões devem ser interativos e responsivos
-- Botões devem mudar de cor/estado ao serem clicados
-- Layout: botão grande no centro, 3 botões pequenos abaixo (possível distribuição horizontal)
+- Problema: "Ó, nada a ver, véi, ele tá mostrando sozinho a mensagem" (Vídeo 1, 01:53-55s)
+- Comportamento observado: Mensagem de erro/resultado aparece sem completar tentativa
+- Comportamento esperado: Mensagens DEVEM aparecer APENAS após validação completa da tentativa do usuário
 - Prioridade: CRÍTICA
-- Impacto: Interface principal do desafio
-- Referência: Parte 1, 03:22s - 04:02s; Parte 2, 00:00s - 00:53s
-- Nota adicional: "Pode ter tipo um botão ali maior, né, um redondo. E pode ter, tipo assim, botões de sentido, que ela toca embaixo."
+- Frame de referência: video1/`docs\Frames_PRD\frame_2712.png`
 
-**REQ-MIND-004: Sistema de Pontuação Diferenciada**
+**REQ-MEM-004: Melhoria da Lógica de Seleção**
 
-- Cada botão sensorial tem valor de pontos diferente:
-  - "Ver" = 1 ponto
-  - "Ouvir" = 3 pontos
-  - "Sentir" = 5 pontos
-- Botão central (grande) = média dos três = 3 pontos por clique
-- Cálculo: (1 + 3 + 5) / 3 = 3 pontos
-- Sistema deve somar pontos em tempo real
+- Problema: "tem que melhorar a animação e a seleção também, a lógica tá péssima disso aqui" (Vídeo 1, 01:08-12s)
+- Comportamento esperado:
+  - Feedback visual claro ao clicar em cada botão
+  - Estado de "selecionado" visualmente distinto
+  - Transição suave entre estados
+  - Validação apenas após sequência completa
 - Prioridade: ALTA
-- Impacto: Gamificação e recompensa progressiva
-- Referência: Parte 2, 00:04s - 01:47s
-- Nota adicional: "O 'ver' conta uma pontuação de número um... O 'ouvir', ele conta como três pontos... E o 'sentir', ele conta como cinco pontos, tá?"
+- Frame de referência: video1/`docs\Frames_PRD\frame_1680.png`
 
-**REQ-MIND-005: Requisitos Mínimos e Máximos**
+#### 3.1.2 Solução Proposta: Botão de Confirmação
 
-- Pontuação mínima para completar desafio: 9 pontos
-  - Equivalente a: 3 cliques no botão grande OU 2 cliques em "Sentir" + 1 em qualquer OU outras combinações
-- Incentivo para completar: 10 ou mais pontos (excelente desempenho)
-- Não há limite máximo de pontos
-- Não há limite de tempo para completar
+**REQ-MEM-005: Implementar Controle Manual de Fluxo**
+
+- Descrição: "ao invés de clicar na sequência e ir pro outro, ter um botãozinho pra confirmar ou resetar aqui, tipo, tentar de novo" (Vídeo 1, 01:33-39s)
+- Comportamento esperado:
+  1. Usuário clica na sequência de cores
+  2. Sistema armazena sequência SEM validar automaticamente
+  3. Usuário clica em "Confirmar" para validar
+  4. OU usuário clica em "Resetar/Tentar Novamente" para limpar seleção
+- Interface proposta:
+  - Botão "✓ Confirmar Sequência" (habilitado após completar número de cores esperado)
+  - Botão "↻ Tentar Novamente" (sempre disponível)
+- Prioridade: CRÍTICA (resolve REQ-MEM-001, 002, 003)
+- Impacto: Elimina todos os bugs de execução automática
+
+#### 3.1.3 Sistema de Níveis e Progressão
+
+**REQ-MEM-006: Padronizar Número de Sequências**
+
+- Problema: "ele vai um número de sequências aleatórias. Às vezes ele vai três sequências, às vezes quatro, às vezes cinco. Então não faz sentido" (Vídeo 1, 02:03-18s)
+- Decisão: "Eu acho que três a quatro ali, ou três ou quatro, é melhor" (Vídeo 1, 02:17-22s)
+- Definição final: "Não, vamos deixar só dois níveis mesmos" (Vídeo 2, 00:12-16s)
+- Comportamento esperado:
+  - Sistema de 2 níveis fixos (não aleatório)
+  - Número consistente de sequências por nível
 - Prioridade: ALTA
-- Impacto: Define critério de sucesso do desafio
-- Referência: Parte 1, 01:38s - 02:13s; Parte 2, 01:47s - 02:17s
-- Nota adicional: "Daí ela tem que pontuar no mínimo nove, né? Ou seja, clicou no botão grande três vezes, né? Eu acho que essa é uma regra boa."
 
-**REQ-MIND-006: Feedback Visual e Animações**
+**REQ-MEM-007: Estrutura de 2 Níveis**
 
-- Botões devem mudar de cor ao serem clicados
-- Pontuação deve ser exibida em tempo real
-- Animação de ganho de pontos (número aumentando com efeito)
-- Possível barra de progresso visual mostrando evolução até o mínimo
-- Feedback tátil (vibração) ao clicar (mobile)
+- Especificação técnica:
+  - **Nível 1:** 2 sequências de cores
+  - **Nível 2:** 5 sequências de cores
+- Referência: "nível um, duas sequências. Nível dois, cinco sequências" (Vídeo 2, 00:02-16s)
+- Comportamento esperado:
+  - Nível claramente indicado na UI: "Nível 1 de 2" / "Nível 2 de 2"
+  - Transição explícita entre níveis com feedback visual
+- Prioridade: ALTA
+
+**REQ-MEM-008: Ajuste de Velocidade por Nível**
+
+- Especificação: "no nível dois já vai um pouquinho mais lento, porque tá muito rápido" (Vídeo 2, 00:23-31s)
+- Comportamento esperado:
+  - Nível 1: Velocidade padrão (atual está aceitável)
+  - Nível 2: Velocidade reduzida em ~25-30% para acomodar maior complexidade
 - Prioridade: MÉDIA
-- Impacto: Melhora engajamento e clareza de progresso
-- Referência: Parte 1, 01:26s - 01:38s
-- Nota adicional: "Vai ganhando pontuação, vai mudando de cor, né? E tudo mais."
+- Justificativa: Aumenta acessibilidade e diminui frustração
 
-**REQ-MIND-007: Sem Limite de Tempo**
+#### 3.1.4 Sistema de Pontuação e Opcionalidade
 
-- Desafio não deve ter timer countdown
-- Usuário pode completar no seu próprio ritmo
-- Foco na qualidade da observação, não na velocidade
+**REQ-MEM-009: Nível 2 Opcional com Bonificação**
+
+- Descrição: "nível dois ela pode pular sem perder pontuação, né, mas se ela fazer o nível dois, ela vai ganhar pontuações bônus" (Vídeo 2, 00:47-54s)
+- Comportamento esperado:
+  - Ao completar Nível 1, exibir tela de transição:
+    - Recompensa do Nível 1: +200 XP +100 Coins (padrão)
+    - Opção: "Continuar para Nível 2" (com preview de bônus)
+    - Opção: "Finalizar e Coletar Recompensas"
+  - Se pular Nível 2: mantém recompensas do Nível 1
+  - Se completar Nível 2: adiciona bônus (especificado abaixo)
+- Prioridade: ALTA
+- Impacto: Gamificação, engajamento opcional sem penalização
+
+**REQ-MEM-010: Copy Motivacional para Nível 2**
+
+- Problema: "trabalhar melhor a copy... deixar bem claro que é opcional" (Vídeo 2, 01:16-28s)
+- Conceito: "60% dos que passaram por aqui não conseguiram... isso aqui é opcional, mas... Você vai provar seu valor, você vai ser melhor que a maioria" (Vídeo 2, 01:11-38s)
+- Copy proposta:
+  - Título: "Desafio Opcional: Nível 2"
+  - Texto: "⚡ 60% dos usuários não conseguem completar este nível. Você aceita o desafio?"
+  - CTA 1: "🔥 Aceitar Desafio" (roxo, primário)
+  - CTA 2: "Finalizar e Coletar Recompensas" (cinza, secundário)
+- Tone: Motivacional, desafio competitivo, opcional explícito
+- Prioridade: ALTA
+- Impacto: Aumenta taxa de tentativa do Nível 2 sem pressão
+
+**REQ-MEM-011: Estrutura de Recompensas**
+
+- Nível 1 (completo):
+  - +200 XP
+  - +100 Coins
+- Nível 2 (completo):
+  - +300 XP (bônus)
+  - +200 Coins (bônus)
+  - Badge especial: "Mente de Aço" ou similar
+- Total máximo: +500 XP, +300 Coins, +1 Badge
 - Prioridade: MÉDIA
-- Impacto: Reduz ansiedade, aumenta mindfulness genuíno
-- Referência: Parte 1, 02:55s - 03:00s
-- Nota adicional: "Daí não tem tempo, não tem nada. É tipo assim, é só... Né? O mínimo de quantidade."
 
-**REQ-MIND-008: Mensagens de Incentivo à Honestidade**
+#### 3.1.5 Elementos de UX/UI
 
-- Sistema deve exibir mensagens reforçando importância de observações genuínas
-- Mensagem sugerida: "Lembre-se: observe coisas diferentes a cada vez. Sua honestidade potencializa o efeito!"
-- Mensagem pode aparecer ao iniciar o desafio
+**REQ-MEM-012: Implementação de Sons**
+
+- Descrição: "tem que memorizar tal, dá pra ter sons, né?... E ela pode se basear também nos sons" (Vídeo 1, 01:01-17s)
+- Comportamento esperado:
+  - Cada cor possui som único e distintivo
+  - Durante apresentação: sons tocam na sequência
+  - Durante reprodução do usuário: sons tocam ao clicar
+  - Usuário pode memorizar por som OU visualmente
+- Sons sugeridos:
+  - Verde: Tom grave (C3)
+  - Amarelo: Tom médio-agudo (E3)
+  - Azul: Tom médio (G3)
+  - Roxo: Tom agudo (C4)
+- Prioridade: MÉDIA
+- Impacto: Acessibilidade, experiência multimodal
+
+**REQ-MEM-013: Melhorias de Animação e Feedback Visual**
+
+- Descrição: "tem que melhorar a animação e a seleção" (Vídeo 1, 01:08-10s)
+- Comportamento esperado:
+  - Botão ao ser tocado:
+    - Scale up leve (1.05x)
+    - Brilho/glow na cor correspondente
+    - Som simultâneo
+    - Duração: 200-300ms
+  - Botão selecionado na sequência:
+    - Border destacado (2-3px) na cor
+    - Número de ordem exibido temporariamente
+  - Feedback de acerto:
+    - Animação de check verde
+    - Partículas/confetti
+    - Som de sucesso
+  - Feedback de erro:
+    - Shake animation
+    - Flash vermelho sutil
+    - Som de erro
+- Prioridade: MÉDIA
+
+**REQ-MEM-014: Tela de Erro Atual**
+
+- Estado atual visualizado:
+  - Ícone: Círculo vermelho com X
+  - Texto principal: "Não foi dessa vez!" (vermelho)
+  - Texto secundário: "Mas não desista! Cada tentativa fortalece sua mente."
+  - Botão primário: "Tentar Novamente" (roxo)
+  - Botão secundário: "Pular Desafio (Sem Recompensas)" (preto)
+- Frame de referência: video1/`docs\Frames_PRD\frame_1872.png`
+- Ação: MANTER com ajustes de timing (aparecer apenas após validação explícita)
+- Prioridade: BAIXA (já está OK, apenas corrigir trigger)
+
+---
+
+### 3.2 DESAFIO: FOCO RÁPIDO (Consolidação)
+
+#### 3.2.1 Contexto e Fusão de Conceitos
+
+**DECISÃO DE CONSOLIDAÇÃO:**
+
+- "esquece aquele outro do botão... Aquela ideia de que vai matando os inimigos, tal, ela pode ser aplicada aqui" (Vídeo 2, 02:07-17s)
+- Fusão de 2 conceitos:
+  1. Desafio do botão (arquivado no Vídeo 1)
+  2. Desafio de foco com alvos (Vídeo 2)
+- Resultado: Único desafio de foco com mecânica de "eliminar inimigos"
+
+#### 3.2.2 Problemas da Versão de Referência
+
+**REJEIÇÕES:**
+
+- Design geral: "o design mudou totalmente aqui, tá péssimo" (Vídeo 2, 01:50s)
+- Estética de vidro: "essa estética de vidro, tá péssima, entendeu? Tá horrível" (Vídeo 2, 02:20s)
+- BUG identificado: "cliquei aqui, ele mudou sozinho, tá? Ao passo que eu vou clicando ele vai mudando sozinho" (Vídeo 2, 02:01-07s)
+- Frames de referência: video2/`docs\Frames_PRD\frame_2736.png`, video2/`docs\Frames_PRD\frame_3048.png`, video2/`docs\Frames_PRD\frame_3432.png`
+
+**AÇÃO:** Recriar completamente no design da versão raiz (lovable.app)
+
+#### 3.2.3 Mecânica de Jogo Aprovada
+
+**REQ-FOC-001: Conceito de "Whack-a-Mole" com Inimigos**
+
+- Descrição: "pode ser os inimigos aparecendo e ela clicando. Tipo aquele joguinho que cê tem que bater no martelo, sabe?" (Vídeo 2, 02:23-29s)
+- Referência: "os bichinho sai do buraco, daí cê tem que bater um martelo, nos bichinho" (Vídeo 2, 02:29-35s)
+- Conceito adaptado: "Pode ser outro conceito que a gente pode trabalhar... Daí ele aparece em algum lugar da tela e a pessoa tem que clicar pra eliminar... Tipo um jogo mesmo, é um jogo" (Vídeo 2, 02:38-48s)
+- Comportamento esperado:
+  1. Inimigos aparecem em posições aleatórias da tela
+  2. Usuário tem tempo limitado para clicar
+  3. Clicar no inimigo = eliminar = pontos
+  4. Não clicar a tempo = inimigo "ataca" = perde vida/pontos
+- Prioridade: ALTA
+- Impacto: Gamificação, mecânica de jogo real
+
+**REQ-FOC-002: Representação Visual de "Inimigos"**
+
+- Descrição: "alusão às coisas que a pessoa, que faz a pessoa ter vontade de fumar... Ou às vezes até o próprio cigarro" (Vídeo 1, 00:31-39s)
+- Opções de representação:
+  - Ícone de cigarro
+  - Ícone de tentação (ex: chama, nuvem de fumaça)
+  - Ícone abstrato de "gatilho"
+- Design: Manter consistência com design raiz (sem estética de vidro)
+- Cores: Vermelho/laranja para inimigos (consistente com alvos do vídeo)
+- Prioridade: MÉDIA
+
+**REQ-FOC-003: Áreas de Spawn e Movimento**
+
+- Comportamento esperado:
+  - Tela dividida em grid invisível (ex: 3x4)
+  - Inimigos aparecem em células aleatórias
+  - Possível movimento: nenhum (estático) ou lento (deslizamento)
+  - Tempo de vida do inimigo: 1.5-2s antes de desaparecer
+  - Múltiplos inimigos podem estar ativos simultaneamente (máx 2-3)
+- Prioridade: MÉDIA
+
+#### 3.2.4 Sistema de Pontuação e Duração
+
+**REQ-FOC-004: Estrutura de Pontos**
+
+- Meta: "20+ acertos para bônus máximo" (visualizado na versão referência)
+- Sistema proposto:
+  - Cada acerto: +15 pontos de foco (conforme visto)
+  - Tempo limite: 45 segundos (conforme visto)
+  - Meta mínima para completar: 10 acertos
+  - Meta para bônus: 20 acertos
+  - Meta para bônus máximo: 30+ acertos
+- Recompensas:
+  - 10-19 acertos: +100 XP, +50 Coins
+  - 20-29 acertos: +200 XP, +100 Coins
+  - 30+ acertos: +300 XP, +150 Coins + Badge "Reflexos de Elite"
+- Frame de referência: video2/`docs\Frames_PRD\frame_2736.png`
+- Prioridade: ALTA
+
+**REQ-FOC-005: Contador de Acertos em Tempo Real**
+
+- Comportamento esperado:
+  - Exibir no topo: "Acertos: X"
+  - Barra de progresso visual indicando progresso para próximo tier
+  - Feedback ao atingir metas (10, 20, 30)
+- Frame de referência: video2/`docs\Frames_PRD\frame_3432.png` (mostra "Acertos: 6")
+- Prioridade: MÉDIA
+
+#### 3.2.5 Integração com Conceito de Boss (Opcional)
+
+**REQ-FOC-006: Mecânica de Boss Battle (Fase 2 ou Versão Avançada)**
+
+- Contexto: "Dá pra pegar o conceito desse boss aqui, e aplicar ali naquele que tem o Quick Time Event" (Vídeo 3, 00:30-37s)
+- Descrição detalhada: "imagina que o boss tá jogando nele... ela tem que clicar no botão pra matar o boss... E ao mesmo tempo tem os Quick Time Events de inimigos ali, pequenos. Imagina inimigos brotando do chão" (Vídeo 3, 00:50-01:15s)
+- Mecânica proposta:
+  1. Boss aparece no topo da tela com HP bar
+  2. Botão principal: "Atirar no Boss" (cliques repetidos causam dano)
+  3. Simultaneamente: inimigos menores aparecem pelo mapa
+  4. Quick Time Event: clicar nos inimigos antes que alcancem o jogador
+  5. Se inimigo alcança: jogador perde HP
+  6. Derrotar boss + sobreviver = vitória
+- Referência visual: video3/`docs\Frames_PRD\frame_0720.png`, video3/`docs\Frames_PRD\frame_1296.png`
+- Prioridade: BAIXA (pode ser implementado em versão futura como "Boss Battle Challenge")
+- Status: OPCIONAL - depende de capacidade de desenvolvimento
+
+---
+
+### 3.3 DESAFIO: MINDFULNESS (Não Visualizado - Manter)
+
+**REQ-MIN-001: Sequenciamento de Desafios**
+
+- Descrição: "Esse desafio da memória livre, pode vir depois daquele desafio do mindfulness" (Vídeo 1, 00:05-14s)
+- Ordem proposta:
+  1. Mindfulness (primeiro)
+  2. Memória Livre (segundo)
+  3. Foco Rápido (terceiro)
+- Justificativa: "a pessoa já vai tá na vibe e tal" (Vídeo 1, 00:11-14s)
+- Prioridade: MÉDIA
+- Impacto: UX, progressão natural
+
+---
+
+### 3.4 PÁGINA DE CONVERSÃO / VENDAS
+
+#### 3.4.1 Estrutura Híbrida Aprovada
+
+**DECISÃO FINAL:**
+
+- Base de design: Versão raiz (lovable.app) - "Eu gostei do design desse aqui, bem melhor, bem melhor... o atual, né?" (Vídeo 4, 00:28-33s)
+- Copy principal: Versão referência (vercel.app) - "a copy desse aqui, ó, sua classificação desbloqueou 70% de descontos" (Vídeo 4, 00:33-39s)
+- Integração: "Dá pra aplicar a copy do de referência aqui no projeto atual" (Vídeo 4, 00:46-50s)
+
+#### 3.4.2 Seção Superior: Perfil de Liberdade
+
+**REQ-VENDA-001: Card de Perfil do Usuário**
+
+- Título: "🏆 Seu Perfil de Liberdade" (manter)
+- Métricas exibidas:
+  - XP Total (cor: amarelo/dourado)
+  - Coins (cor: verde)
+  - Badges (cor: verde)
+- Barra de progresso: "Nível de Prontidão" com percentual
+- Design: Card escuro, minimalista, dados destacados
+- Frame de referência: video3/`docs\Frames_PRD\frame_3840.png`, video4/`docs\Frames_PRD\frame_1896.png`
+- Prioridade: ALTA
+- Status: APROVADO - "Mais simples. Concreto." (Vídeo 3, 02:37s)
+
+**REQ-VENDA-002: Contextualização por Conquistas**
+
+- Adicionar acima do card: "Baseado nas suas X conquistas"
+- Número dinâmico baseado em badges reais do usuário
+- Cor: texto branco, número em amarelo/dourado
+- Exemplo: "Baseado nas suas 6 conquistas"
+- Frame de referência: video4/`docs\Frames_PRD\frame_1896.png` (visualizado)
+- Prioridade: MÉDIA
+- Impacto: Personalização, validação social
+
+**REQ-VENDA-003: Box de Diagnóstico (Opcional)**
+
+- Título: "Diagnóstico:" (verde)
+- Texto: "Você está totalmente pronto para sua jornada de liberdade definitiva"
+- Design: Box com borda verde sutil
+- Frame de referência: video4/`docs\Frames_PRD\frame_1896.png`
 - Prioridade: BAIXA
-- Impacto: Reforça intenção terapêutica do exercício
-- Referência: Parte 1, 02:13s - 02:26s
-- Nota adicional: "Então tem que ser fortificado que a honestidade da pessoa conta muito."
+- Status: Opcional, pode ser incluído
 
----
+#### 3.4.3 Seção Central: Oferta Desbloqueada
 
-### 3.2 Padronização Visual (Baseada em Foco Laser e Memória Livre)
+**REQ-VENDA-004: Badge de Oferta Exclusiva**
 
-**REQ-VISUAL-001: Estrutura de Card Padrão**
-
-- Todos os desafios devem seguir o layout do Foco Laser (aprovado)
-- Estrutura obrigatória:
-  1. Ícone do desafio + Badge de nível (topo)
-  2. Título do desafio
-  3. Subtítulo descritivo (1 linha, máx. 60 caracteres)
-  4. Card "Como Funciona" com 3 passos máximo
-  5. Card "Recompensas" separado
-  6. Botão CTA full-width (cor conforme desafio)
-  7. Badge "Step: X" no canto inferior direito
+- Texto: "🔓 OFERTA EXCLUSIVA DESBLOQUEADA"
+- Cor: Vermelho/laranja em banner destacado
+- Posicionamento: Acima do título principal
+- Frame de referência: video3/`docs\Frames_PRD\frame_4224.png`
 - Prioridade: CRÍTICA
-- Impacto: Consistência de UX em todo o app
-- Referência: Frame 240, Frame 6816
-- Nota adicional: Design aprovado como "perfeito" em duas instâncias
+- Impacto: Urgência, exclusividade, gatilho psicológico
+- Status: "Isso aqui tá muito bom, tá?" (Vídeo 4, 01:17-19s)
 
-**REQ-VISUAL-002: Paleta de Cores do Mindfulness**
+**REQ-VENDA-005: Título de Classificação**
 
-- Desafio Mindfulness deve usar cor que contraste com amarelo (Foco Laser) e rosa (Memória Livre)
-- Sugestões: Azul turquesa (#00CED1) ou Verde água (#3EB489)
-- Evitar: Verde neon, Roxo escuro (paletas rejeitadas)
-- Manter: Fundo preto, texto branco/cinza claro
-- Prioridade: ALTA
-- Impacto: Identidade visual e diferenciação entre desafios
-- Referência: Rejeição explícita do verde neon e roxo (Frame 456, 00:00s)
-
-**REQ-VISUAL-003: Ícone do Desafio Mindfulness**
-
-- Criar ícone no estilo dos aprovados (círculo com símbolo interno)
-- Sugestões de símbolos: cérebro com ondas, olho mindful, mão em mudra, círculos concêntricos zen
-- Cor do ícone: conforme paleta definida em REQ-VISUAL-002
-- Badge de nível no topo direito (amarelo com texto preto)
-- Prioridade: ALTA
-- Impacto: Reconhecimento visual imediato
-
-**REQ-VISUAL-004: Seção "Como Funciona"**
-
-- Título: " Como Funciona" (com ícone de raio)
-- Fundo: Card com cor semi-transparente (40% opacity da cor primária)
-- 3 passos obrigatórios, numerados com círculos coloridos
-- Texto: claro, acionável, máximo 1-2 linhas por passo
-- Fonte: Sans-serif, peso regular para corpo e bold para números
+- Texto: "Sua Classificação Desbloqueou"
+- Cor: Branco, tamanho grande
+- Posicionamento: Logo abaixo do badge vermelho
+- Frame de referência: video3/`docs\Frames_PRD\frame_4224.png`
 - Prioridade: CRÍTICA
-- Impacto: Clareza de instruções
-- Referência: Frame 240 (Foco Laser - aprovado)
+- Status: "sua classificação desbloqueou 70% de descontos. Isso aqui tá muito bom" (Vídeo 4, 01:11-19s)
 
-**REQ-VISUAL-005: Card de Recompensas**
+**REQ-VENDA-006: Desconto Destacado**
 
-- Card separado abaixo de "Como Funciona"
-- Título: " Recompensa:" ou similar com ícone
-- Formato: "+[X] XP +[X] Coins"
-- XP em verde (#00FF00), Coins em amarelo (#FFD700)
-- Borda sutil na cor primária do desafio
-- Prioridade: ALTA
-- Impacto: Motivação e transparência de progressão
-
-**REQ-VISUAL-006: Botão CTA Principal**
-
-- Full-width (92% da largura da tela)
-- Altura mínima: 56px (tappable)
-- Texto: " Começar Desafio" (ou variação com ícone relevante)
-- Cor: primária do desafio
-- Texto: preto ou branco (conforme contraste WCAG AA)
-- Border-radius: 12px
-- Hover/Active states obrigatórios
+- Texto: "70% DE DESCONTO"
+- Cor: Verde neon/brilhante, tamanho gigante
+- Peso: Bold/Heavy
+- Posicionamento: Título principal da oferta
+- Frame de referência: video3/`docs\Frames_PRD\frame_4224.png`
 - Prioridade: CRÍTICA
-- Impacto: Conversão para iniciar desafio
+- Impacto: Conversão, decisão de compra
+- Status: Fortemente aprovado (Vídeo 4, 01:11-19s)
 
-**REQ-VISUAL-007: Espaçamento e Hierarquia**
+**REQ-VENDA-007: Copy de Exclusividade**
 
-- Margin entre elementos: 16px mínimo
-- Padding interno de cards: 20px
-- Títulos: 24-28px, bold
-- Subtítulos: 14-16px, regular
-- Corpo de texto: 14px, regular
-- Hierarquia clara: Título > Como Funciona > Recompensas > CTA
+- Texto: "Apenas para quem completou a jornada como você"
+- Cor: Cinza claro / branco suave
+- Posicionamento: Abaixo do desconto
+- Frame de referência: video3/`docs\Frames_PRD\frame_4224.png`
+- Prioridade: ALTA
+- Impacto: Validação, sentimento de conquista
+
+#### 3.4.4 Seção de Preço
+
+**REQ-VENDA-008: Estrutura de Preço**
+
+- Preço original: "De R$ 297.00" (riscado, cinza)
+- Preço com desconto: "R$ 89.10" (verde gigante, destaque máximo)
+- Parcelamento: "ou 12x de R$ 7.43" (cinza, menor)
+- Frame de referência: video3/`docs\Frames_PRD\frame_4224.png`
+- Nota: Valores são exemplos, usar valores reais do produto
+- Prioridade: ALTA
+
+**REQ-VENDA-009: Badge de Economia**
+
+- Texto: "📈 Você economizou R$ 207.90"
+- Cor: Verde, em badge/pill
+- Posicionamento: Abaixo do preço ou ao lado
+- Frame de referência: video3/`docs\Frames_PRD\frame_4224.png`
 - Prioridade: MÉDIA
-- Impacto: Legibilidade e escaneabilidade
+- Impacto: Reforço de valor, sensação de ganho
 
----
+#### 3.4.5 Seção de Benefícios
 
-### 3.3 Tela de Execução do Mindfulness
+**REQ-VENDA-010: Card do Produto Principal**
 
-**REQ-EXEC-001: Layout da Tela Principal**
-
-- Fundo: preto ou gradiente escuro
-- Topo: barra de progresso ou contador de pontos
-- Centro: botão grande circular (diâmetro: 60-70% da largura)
-- Abaixo: 3 botões menores (Ver, Ouvir, Sentir)
-- Distribuição dos 3 botões: horizontal, espaçados igualmente
-- Footer: botão "Concluir" (só aparece quando atingir mínimo)
-- Prioridade: CRÍTICA
-- Impacto: Interface principal da interação
-- Referência: Conceito descrito Parte 1, 03:22s - 04:02s
-
-**REQ-EXEC-002: Botão Central Grande**
-
-- Formato: círculo perfeito
-- Cor inicial: neutra (cinza ou cor primária em 40% opacity)
-- Ícone: pulsação sutil ou símbolo zen
-- Texto: "Notei 5 coisas" ou "Registrar Observação"
-- Animação ao clicar:
-  - Pulso de cor
-  - Feedback tátil
-  - Contador de pontos +3
-- Estado após clique: retorna ao inicial após 0.3s
-- Prioridade: CRÍTICA
-- Impacto: Interação principal do usuário
-
-**REQ-EXEC-003: Botões Sensoriais Pequenos**
-
-- Formato: círculos menores ou capsule buttons
-- Tamanhos proporcionais ao valor (opcional):
-  - "Ver" (1pt): menor
-  - "Ouvir" (3pts): médio
-  - "Sentir" (5pts): maior
-- Labels claros: "️ Ver" " Ouvir" " Sentir"
-- Cor: gradiente ou sólida na paleta do desafio
-- Animação ao clicar:
-  - Escala aumenta (scale 1.1)
-  - Mostra pontos ganhos flutuando (+1, +3, +5)
-  - Vibração diferenciada por valor
-- Prioridade: CRÍTICA
-- Impacto: Opção de interação detalhada
-
-**REQ-EXEC-004: Display de Pontuação**
-
-- Posição: topo da tela, centralizado
-- Formato: "Pontos: [X] / 9 mínimo"
-- Animação: número aumenta com easing suave
-- Mudança de cor ao atingir mínimo: verde brilhante
-- Possível barra de progresso visual adicional
-- Prioridade: ALTA
-- Impacto: Feedback claro de progresso
-
-**REQ-EXEC-005: Botão de Conclusão**
-
-- Só aparece quando pontuação >= 9
-- Posição: footer fixo
-- Texto: "Concluir Desafio" ou "Coletar Recompensa"
-- Cor: verde (#00FF00) ou cor primária
-- Animação de entrada: slide-up suave
-- Prioridade: ALTA
-- Impacto: Conclusão clara do desafio
-
-**REQ-EXEC-006: Mensagens de Estado**
-
-- Mensagem inicial ao entrar:
-  - "Observe 5 coisas ao seu redor. Pode ser visual, sonoro ou sensorial. Registre cada observação."
-- Mensagem ao atingir 9 pontos:
-  - "Ótimo! Você atingiu o mínimo. Continue ou finalize agora."
-- Mensagem ao atingir 15+ pontos:
-  - "Excelente! Você está em estado de presença profunda."
+- Ícone: Coroa (dourada/amarela) em card
+- Título: "Respira Livre Premium" (manter do atual)
+- Subtítulo: "O método completo para sua liberdade definitiva"
+- Frame de referência: video4/`docs\Frames_PRD\frame_1896.png`
 - Prioridade: MÉDIA
-- Impacto: Orientação e incentivo
 
-**REQ-EXEC-007: Tela de Conclusão**
+**REQ-VENDA-011: Lista de Benefícios Híbrida**
 
-- Similar ao Frame 0001 (Desafio Concluído)
-- Ícone: troféu verde ou símbolo zen
-- Título: "Desafio Concluído!"
-- Texto motivacional customizado para Mindfulness:
-  - "Você exercitou sua presença! Sua consciência está mais afiada."
-- Exibir:
-  - Pontuação final
-  - XP ganho
-  - Coins ganhos
-  - Bônus (se aplicável)
-- CTA: "Concluir e Coletar Pontos" (verde)
+- Combinar melhor da versão atual + referência
+- Itens aprovados da versão atual:
+  - ✅ "Sistema gamificado completo com 50+ desafios progressivos"
+- Itens aprovados da versão referência:
+  - ✅ "Coach IA personalizado 24/7 baseado no seu perfil"
+  - ✅ "Comunidade exclusiva de apoio com mentores certificados"
+  - ✅ "Garantia de 30 dias - sua liberdade ou seu dinheiro de volta"
+- Design: Checkmarks verdes, texto branco
+- Frames de referência: video4/`docs\Frames_PRD\frame_0480.png`, video4/`docs\Frames_PRD\frame_1896.png`
 - Prioridade: ALTA
-- Impacto: Fechamento satisfatório da experiência
+- Status: "Solução personalizada é interessante" (Vídeo 4, 00:16s)
 
----
+#### 3.4.6 Elementos de Urgência
 
-### 3.4 Correções de Desafios Existentes
+**REQ-VENDA-012: Timer de Oferta**
 
-**REQ-CORR-001: Desafio Mindfulness Antigo - Remoção**
-
-- Remover completamente o desafio atual (Técnica dos 3 Passos)
-- Substituir por novo Botão de Emergência (REQ-MIND-001 a 008)
-- Migrar ou manter dados históricos de usuários (se aplicável)
-- Prioridade: CRÍTICA
-- Impacto: Melhoria radical de UX
-- Referência: Rejeição total do design atual
-
-**REQ-CORR-002: Desafio Resistência - Melhorias UX**
-
-- Garantir scroll adequado em todo o conteúdo
-- Reduzir densidade de texto na tela de apresentação
-- Considerar mover instruções detalhadas para modal "Como Funciona"
-- Prioridade: ALTA (se desafio for mantido)
-- Impacto: Legibilidade e acessibilidade
-- Referência: Parte 2, Frame 4440, 02:52s - 03:01s
-
-**REQ-CORR-003: Desafio Resistência - Auto-Completar**
-
-- Remover necessidade de clicar em "Concluir" manualmente
-- Desafio deve auto-completar ao atingir meta ou tempo expirar
-- Transição automática para tela de recompensas
-- Prioridade: ALTA (se desafio for mantido)
-- Impacto: Fluidez da experiência
-- Referência: Parte 2, 04:32s - "quebra a dinâmica ali"
-
-**REQ-CORR-004: Padronização de Botões**
-
-- Desafios com opção de "Pular": manter botões em stack vertical
-- Ordem: "Começar Desafio" (primário) acima, "Pular Desafio" (secundário) abaixo
-- Espaçamento: 12px entre botões
+- Visualizado na versão atual: "⏱️ Oferta expira em: 14:23"
+- Cor: Vermelho/laranja
+- Frame de referência: video4/`docs\Frames_PRD\frame_0480.png`
+- Ação: MANTER
 - Prioridade: MÉDIA
-- Impacto: Consistência e preferência do usuário
-- Referência: Parte 2, 03:05s - "Mas eu ainda prefiro um abaixo do outro"
+- Nota: Garantir que timer seja real e não enganoso
+
+**REQ-VENDA-013: Prova Social**
+
+- Texto: "X pessoas conquistaram a liberdade esta semana"
+- Número dinâmico em verde/destaque
+- Frame de referência: video4/`docs\Frames_PRD\frame_0480.png` (mostra "1.847 pessoas")
+- Ação: MANTER
+- Prioridade: MÉDIA
+
+#### 3.4.7 Elementos a NÃO Incluir
+
+**REQ-VENDA-014: Remover "Elite Liberdade" como Título**
+
+- Problema: "Essa elite liberdade é meio, sei lá" (Vídeo 4, 00:39-46s)
+- Ação: Usar "Seu Perfil de Liberdade" (versão raiz) como base
+- Integrar copy da classificação e desconto (versão referência)
+- Prioridade: MÉDIA
+- Decisão: Título "Elite Liberdade" pode aparecer como badge/achievement, mas não como título principal da página
+
+#### 3.4.8 Personalização Avançada (Roadmap Futuro)
+
+**REQ-VENDA-015: Comunicação de Plano Personalizado**
+
+- Descrição: "aqui já dá pra tipo assim ser na intenção de falar tipo ó mano, isso aqui é um plano personalizado pra você" (Vídeo 4, 01:34-42s)
+- Copy sugerida: Adicionar frase como "Este plano foi personalizado especialmente para o seu perfil" ou similar
+- Prioridade: MÉDIA
+- Status: Prioridade 1 (MVP)
+
+**REQ-VENDA-016: Dados Personalizados Reais (Futuro)**
+
+- Descrição: "Óbvio que quanto mais realista melhor, se der pra ter alguma forma de tipo assim eh colocar dados personalizados" (Vídeo 4, 01:43-50s)
+- Decisão: "Ou isso aí pode ser colocado como prioridade nível 2, que a gente vai otimizar depois" (Vídeo 4, 01:50-56s)
+- Exemplos de personalização futura:
+  - Recomendar duração do programa baseado em perfil
+  - Sugerir desafios específicos
+  - Ajustar preço/parcelamento baseado em análise de perfil
+- Prioridade: BAIXA (Prioridade Nível 2)
+- Status: Roadmap futuro, não urgente
+
+#### 3.4.9 Distribuição e Layout
+
+**REQ-VENDA-017: Correção de Hierarquia Visual**
+
+- Problema: "essas informações aqui... não gostei das forma que tá distribuída" (Vídeo 4, 01:05-11s)
+- Estrutura aprovada (ordem top-to-bottom):
+  1. Contextualização por conquistas
+  2. Card "Seu Perfil de Liberdade"
+  3. Badge "Oferta Exclusiva Desbloqueada"
+  4. Título "Sua Classificação Desbloqueou"
+  5. "70% DE DESCONTO" (gigante)
+  6. Copy de exclusividade
+  7. Preço com economia
+  8. Card do produto com benefícios
+  9. Timer e prova social
+  10. CTA principal
+- Decisão: "Pode vir abaixo do seu perfil de liberdade" (Vídeo 4, 01:19-23s) - referindo-se ao bloco de oferta
+- Prioridade: ALTA
+
+**REQ-VENDA-018: CTA Principal**
+
+- Texto sugerido: "🛡️ Garantir Minha Liberdade Agora" (inspirado na versão atual)
+- OU: "Garantir Minha Oferta Exclusiva"
+- Cor: Verde neon/brilhante (alta conversão)
+- Tamanho: Grande, proeminente
+- Posicionamento: Após todos os benefícios
+- Prioridade: ALTA
 
 ---
 
@@ -565,535 +695,354 @@ Este documento especifica tecnicamente:
 
 ### 4.1 Performance
 
-**REQ-PERF-001: Tempo de Carregamento**
+**REQ-PERF-001: Tempo de Resposta de Cliques**
 
-- Tela de apresentação do desafio: <1s em conexão 3G
-- Transição entre telas: <300ms
-- Animações: 60 FPS consistente
+- Todos os cliques em botões coloridos (Memória Livre) devem ter feedback visual em <100ms
 - Prioridade: ALTA
+- Justificativa: Bug atual de lógica péssima pode estar relacionado a delay
 
-**REQ-PERF-002: Responsividade de Botões**
+**REQ-PERF-002: Frame Rate de Animações**
 
-- Feedback visual em <50ms após toque
-- Vibração (se habilitada) em <30ms
-- Atualização de pontuação em <100ms
-- Prioridade: CRÍTICA (afeta sensação de responsividade)
+- Todas as animações devem rodar a 60fps
+- Animações de feedback devem ser suaves e não travar
+- Prioridade: MÉDIA
 
-**REQ-PERF-003: Otimização de Assets**
+**REQ-PERF-003: Carregamento de Sons**
 
-- Ícones: SVG sempre que possível
-- Imagens: WebP com fallback PNG
-- Animações: CSS transitions/animations, evitar JS quando possível
+- Sons devem ser pré-carregados ao iniciar desafio
+- Sem delay entre clique e reprodução de som
 - Prioridade: MÉDIA
 
 ### 4.2 Acessibilidade
 
-**REQ-ACESS-001: Contraste WCAG AA**
+**REQ-ACES-001: Suporte a Memorização por Som**
 
-- Todos os textos devem ter contraste mínimo 4.5:1
-- Botões e elementos interativos: 3:1 mínimo
-- Testar com ferramenta de contraste (WebAIM, Lighthouse)
-- Prioridade: ALTA
-
-**REQ-ACESS-002: Áreas de Toque**
-
-- Botões: mínimo 44x44px (iOS) / 48x48dp (Android)
-- Espaçamento entre botões: mínimo 8px
-- Prioridade: CRÍTICA
-
-**REQ-ACESS-003: Suporte a Screen Readers**
-
-- Labels ARIA adequados em todos os elementos interativos
-- Anúncio de mudanças de estado (pontuação, conclusão)
-- Ordem lógica de foco (tab order)
+- Desafio Memória Livre deve ser completável apenas com sons (sem visual)
+- Cada cor tem som único e distinguível
 - Prioridade: MÉDIA
 
-**REQ-ACESS-004: Suporte a Modo Escuro/Claro**
+**REQ-ACES-002: Feedback Multimodal**
 
-- Design atual é dark mode nativo
-- Considerar implementação de light mode futuro
+- Todo feedback deve ter componente visual + sonoro
+- Suporte a vibração em dispositivos móveis (opcional)
 - Prioridade: BAIXA
+
+**REQ-ACES-003: Contraste e Legibilidade**
+
+- Todas as cores de botões devem passar WCAG AA
+- Textos devem ter contraste mínimo 4.5:1
+- Prioridade: MÉDIA
 
 ### 4.3 Compatibilidade
 
-**REQ-COMPAT-001: Navegadores**
+**REQ-COMP-001: Responsividade**
 
-- Chrome/Edge: últimas 2 versões
-- Safari: últimas 2 versões
-- Firefox: últimas 2 versões
-- Mobile browsers: Safari iOS 14+, Chrome Android 90+
+- Todos os desafios devem funcionar em mobile (principal) e desktop
+- Grid de botões deve adaptar para diferentes tamanhos de tela
 - Prioridade: ALTA
 
-**REQ-COMPAT-002: Dispositivos**
+**REQ-COMP-002: Navegadores**
 
-- Smartphones: iPhone 8+ / Android 8.0+
-- Tablets: iPad Air 2+ / Android tablets
-- Desktop: 1280x720 mínimo
-- Prioridade: ALTA
-
-**REQ-COMPAT-003: Orientações**
-
-- Portrait: otimizado (preferencial)
-- Landscape: suportado mas não otimizado
+- Suporte: Chrome, Safari, Firefox, Edge (últimas 2 versões)
 - Prioridade: MÉDIA
 
-### 4.4 Segurança e Dados
+### 4.4 Segurança e Integridade
 
-**REQ-SEG-001: Armazenamento de Progresso**
+**REQ-SEG-001: Validação Server-Side**
 
-- Salvar pontuação e progresso localmente (localStorage/IndexedDB)
-- Sincronizar com servidor quando online
-- Garantir integridade de dados (não permitir manipulação local)
+- Pontuações e recompensas devem ser validadas no servidor
+- Impedir manipulação client-side de XP/Coins
 - Prioridade: ALTA
 
-**REQ-SEG-002: Privacidade**
+**REQ-SEG-002: Timer Real**
 
-- Não coletar dados sensíveis de observações
-- Analytics: apenas eventos agregados (desafio iniciado, concluído, pontuação)
+- Timer de oferta na página de vendas deve ser baseado em timestamp real
+- Não deve ser enganoso ou resetar artificialmente
 - Prioridade: ALTA
 
 ---
 
 ## 5. ESPECIFICAÇÕES DE DESIGN
 
-### 5.1 Cores
+### 5.1 Sistema de Cores
 
-**Paleta do Novo Desafio Mindfulness:**
+**Paleta Principal (Versão Raiz - Aprovada):**
 
-```
-Primária:    #00CED1 (Turquesa) ou #3EB489 (Verde Água)
-Secundária:  #1E90FF (Azul Elétrico) para destaques
-Fundo:       #000000 (Preto)
-Card BG:     #1A1A1A (Cinza Escuro)
-Texto:       #FFFFFF (Branco) / #CCCCCC (Cinza Claro)
-Sucesso:     #00FF00 (Verde Neon)
-XP:          #00FF00 (Verde)
-Coins:       #FFD700 (Amarelo Ouro)
-```
+- Background: Preto (#000000) ou cinza muito escuro
+- Cards: Cinza escuro com leve transparência
+- Primário (CTAs): Roxo/Magenta vibrante
+- Secundário: Verde neon (para sucessos, XP, highlights)
+- Terciário: Amarelo/Dourado (para XP, destaques especiais)
+- Erro: Vermelho (#FF3B3B ou similar)
+- Coins: Verde (#00D26A ou similar)
 
-**Paleta Foco Laser (Referência):**
+**Cores dos Botões (Memória Livre):**
 
-```
-Primária:    #FFD700 (Amarelo Ouro)
-Secundária:  #D4AF37 (Dourado)
-```
+- Verde: #00FF00 ou #00D26A (verde vibrante)
+- Amarelo: #FFD700 ou #FFEB3B (amarelo brilhante)
+- Azul: #00A6FF ou #2196F3 (azul claro/ciano)
+- Roxo: #FF00FF ou #E91E63 (rosa/magenta)
 
-**Paleta Memória Livre (Referência):**
+**Cores de Feedback:**
 
-```
-Primária:    #FF69B4 (Rosa/Magenta)
-Secundária:  #C71585 (Magenta Escuro)
-```
+- Sucesso: Verde #00D26A
+- Erro: Vermelho #FF3B3B
+- Destaque de oferta: Vermelho/laranja #FF6B35
+- Economia: Verde #00FF88
 
 ### 5.2 Tipografia
 
-**Família de Fonte:** Inter, SF Pro Display, ou Roboto (sans-serif)
+**Hierarquia de Textos:**
 
-**Tamanhos e Pesos:**
+- H1 (Títulos principais): 32-40px, Bold/Heavy
+- H2 (Subtítulos): 24-28px, Semibold
+- H3 (Seções): 18-22px, Semibold
+- Body: 16px, Regular
+- Small (labels): 12-14px, Regular
 
-```
-H1 (Título Desafio):     28px, Bold (700)
-H2 (Subtítulo):          16px, Regular (400)
-H3 (Seções):             20px, SemiBold (600)
-Corpo (Instruções):      14px, Regular (400)
-Corpo (Passos):          14px, Regular (400)
-Números (Pontos):        32px, Bold (700) - tela de execução
-Números (Passos):        18px, Bold (700)
-Botões CTA:              16px, SemiBold (600)
-Botões Secundários:      14px, Medium (500)
-Badges:                  12px, Bold (700)
-```
+**Fontes Sugeridas:**
 
-### 5.3 Espaçamento/Grid
+- Sans-serif moderna (ex: Inter, SF Pro, Poppins)
+- Monospace para números de XP/Coins (opcional)
 
-**Sistema de Espaçamento (múltiplos de 4px):**
+### 5.3 Espaçamento e Grid
 
-```
-XXS:  4px   - Spacing interno mínimo
-XS:   8px   - Entre elementos muito próximos
-S:    12px  - Entre botões stacked
-M:    16px  - Padrão entre elementos
-L:    20px  - Padding de cards
-XL:   24px  - Entre seções
-XXL:  32px  - Margens externas
-XXXL: 48px  - Espaçamento de destaque
-```
+**Espaçamento:**
 
-**Grid Layout (Mobile):**
+- Padding interno de cards: 20-24px
+- Margem entre elementos: 16px (padrão)
+- Margem entre seções: 32-40px
 
-```
-Container Width:  92% (4% margin cada lado)
-Max Width:        480px (smartphones grandes)
-Gutters:          16px entre colunas
-```
+**Grid de Botões (Memória Livre):**
 
-**Grid Layout (Tablet/Desktop):**
-
-```
-Container Width:  80%
-Max Width:        768px
-Gutters:          24px
-```
+- Layout: 2x2
+- Gap entre botões: 16-20px
+- Tamanho dos botões: Quadrados, 140-160px (mobile)
+- Border radius: 16-20px
 
 ### 5.4 Animações
 
 **Duração Padrão:**
 
-- Micro-interações: 150ms (hover, click)
-- Transições: 300ms (mudança de tela)
-- Animações complexas: 500ms (entrada de elementos)
-- Loading states: 1000ms+ (skeleton screens)
+- Feedback de clique: 200-300ms
+- Transições de tela: 300-400ms
+- Animações de sucesso: 400-600ms
 
-**Easing Functions:**
+**Easing:**
 
-- Entrada: `cubic-bezier(0.4, 0.0, 0.2, 1)` (ease-out)
-- Saída: `cubic-bezier(0.0, 0.0, 0.2, 1)` (ease-in)
-- Bidirecion: `cubic-bezier(0.4, 0.0, 0.6, 1)` (ease-in-out)
-
-**Animações Específicas do Mindfulness:**
-
-**Botão Central ao Clicar:**
-
-```css
-@keyframes buttonPulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-duration: 300ms;
-```
-
-**Pontos Flutuando ao Ganhar:**
-
-```css
-@keyframes pointsFloat {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-40px) scale(1.5);
-    opacity: 0;
-  }
-}
-duration: 800ms;
-```
-
-**Botão Concluir Aparecendo:**
-
-```css
-@keyframes slideUp {
-  0% { transform: translateY(100px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
-}
-duration: 400ms
-easing: ease-out
-```
+- Cliques: ease-out
+- Transições: ease-in-out
+- Celebrações: cubic-bezier custom para "bounce"
 
 ### 5.5 Efeitos Visuais
 
-**Sombras (Elevation):**
+**Aprovados:**
 
-```css
-/* Cards */
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+- Glow sutil em botões ativos
+- Scale up em hover/active
+- Border highlights
+- Partículas/confetti em sucessos
 
-/* Botões Elevated */
-box-shadow: 0 6px 20px rgba(0, 206, 209, 0.4); /* Turquesa com 40% opacity */
+**Proibidos:**
 
-/* Modal/Overlay */
-box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
-```
-
-**Gradientes:**
-
-```css
-/* Fundo Sutil */
-background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
-
-/* Botão Primário Mindfulness */
-background: linear-gradient(135deg, #00ced1 0%, #1e90ff 100%);
-
-/* Card de Recompensa */
-background: linear-gradient(
-  90deg,
-  rgba(0, 206, 209, 0.1) 0%,
-  rgba(30, 144, 255, 0.1) 100%
-);
-```
-
-**Border Radius:**
-
-```
-Botões:      12px
-Cards:       16px
-Badges:      20px (pill shape)
-Ícones:      20px (rounded square)
-```
-
-**Blur Effects:**
-
-```css
-/* Backdrop de Modal */
-backdrop-filter: blur(10px);
-background: rgba(0, 0, 0, 0.7);
-
-/* Card Glass Effect (opcional) */
-backdrop-filter: blur(16px) saturate(180%);
-background: rgba(26, 26, 26, 0.75);
-border: 1px solid rgba(255, 255, 255, 0.125);
-```
+- "Estética de vidro" (glassmorphism) - explicitamente rejeitado
+- Blur excessivo em backgrounds
+- Gradientes complexos em versão de referência
 
 ---
 
 ## 6. ELEMENTOS A MANTER
 
-### 6.1 Estrutura Aprovada (Foco Laser / Memória Livre)
+### 6.1 Da Versão Raiz (lovable.app)
 
-**Manter 100%:**
+- ✅ Design global (aprovado: "tá perfeito")
+- ✅ Paleta de cores escura e vibrante
+- ✅ Estrutura de cards
+- ✅ "Seu Perfil de Liberdade" como base
+- ✅ Timer de oferta
+- ✅ Prova social (X pessoas conquistaram)
+- ✅ Badge/pill de "Step: X"
+- ✅ Botão "Pular Desafio (Sem Recompensas)"
+- ✅ Tela de erro "Não foi dessa vez!"
 
-- Layout de card com ícone + badge de nível
-- Seção "Como Funciona" com 3 passos
-- Card de Recompensas separado
-- Botão CTA full-width na cor do desafio
-- Badge "Step: X" no canto inferior direito
-- Hierarquia visual: Ícone → Título → Como Funciona → Recompensas → CTA
+### 6.2 Da Versão de Referência (vercel.app)
 
-**Referência:** Frame 240, Frame 6816
-
-### 6.2 Tela de Conclusão (Frame 0001)
-
-**Manter Estrutura:**
-
-- Ícone de troféu grande e centralizado
-- Título "Desafio Concluído!"
-- Texto motivacional (customizar por desafio)
-- Card com estatísticas:
-  - Nível Final
-  - Pontos Ganhos
-  - Bônus de Conclusão
-- Botão verde "Concluir e Coletar Pontos"
-
-### 6.3 Sistema de Navegação
-
-**Manter:**
-
-- Barra inferior com 5 ícones
-- Indicação visual de página ativa
-- Animações suaves de transição
+- ✅ Copy "Oferta Exclusiva Desbloqueada"
+- ✅ Copy "Sua Classificação Desbloqueou"
+- ✅ Copy "70% DE DESCONTO"
+- ✅ Copy "Apenas para quem completou a jornada como você"
+- ✅ Badge de economia "Você economizou R$ X"
+- ✅ Benefício "Coach IA personalizado 24/7"
+- ✅ Benefício "Comunidade exclusiva"
+- ✅ Benefício "Garantia de 30 dias"
+- ✅ Conceito de boss (para futura implementação)
 
 ---
 
 ## 7. ELEMENTOS A MODIFICAR/ADICIONAR
 
-### 7.1 Desafio Mindfulness - Completo Redesign
+### 7.1 Desafio Memória Livre
 
-**Modificar:**
+**MODIFICAR:**
 
-- Substituir "Técnica dos 3 Passos" por "Botão de Emergência"
-- Mudar título de "Desafio Mindfulness" para "Desafio: Observação Consciente" ou similar
-- Substituir subtítulo por algo acionável: "Exercite sua presença através dos sentidos"
-- Criar nova tela de execução conforme REQ-EXEC-001 a 007
+- ❌ Lógica de validação (remover automação)
+- ❌ Sistema de sequências (padronizar)
+- ❌ Animações de feedback (melhorar)
+- ❌ Seleção de botões (clarear estado)
 
-**Adicionar:**
+**ADICIONAR:**
 
-- Sistema de botões multi-sensoriais
-- Sistema de pontuação diferenciada
-- Animações de feedback sensorial
-- Mensagens de incentivo à honestidade
+- ➕ Botão "Confirmar Sequência"
+- ➕ Botão "Resetar"
+- ➕ Sons únicos por cor
+- ➕ Sistema de 2 níveis
+- ➕ Tela de transição entre níveis
+- ➕ Nível 2 opcional com copy motivacional
+- ➕ Estrutura de bônus
+- ➕ Indicadores de nível (1 de 2, 2 de 2)
 
-### 7.2 Todos os Desafios - Padronização
+### 7.2 Novo Desafio: Foco Rápido
 
-**Modificar:**
+**CRIAR DO ZERO (design raiz):**
 
-- Garantir que todos seguem estrutura do Foco Laser
-- Padronizar botões: vertical stack, não horizontal
-- Uniformizar tamanhos de fonte e espaçamentos
+- ➕ Mecânica de inimigos aparecendo
+- ➕ Sistema de spawn aleatório
+- ➕ Contador de acertos
+- ➕ Barra de tempo (45s)
+- ➕ Feedback de eliminação
+- ➕ Sistema de tiers de recompensa
+- ➕ Badge "Reflexos de Elite"
 
-**Adicionar:**
+### 7.3 Página de Vendas
 
-- Indicador de step/progresso em todos os desafios (se não houver)
-- Badges de nível consistentes
+**MODIFICAR:**
 
-### 7.3 Desafio Resistência - Se Mantido
+- ❌ Hierarquia de informações (reorganizar)
+- ❌ Posição do bloco de oferta (abaixo do perfil)
 
-**Modificar:**
+**ADICIONAR:**
 
-- Reduzir texto da tela de apresentação
-- Remover botão "Concluir" manual, tornar auto-conclusão
-- Implementar scroll adequado
-
-**Nota:** Desafio pode ser movido para "gaveta" (backlog) conforme feedback
+- ➕ "Baseado nas suas X conquistas"
+- ➕ Badge vermelho "Oferta Exclusiva Desbloqueada"
+- ➕ "Sua Classificação Desbloqueou"
+- ➕ "70% DE DESCONTO" em destaque
+- ➕ Badge de economia
+- ➕ Benefícios híbridos (versão raiz + referência)
+- ➕ Copy "Este plano foi personalizado para você"
 
 ---
 
 ## 8. FLUXO DE USUÁRIO
 
-### 8.1 Fluxo Principal - Novo Desafio Mindfulness
+### 8.1 Fluxo Principal: Desafio Memória Livre
 
 ```
-1. DESCOBERTA
-   └─ Usuário visualiza lista de desafios
-      └─ Vê card do "Desafio: Observação Consciente"
-         └─ Ícone turquesa + Badge "Nível 2"
+1. [Tela de Apresentação]
+   - Visualiza: Título, descrição, recompensas
+   - Ação: Clica "Começar Desafio"
+   ↓
+2. [Nível 1: Apresentação]
+   - Sistema mostra sequência de 2 cores (visual + som)
+   - Indicador: "Nível 1 de 2"
+   - Usuário observa e memoriza
+   ↓
+3. [Nível 1: Reprodução]
+   - Usuário clica nas cores na ordem
+   - Feedback visual e sonoro a cada clique
+   - Botões disponíveis: "Confirmar Sequência" / "Resetar"
+   ↓
+4a. [Nível 1: Sucesso]
+   - Animação de sucesso
+   - Exibe recompensa: +200 XP +100 Coins
+   - Tela de transição com opções:
+     • "Aceitar Nível 2" (com preview de bônus)
+     • "Finalizar e Coletar Recompensas"
+   ↓
+5a. [Se aceitar Nível 2]
+   - Sistema mostra sequência de 5 cores (mais lento)
+   - Indicador: "Nível 2 de 2"
+   - Fluxo similar ao Nível 1
+   ↓
+6a. [Nível 2: Sucesso]
+   - Animação de grande sucesso (confetti)
+   - Exibe bônus: +300 XP +200 Coins
+   - Badge desbloqueado: "Mente de Aço"
+   - Retorna ao mapa de desafios
 
-2. APRESENTAÇÃO
-   └─ Usuário toca no card
-      └─ Tela de apresentação carrega (<1s)
-         └─ Exibe:
-            - Ícone grande + Badge
-            - Título e subtítulo
-            - "Como Funciona" (3 passos)
-            - Recompensas (+150 XP, +50 Coins)
-            - Botão "Começar Desafio"
+OU
 
-3. INÍCIO
-   └─ Usuário toca "Começar Desafio"
-      └─ Transição para tela de execução (300ms)
-         └─ Exibe:
-            - Mensagem inicial orientadora
-            - Botão grande central
-            - 3 botões sensoriais
-            - Contador "Pontos: 0 / 9"
+5b. [Se finalizar após Nível 1]
+   - Coleta recompensas do Nível 1
+   - Retorna ao mapa de desafios
 
-4. EXECUÇÃO - Opção A (Botão Grande)
-   └─ Usuário observa 5 coisas ao redor
-      └─ Toca botão central grande
-         └─ Feedback:
-            - Animação de pulso
-            - Vibração
-            - Pontos: 0 → 3
-            - Número "+3" flutua
+OU
 
-   └─ Usuário observa mais 5 coisas
-      └─ Toca botão central novamente
-         └─ Pontos: 3 → 6
-
-   └─ Usuário observa mais 5 coisas
-      └─ Toca botão central terceira vez
-         └─ Pontos: 6 → 9
-            └─ Botão "Concluir" aparece (slide-up)
-            └─ Mensagem: "Ótimo! Você atingiu o mínimo"
-
-5. EXECUÇÃO - Opção B (Botões Específicos)
-   └─ Usuário vê uma árvore (visual)
-      └─ Toca botão "Ver"
-         └─ Pontos: 0 → 1
-
-   └─ Usuário ouve pássaro (auditivo)
-      └─ Toca botão "Ouvir"
-         └─ Pontos: 1 → 4
-
-   └─ Usuário sente brisa (sensorial)
-      └─ Toca botão "Sentir"
-         └─ Pontos: 4 → 9
-            └─ Botão "Concluir" aparece
-
-6. EXECUÇÃO - Opção C (Misto)
-   └─ Usuário combina botões:
-      - Botão grande: +3 (total: 3)
-      - "Ouvir": +3 (total: 6)
-      - "Sentir": +5 (total: 11)
-         └─ Excedeu mínimo
-         └─ Botão "Concluir" disponível
-
-7. CONCLUSÃO
-   └─ Usuário toca "Concluir"
-      └─ Transição para tela de conclusão (300ms)
-         └─ Exibe:
-            - Troféu turquesa
-            - "Desafio Concluído!"
-            - Texto: "Você exercitou sua presença!"
-            - Pontuação final: 11 pontos
-            - XP ganho: +150
-            - Coins ganhos: +50
-            - Botão "Concluir e Coletar Pontos"
-
-8. FINALIZAÇÃO
-   └─ Usuário toca "Concluir e Coletar Pontos"
-      └─ Pontos são adicionados ao perfil
-      └─ Retorna para lista de desafios ou home
-      └─ Desafio marcado como concluído (badge/check)
+4b. [Nível 1: Erro]
+   - Tela de erro: "Não foi dessa vez!"
+   - Copy motivacional
+   - Opções: "Tentar Novamente" / "Pular Desafio"
 ```
 
-### 8.2 Fluxos Alternativos
-
-**ALT-001: Usuário Desiste no Meio**
+### 8.2 Fluxo Principal: Desafio Foco Rápido
 
 ```
-1. Durante execução
-   └─ Usuário toca botão "Voltar" (<) ou gesture de voltar
-      └─ Modal de confirmação:
-         "Deseja sair do desafio? Seu progresso será perdido."
-         [Continuar Desafio] [Sair]
-
-      Opção A: [Continuar Desafio]
-      └─ Modal fecha, volta para execução
-
-      Opção B: [Sair]
-      └─ Retorna para lista de desafios
-      └─ Nenhum ponto/XP ganho
-      └─ Analytics: evento "desafio_abandonado"
+1. [Tela de Apresentação]
+   - Visualiza: Título, descrição, tempo limite (45s)
+   - Ação: Clica "Começar Desafio"
+   ↓
+2. [Jogo: Loop Principal]
+   - Timer inicia contagem regressiva
+   - Inimigos aparecem aleatoriamente
+   - Usuário clica para eliminar
+   - Contador de acertos atualiza em tempo real
+   - Loop continua por 45s
+   ↓
+3. [Fim do Desafio]
+   - Timer chega a 0
+   - Sistema calcula tier de recompensa:
+     • 10-19 acertos: Tier 1
+     • 20-29 acertos: Tier 2
+     • 30+ acertos: Tier 3 + Badge
+   ↓
+4. [Tela de Resultado]
+   - Exibe total de acertos
+   - Animação baseada em tier
+   - Recompensas coletadas
+   - Opção: "Continuar" (retorna ao mapa)
 ```
 
-**ALT-002: Usuário Excede Largamente o Mínimo**
+### 8.3 Fluxo Principal: Página de Vendas
 
 ```
-1. Usuário atinge 20+ pontos
-   └─ Mensagem especial:
-      "Incrível! Você está em estado de presença profunda. Continue quanto quiser."
-   └─ Possível badge especial: "Mestre da Observação"
-   └─ Bônus de XP/Coins aumentado: +50% sobre o padrão
-```
-
-**ALT-003: Usuário Explora Botão Após Atingir Mínimo**
-
-```
-1. Pontos >= 9
-   └─ Botão "Concluir" visível
-   └─ Usuário continua clicando
-      └─ Pontos continuam aumentando
-      └─ Sistema permite (sem limite superior)
-      └─ Mensagem de encorajamento a cada 5 pontos adicionais
-```
-
-### 8.3 Casos de Erro
-
-**ERR-001: Falha ao Carregar Desafio**
-
-```
-Cenário: API não responde ou erro de rede
-Resposta:
-- Exibir toast: "Não foi possível carregar o desafio. Verifique sua conexão."
-- Botão: "Tentar Novamente"
-- Fallback: Carregar dados em cache (se disponível)
-```
-
-**ERR-002: Falha ao Salvar Progresso**
-
-```
-Cenário: Erro ao sincronizar com servidor
-Resposta:
-- Salvar localmente (localStorage/IndexedDB)
-- Toast: "Progresso salvo localmente. Sincronizaremos quando possível."
-- Ícone de cloud offline no header
-- Tentar resync em background
-```
-
-**ERR-003: Usuário Tenta Começar Desafio Já Concluído Hoje**
-
-```
-Cenário: Sistema de cooldown/limite diário
-Resposta:
-- Modal: "Você já completou este desafio hoje! Volte amanhã para mais recompensas."
-- Botão: "Ver Outros Desafios"
-- Alternativa: Permitir repetir sem ganhar XP/Coins (modo prática)
+1. [Chegada na Página]
+   - Usuário completa jornada de desafios
+   - Redirecionamento automático
+   ↓
+2. [Visualização do Perfil]
+   - Vê "Baseado nas suas X conquistas"
+   - Vê card com suas métricas (XP, Coins, Badges)
+   - Vê Nível de Prontidão: 100%
+   ↓
+3. [Descoberta da Oferta]
+   - Scroll down
+   - Badge vermelho: "OFERTA EXCLUSIVA DESBLOQUEADA"
+   - Título: "Sua Classificação Desbloqueou"
+   - Desconto: "70% DE DESCONTO" (gigante, verde)
+   - Copy: "Apenas para quem completou a jornada como você"
+   ↓
+4. [Análise de Valor]
+   - Vê preço original riscado
+   - Vê preço com desconto (grande)
+   - Vê economia total
+   - Lê benefícios do produto
+   ↓
+5. [Urgência]
+   - Nota timer de oferta
+   - Vê prova social (X pessoas conquistaram)
+   ↓
+6. [Decisão]
+   - Clica CTA: "Garantir Minha Liberdade Agora"
+   - Redirecionamento para checkout
 ```
 
 ---
@@ -1102,658 +1051,316 @@ Resposta:
 
 ### 9.1 Métricas de Engajamento
 
-**ENG-001: Taxa de Início**
+**Desafios:**
 
-- **Métrica:** % de usuários que tocam "Começar Desafio" após visualizar apresentação
-- **Baseline:** 45% (estimado para desafio atual)
-- **Meta:** >65% (pós-redesign)
-- **Método:** Analytics - evento "desafio_visualizado" vs "desafio_iniciado"
+- Taxa de conclusão do Nível 1 (Memória Livre): Meta >70%
+- Taxa de tentativa do Nível 2 (Memória Livre): Meta >40%
+- Taxa de conclusão do Nível 2: Meta >25%
+- Taxa de conclusão (Foco Rápido): Meta >60%
+- Tempo médio por desafio: Benchmark a definir
 
-**ENG-002: Taxa de Conclusão**
+**Bugs Corrigidos:**
 
-- **Métrica:** % de usuários que completam o desafio após iniciar
-- **Baseline:** 30% (estimado)
-- **Meta:** >60%
-- **Método:** Evento "desafio_iniciado" vs "desafio_concluido"
-
-**ENG-003: Tempo Médio de Conclusão**
-
-- **Métrica:** Tempo entre início e conclusão
-- **Baseline:** N/A (novo desafio)
-- **Meta:** 3-5 minutos (ideal para mindfulness)
-- **Método:** Timestamp de início e fim
-
-**ENG-004: Pontuação Média**
-
-- **Métrica:** Média de pontos obtidos ao concluir
-- **Baseline:** N/A
-- **Meta:** >12 pontos (indicando exploração além do mínimo)
-- **Método:** Coleta de pontuação final
-
-**ENG-005: Taxa de Uso de Botões Específicos**
-
-- **Métrica:** % de usuários que usam botões "Ver", "Ouvir", "Sentir" vs apenas botão grande
-- **Baseline:** N/A
-- **Meta:** >40% usam pelo menos 1 botão específico
-- **Método:** Contagem de cliques por tipo de botão
-
-**ENG-006: Taxa de Repetição**
-
-- **Métrica:** % de usuários que completam o desafio 2+ vezes em 7 dias
-- **Baseline:** 15% (estimado para desafio atual)
-- **Meta:** >30%
-- **Método:** Contagem de conclusões por user_id em janela de 7 dias
+- Taxa de erros de validação automática: Meta = 0%
+- Reclamações de "jogo bugado": Meta = 0
 
 ### 9.2 Métricas de Qualidade
 
-**QUAL-001: Net Promoter Score (NPS)**
+**Performance:**
 
-- **Métrica:** "De 0 a 10, quanto você recomendaria este desafio?"
-- **Baseline:** N/A
-- **Meta:** NPS >50 (excelente)
-- **Método:** Survey após 3ª conclusão
+- Tempo de resposta de clique: <100ms
+- Frame rate de animações: 60fps
+- Bugs críticos abertos: 0
 
-**QUAL-002: Satisfação (CSAT)**
+**UX:**
 
-- **Métrica:** "Como você avalia sua experiência?" (1-5 estrelas)
-- **Baseline:** 3.2/5 (estimado para desafio atual)
-- **Meta:** >4.2/5
-- **Método:** Prompt opcional após conclusão
-
-**QUAL-003: Taxa de Abandono Precoce**
-
-- **Métrica:** % de usuários que saem antes de 30s ou 3 pontos
-- **Baseline:** 50% (estimado)
-- **Meta:** <20%
-- **Método:** Analytics - tempo/pontos ao evento "desafio_abandonado"
-
-**QUAL-004: Clareza de Instruções**
-
-- **Métrica:** % de usuários que entendem a mecânica sem ajuda
-- **Baseline:** N/A
-- **Meta:** >85% completam sem visualizar tutorial/ajuda
-- **Método:** Contagem de acessos a "Como Funciona" durante execução
+- Taxa de abandono em desafios: Meta <30%
+- Satisfação com feedback visual: Survey pós-desafio
 
 ### 9.3 Métricas de Negócio
 
-**NEG-001: Retenção D1 (Day 1)**
+**Conversão:**
 
-- **Métrica:** % de usuários que retornam 1 dia após completar desafio
-- **Baseline:** 35% (geral do app)
-- **Meta:** >45% (para usuários que completam Mindfulness)
-- **Método:** Análise de cohort
+- Taxa de conversão da página de vendas: Benchmark atual + 20-30% (esperado)
+- Valor médio de pedido: Manter ou aumentar
+- Taxa de rejeição na página de vendas: Meta <40%
 
-**NEG-002: Conversão para Premium**
+**Engajamento pré-venda:**
 
-- **Métrica:** % de usuários gratuitos que convertem após usar desafio
-- **Baseline:** 2.5% (geral)
-- **Meta:** >4% (desafio pode ser teaser de features premium)
-- **Método:** Tracking de conversão em 30 dias pós-uso
-
-**NEG-003: Tempo em App (Session Duration)**
-
-- **Métrica:** Tempo médio de sessão em dias com uso do desafio
-- **Baseline:** 8 minutos
-- **Meta:** >12 minutos
-- **Método:** Analytics de sessão
-
-**NEG-004: Progressão de Nível**
-
-- **Métrica:** % de usuários que sobem de nível no sistema de gamificação
-- **Baseline:** 40% em 30 dias
-- **Meta:** >55% (desafio contribui com XP significativo)
-- **Método:** Tracking de level_up eventos
+- Usuários que completam jornada completa: Meta >50%
+- Badges coletados por usuário: Média >3
 
 ---
 
 ## 10. IMPLEMENTAÇÃO
 
-### 10.1 Priorização (MVP/Fases)
+### 10.1 Priorização (MVP - Fase 1)
 
-#### FASE 1 - MVP (4-6 semanas) - CRÍTICO
+**URGENTE (Semana 1-2):**
 
-**Sprint 1-2: Fundação Visual e Apresentação**
+1. ✅ Corrigir bugs críticos do Memória Livre (REQ-MEM-001 a 004)
+2. ✅ Implementar botão de confirmação (REQ-MEM-005)
+3. ✅ Implementar sistema de 2 níveis (REQ-MEM-006, 007)
+4. ✅ Criar página de vendas híbrida (REQ-VENDA-001 a 018)
 
-- [ ] REQ-VISUAL-001: Implementar estrutura de card padrão
-- [ ] REQ-VISUAL-002: Definir e implementar paleta de cores do Mindfulness
-- [ ] REQ-VISUAL-003: Criar ícone do desafio
-- [ ] REQ-VISUAL-004: Implementar seção "Como Funciona"
-- [ ] REQ-VISUAL-005: Implementar card de Recompensas
-- [ ] REQ-VISUAL-006: Implementar botão CTA principal
-- [ ] REQ-MIND-001: Definir conceito e documentar mecânica
-- [ ] Tela de apresentação completa e funcional
+**ALTA PRIORIDADE (Semana 3-4):** 5. ✅ Implementar sons no Memória Livre (REQ-MEM-012) 6. ✅ Melhorar animações e feedback (REQ-MEM-013) 7. ✅ Criar Desafio Foco Rápido completo (REQ-FOC-001 a 005) 8. ✅ Implementar sistema de bônus do Nível 2 (REQ-MEM-009, 010, 011)
 
-**Sprint 3-4: Mecânica Core e Tela de Execução**
+**MÉDIA PRIORIDADE (Semana 5-6):** 9. ✅ Ajustar velocidade por nível (REQ-MEM-008) 10. ✅ Implementar contador de acertos (REQ-FOC-005) 11. ✅ Adicionar prova social e timer real (REQ-VENDA-012, 013) 12. ✅ Otimizar responsividade mobile (REQ-COMP-001)
 
-- [ ] REQ-EXEC-001: Implementar layout da tela principal
-- [ ] REQ-EXEC-002: Implementar botão central grande
-- [ ] REQ-EXEC-003: Implementar botões sensoriais (Ver, Ouvir, Sentir)
-- [ ] REQ-MIND-004: Implementar sistema de pontuação diferenciada
-- [ ] REQ-EXEC-004: Implementar display de pontuação
-- [ ] REQ-MIND-005: Implementar requisitos mínimos/máximos
-- [ ] REQ-EXEC-005: Implementar botão de conclusão condicional
-- [ ] REQ-PERF-002: Garantir responsividade de botões
+### 10.2 Fase 2 (Otimizações)
 
-**Sprint 5-6: Feedback, Animações e Conclusão**
+**BAIXA PRIORIDADE (Futuro):**
 
-- [ ] REQ-MIND-006: Implementar feedback visual e animações
-- [ ] REQ-EXEC-006: Implementar mensagens de estado
-- [ ] REQ-EXEC-007: Implementar tela de conclusão customizada
-- [ ] REQ-VISUAL-007: Ajustar espaçamento e hierarquia
-- [ ] REQ-CORR-001: Remover desafio antigo e ativar novo
-- [ ] Testes de QA completos
-- [ ] Deploy para produção
+- Boss Battle Challenge (REQ-FOC-006)
+- Personalização avançada com dados reais (REQ-VENDA-016)
+- Badges e conquistas adicionais
+- Analytics e A/B testing de variações
 
-**Entregáveis do MVP:**
+### 10.3 Dependências Técnicas
 
-- Novo Desafio Mindfulness 100% funcional
-- Design padronizado conforme Foco Laser/Memória Livre
-- Sistema de pontuação multi-sensorial operacional
-- Animações e feedback responsivos
-- Analytics básico implementado
+**Backend:**
 
-#### FASE 2 - Melhorias e Correções (2-3 semanas) - ALTA
+- Sistema de validação server-side de pontos/recompensas
+- API para atualizar perfil do usuário
+- Endpoint para gerar timer real de oferta
+- Armazenamento de progresso de desafios
 
-**Sprint 7-8: Correções de Desafios Existentes**
+**Frontend:**
 
-- [ ] REQ-CORR-002: Melhorias UX no Desafio Resistência (se mantido)
-- [ ] REQ-CORR-003: Implementar auto-completar no Resistência
-- [ ] REQ-CORR-004: Padronizar botões em todos os desafios
-- [ ] REQ-PERF-001: Otimização de carregamento
-- [ ] REQ-PERF-003: Otimização de assets
-- [ ] Testes A/B de variações (botão grande vs específicos)
+- Framework: React (presumido)
+- Biblioteca de animações: Framer Motion ou React Spring
+- Biblioteca de sons: Howler.js ou Web Audio API
+- State management: Context API ou Redux
 
-**Entregáveis da Fase 2:**
+**Assets:**
 
-- Desafio Resistência otimizado (ou movido para backlog)
-- Consistência visual em 100% dos desafios
-- Performance otimizada (<1s carregamento)
-- Dados de A/B tests coletados
+- Sons para 4 cores (formato: .mp3 ou .wav)
+- Ícones de inimigos (SVG)
+- Badges de conquistas .png` ou SVG)
+- Imagens de celebração/confetti
 
-#### FASE 3 - Acessibilidade e Polimento (2 semanas) - MÉDIA
+### 10.4 Estimativas (Opcionais)
 
-**Sprint 9-10: Acessibilidade e Refinamento**
+**Desenvolvimento:**
 
-- [ ] REQ-ACESS-001: Implementar contraste WCAG AA
-- [ ] REQ-ACESS-002: Garantir áreas de toque adequadas
-- [ ] REQ-ACESS-003: Implementar suporte a screen readers
-- [ ] REQ-MIND-007: Validar ausência de limite de tempo
-- [ ] REQ-MIND-008: Implementar mensagens de incentivo
-- [ ] Testes de usabilidade com usuários reais (5-10 pessoas)
-- [ ] Iterações baseadas em feedback
+- Correção de bugs Memória Livre: 2-3 dias
+- Novo sistema de níveis: 3-4 dias
+- Desafio Foco Rápido: 5-6 dias
+- Página de vendas híbrida: 2-3 dias
+- Implementação de sons: 1-2 dias
+- Animações e feedback: 2-3 dias
+- QA e testes: 3-4 dias
 
-**Entregáveis da Fase 3:**
-
-- WCAG AA compliance
-- Suporte completo a assistive technologies
-- Refinamentos baseados em usabilidade
-
-#### FASE 4 - Features Avançadas (Backlog) - BAIXA
-
-**Features Futuras (não priorizadas):**
-
-- [ ] REQ-ACESS-004: Modo claro (light mode)
-- [ ] Sistema de badges especiais (Mestre da Observação, etc)
-- [ ] Tutorial interativo first-time user experience (FTUE)
-- [ ] Variações de desafio (tempo limitado, tema específico)
-- [ ] Integração com outras features do app (diário, comunidade)
-- [ ] Desafio "Gaveta" - Jogo de eliminar inimigos (Frame 6120 conceito)
-
-### 10.2 Dependências Técnicas
-
-**Dependências Externas:**
-
-- Framework Frontend: React / React Native (assumido)
-- Sistema de Roteamento: React Router ou similar
-- Animações: Framer Motion ou React Spring (recomendado)
-- State Management: Redux / Context API / Zustand
-- Analytics: Google Analytics, Mixpanel, ou Amplitude
-- Backend API: endpoint para salvar/sincronizar progresso
-- Assets: ícones (biblioteca ou custom SVGs)
-
-**Dependências Internas:**
-
-- Sistema de gamificação existente (XP, Coins, Levels)
-- Sistema de autenticação (user_id para salvar progresso)
-- Design System (se existir, adaptar; se não, criar)
-- Infraestrutura de analytics já implementada
-
-**Bloqueios Potenciais:**
-
-- Aprovação de design final do ícone e paleta
-- Definição de recompensas (XP/Coins) - requer balanceamento
-- Sincronização com roadmap de outros desafios
-- Recursos de design/ilustração (se ícone for custom)
-
-### 10.3 Estimativas (opcional)
-
-**Baseado em squad típico (1 designer, 2 devs frontend, 1 QA):**
-
-**Fase 1 (MVP):**
-
-- Design: 40h (5 dias)
-- Frontend: 160h (20 dias / 2 devs)
-- Backend: 16h (2 dias - endpoints simples)
-- QA: 32h (4 dias)
-- **Total:** ~6 semanas calendar time
-
-**Fase 2 (Melhorias):**
-
-- Design: 16h (2 dias - ajustes)
-- Frontend: 64h (8 dias / 2 devs)
-- QA: 16h (2 dias)
-- **Total:** ~2-3 semanas
-
-**Fase 3 (Acessibilidade):**
-
-- Frontend: 48h (6 dias / 2 devs)
-- QA: 16h (2 dias)
-- **Total:** ~2 semanas
-
-**TOTAL ESTIMADO PARA FASES 1-3:** 10-11 semanas
+**Total estimado Fase 1:** 18-25 dias úteis
 
 ---
 
 ## 11. CRITÉRIOS DE ACEITAÇÃO
 
-### 11.1 Tela de Apresentação do Desafio
+### 11.1 Desafio Memória Livre
 
-- [ ] Ícone do desafio é exibido com cor turquesa/verde água conforme paleta definida
-- [ ] Badge de nível é exibida no topo direito do ícone (ex: "Nível 2")
-- [ ] Título "Desafio: Observação Consciente" (ou nome final aprovado) está em fonte bold, 28px, branco
-- [ ] Subtítulo descritivo está presente e legível (16px, cinza claro)
-- [ ] Seção "Como Funciona" contém exatamente 3 passos numerados
-- [ ] Cada passo tem texto claro e acionável (máx. 2 linhas)
-- [ ] Card de Recompensas exibe "+150 XP" em verde e "+50 Coins" em amarelo (ou valores finais aprovados)
-- [ ] Botão "Começar Desafio" é full-width, na cor primária, com ícone de raio
-- [ ] Badge "Step: X" aparece no canto inferior direito
-- [ ] Tempo de carregamento da tela é <1s em conexão 3G
-- [ ] Layout é idêntico (estruturalmente) ao Desafio Foco Laser aprovado
-- [ ] Todos os elementos têm contraste WCAG AA mínimo (4.5:1 para texto)
+- [ ] Nenhum avanço automático ocorre sem input do usuário
+- [ ] Botão "Confirmar Sequência" funciona corretamente
+- [ ] Botão "Resetar" limpa seleção atual
+- [ ] Sistema apresenta exatamente 2 níveis (não aleatório)
+- [ ] Nível 1 possui 2 sequências de cores
+- [ ] Nível 2 possui 5 sequências de cores
+- [ ] Nível 2 executa mais lento que Nível 1
+- [ ] Sons únicos tocam para cada cor (4 sons diferentes)
+- [ ] Feedback visual de clique é claro e instantâneo (<100ms)
+- [ ] Tela de transição entre níveis exibe copy motivacional
+- [ ] Opção de pular Nível 2 está disponível sem penalização
+- [ ] Recompensas de Nível 1: +200 XP +100 Coins
+- [ ] Recompensas de Nível 2: +300 XP +200 Coins + Badge
+- [ ] Tela de erro aparece APENAS após validação explícita
+- [ ] Animação de sucesso inclui confetti ou partículas
 
-### 11.2 Tela de Execução - Layout e Elementos
+### 11.2 Desafio Foco Rápido
 
-- [ ] Fundo é preto ou gradiente escuro conforme especificação
-- [ ] Display de pontuação está no topo: "Pontos: X / 9"
-- [ ] Botão central grande é um círculo, centralizado, com diâmetro 60-70% da largura
-- [ ] Botão central tem texto/ícone claro (ex: "Notei 5 coisas")
-- [ ] 3 botões sensoriais estão visíveis abaixo do botão central
-- [ ] Botões sensoriais têm labels claros: "️ Ver", " Ouvir", " Sentir"
-- [ ] Botões sensoriais estão distribuídos horizontalmente com espaçamento igual
-- [ ] Área de toque de todos os botões é >= 44x44px (iOS) ou 48x48dp (Android)
-- [ ] Mensagem inicial orientadora é exibida ao entrar na tela
-- [ ] Não há timer ou countdown visível (desafio sem limite de tempo)
+- [ ] Desafio está implementado no design da versão raiz (sem estética de vidro)
+- [ ] Inimigos aparecem em posições aleatórias
+- [ ] Tempo limite é exatamente 45 segundos
+- [ ] Contador de acertos atualiza em tempo real
+- [ ] Sistema diferencia entre 3 tiers de recompensa (10, 20, 30 acertos)
+- [ ] Badge "Reflexos de Elite" é desbloqueado com 30+ acertos
+- [ ] Não há mudança automática de estado sem clique
+- [ ] Feedback visual de eliminação é claro
+- [ ] Sons de feedback tocam ao eliminar inimigo
 
-### 11.3 Tela de Execução - Interação e Pontuação
+### 11.3 Página de Vendas
 
-**Botão Central Grande:**
+- [ ] Design base é da versão raiz (lovable.app)
+- [ ] Copy principal é da versão referência (vercel.app)
+- [ ] "Baseado nas suas X conquistas" aparece no topo
+- [ ] Card "Seu Perfil de Liberdade" exibe XP, Coins, Badges
+- [ ] Badge vermelho "OFERTA EXCLUSIVA DESBLOQUEADA" está presente
+- [ ] Título "Sua Classificação Desbloqueou" está presente
+- [ ] "70% DE DESCONTO" é o elemento mais destacado (verde gigante)
+- [ ] Copy "Apenas para quem completou a jornada como você" está presente
+- [ ] Preço original está riscado
+- [ ] Preço com desconto está em verde gigante
+- [ ] Badge de economia "Você economizou R$ X" está presente
+- [ ] Benefícios híbridos incluem: sistema gamificado, coach IA, comunidade, garantia
+- [ ] Timer de oferta é funcional e não enganoso
+- [ ] Prova social exibe número de pessoas (atualizado)
+- [ ] Hierarquia visual segue ordem definida (perfil → oferta → preço → benefícios)
+- [ ] CTA principal está em verde e é proeminente
+- [ ] Nenhum elemento "Elite Liberdade" aparece como título principal
+- [ ] Toda a página é responsiva em mobile
 
-- [ ] Ao clicar, adiciona exatamente 3 pontos
-- [ ] Animação de pulso é executada (scale 1 → 1.05 → 1, duração 300ms)
-- [ ] Vibração tátil é sentida (mobile, se habilitada)
-- [ ] Número "+3" flutua para cima e desaparece (animação pointsFloat)
-- [ ] Display de pontuação atualiza em <100ms
+### 11.4 Gerais
 
-**Botão "Ver":**
-
-- [ ] Ao clicar, adiciona exatamente 1 ponto
-- [ ] Animação e feedback apropriados são executados
-- [ ] Número "+1" flutua para cima
-
-**Botão "Ouvir":**
-
-- [ ] Ao clicar, adiciona exatamente 3 pontos
-- [ ] Animação e feedback apropriados são executados
-- [ ] Número "+3" flutua para cima
-
-**Botão "Sentir":**
-
-- [ ] Ao clicar, adiciona exatamente 5 pontos
-- [ ] Animação e feedback apropriados são executados
-- [ ] Número "+5" flutua para cima
-
-**Sistema de Pontuação:**
-
-- [ ] Pontuação nunca diminui (apenas aumenta)
-- [ ] Pontuação é exibida com animação suave (easing)
-- [ ] Quando pontos >= 9, display muda para cor verde
-- [ ] Não há limite superior de pontos (usuário pode continuar clicando)
-
-### 11.4 Botão de Conclusão e Mensagens
-
-- [ ] Botão "Concluir" NÃO está visível quando pontos < 9
-- [ ] Botão "Concluir" APARECE quando pontos >= 9
-- [ ] Animação de entrada do botão é suave (slide-up, 400ms)
-- [ ] Botão "Concluir" está fixo no footer
-- [ ] Botão tem cor verde ou cor primária conforme especificação
-- [ ] Mensagem "Ótimo! Você atingiu o mínimo" aparece ao atingir 9 pontos
-- [ ] Mensagem "Excelente! Presença profunda" aparece ao atingir 15+ pontos (opcional)
-- [ ] Usuário pode continuar clicando após atingir mínimo
-- [ ] Ao clicar "Concluir", transição para tela de conclusão é executada (300ms)
-
-### 11.5 Tela de Conclusão
-
-- [ ] Ícone de troféu na cor do desafio (turquesa/verde água) é exibido
-- [ ] Título "Desafio Concluído!" está presente
-- [ ] Texto motivacional customizado para Mindfulness é exibido
-- [ ] Card de estatísticas mostra:
-  - [ ] Pontuação final (número exato obtido)
-  - [ ] XP ganho (+150 ou valor configurado)
-  - [ ] Coins ganhos (+50 ou valor configurado)
-  - [ ] Bônus de conclusão (se aplicável)
-- [ ] Botão "Concluir e Coletar Pontos" está presente e funcional
-- [ ] Botão tem cor verde conforme padrão
-- [ ] Ao clicar no botão:
-  - [ ] XP é adicionado ao perfil do usuário
-  - [ ] Coins são adicionados ao perfil do usuário
-  - [ ] Desafio é marcado como concluído
-  - [ ] Usuário retorna para lista de desafios ou home
-  - [ ] Evento "desafio_concluido" é enviado para analytics
-
-### 11.6 Fluxos Alternativos e Casos de Erro
-
-**Abandono do Desafio:**
-
-- [ ] Botão "Voltar" ou gesture de voltar dispara modal de confirmação
-- [ ] Modal exibe texto: "Deseja sair? Progresso será perdido"
-- [ ] Modal tem 2 botões: "Continuar Desafio" e "Sair"
-- [ ] "Continuar Desafio" fecha modal e retorna para execução
-- [ ] "Sair" retorna para lista de desafios sem salvar progresso
-- [ ] Evento "desafio_abandonado" é enviado para analytics (com pontos atuais e tempo)
-
-**Erros de Rede:**
-
-- [ ] Se API falha ao carregar desafio, toast de erro é exibido
-- [ ] Toast tem botão "Tentar Novamente"
-- [ ] Se dados em cache existem, são carregados automaticamente
-- [ ] Se falha ao salvar progresso, salva localmente e exibe toast informativo
-- [ ] Ícone de cloud offline aparece no header quando offline
-
-**Desafio Já Concluído:**
-
-- [ ] Se usuário tentar repetir desafio no mesmo dia (cooldown), modal é exibido
-- [ ] Modal informa: "Já completou hoje! Volte amanhã para recompensas"
-- [ ] Opcional: permite repetir em "modo prática" sem ganhar XP/Coins
-
-### 11.7 Performance e Responsividade
-
-- [ ] Tela de apresentação carrega em <1s (3G)
-- [ ] Transição entre telas ocorre em <300ms
-- [ ] Feedback de botões ocorre em <50ms após toque
-- [ ] Vibração (se habilitada) ocorre em <30ms
-- [ ] Animações rodam a 60 FPS consistente (sem jank)
-- [ ] Atualização de pontuação ocorre em <100ms
-- [ ] App não trava ou congela durante execução do desafio
-- [ ] Consumo de memória é estável (sem memory leaks)
-
-### 11.8 Acessibilidade
-
-- [ ] Todos os textos têm contraste >= 4.5:1 (WCAG AA)
-- [ ] Todos os botões têm área de toque >= 44x44px (iOS) ou 48x48dp (Android)
-- [ ] Espaçamento entre botões é >= 8px
-- [ ] Todos os elementos interativos têm labels ARIA apropriados
-- [ ] Screen reader anuncia corretamente:
-  - [ ] Pontuação ao mudar
-  - [ ] Aparecimento do botão "Concluir"
-  - [ ] Conclusão do desafio
-- [ ] Ordem de foco (tab order) é lógica e sequencial
-- [ ] Botões têm estados de foco visíveis (outline ou similar)
-
-### 11.9 Analytics e Tracking
-
-- [ ] Evento "desafio_visualizado" é enviado ao abrir apresentação
-- [ ] Evento "desafio_iniciado" é enviado ao clicar "Começar Desafio"
-- [ ] Evento "botao_clicado" é enviado para cada tipo de botão (com tipo e valor)
-- [ ] Evento "desafio_concluido" é enviado ao finalizar, com:
-  - [ ] Pontuação final
-  - [ ] Tempo total (início a fim)
-  - [ ] Quantidade de cada tipo de botão usado
-  - [ ] XP/Coins ganhos
-- [ ] Evento "desafio_abandonado" é enviado ao sair sem concluir, com:
-  - [ ] Pontos parciais
-  - [ ] Tempo até abandono
-- [ ] Todos os eventos incluem user_id e timestamp
-
-### 11.10 Compatibilidade
-
-- [ ] Desafio funciona corretamente em Chrome (últimas 2 versões)
-- [ ] Desafio funciona corretamente em Safari (últimas 2 versões)
-- [ ] Desafio funciona corretamente em Firefox (últimas 2 versões)
-- [ ] Desafio funciona corretamente em Safari iOS 14+
-- [ ] Desafio funciona corretamente em Chrome Android 90+
-- [ ] Layout é responsivo em smartphones (360x640 a 414x896)
-- [ ] Layout é responsivo em tablets (768x1024 e similares)
-- [ ] Orientação portrait é otimizada
-- [ ] Orientação landscape é suportada (mas não precisa ser otimizada)
-
-### 11.11 Integração com Sistema Existente
-
-- [ ] XP ganho no desafio é corretamente adicionado ao total do usuário
-- [ ] Coins ganhos são corretamente adicionados ao saldo do usuário
-- [ ] Desafio aparece corretamente na lista de desafios disponíveis
-- [ ] Badge de nível é dinâmico (aumenta conforme usuário progride)
-- [ ] Desafio é marcado como "concluído" na lista após finalização
-- [ ] Progresso é salvo e sincronizado com backend
-- [ ] Se logout/login, progresso concluído persiste
-- [ ] Cooldown (se implementado) funciona corretamente entre dias
+- [ ] Todos os bugs críticos identificados foram corrigidos
+- [ ] Design é consistente em todas as telas (sem mudanças abruptas)
+- [ ] Nenhuma "estética de vidro" está presente
+- [ ] Performance é aceitável (cliques <100ms, animações 60fps)
+- [ ] Todos os sons carregam sem delay perceptível
+- [ ] Sistema funciona em Chrome, Safari, Firefox, Edge
+- [ ] Validações de pontos ocorrem no servidor (não manipulável)
+- [ ] Testes de QA foram realizados em mobile e desktop
+- [ ] Documentação de código está atualizada
 
 ---
 
 ## 12. ANEXOS
 
-### 12.1 Referências
+### 12.1 Referências Visuais
 
-**Vídeos Analisados:**
+**Frames-Chave Analisados:**
 
-- `Desafio_Mindfullness_Pt_1.mp4` - 4min09s (5.976 frames)
-- `Desafio_Mindfullness_Pt_2.mp4` - 5min30s (7.937 frames)
-- **Total:** 9min39s, 13.913 frames analisados
+**Vídeo 1 (Finais-1.mp4):**
 
-**Frames de Referência Críticos:**
+- `docs\Frames_PRD\Video1\frame_0096.png` - Desafio Memória Livre (aprovado)
+- `docs\Frames_PRD\Video1\frame_1296.png` - "tá muito bom, pô"
+- `docs\Frames_PRD\Video1\frame_1600.png` - Interface de jogo com 4 botões
+- `docs\Frames_PRD\Video1\frame_1680.png` - "lógica tá péssima"
+- `docs\Frames_PRD\Video1\frame_1872.png` - BUG: tela de erro automática
+- `docs\Frames_PRD\Video1\frame_2232.png` - Solução: botão de confirmação
+- `docs\Frames_PRD\Video1\frame_2712.png` - BUG: mensagem sozinha
+- `docs\Frames_PRD\Video1\frame_3312.png` - Definição de sequências
+- `docs\Frames_PRD\Video1\frame_4008.png` - Sistema de níveis proposto
 
-- Frame 0001 (Pt1): Tela de conclusão (modelo aprovado)
-- Frame 0240 (Pt1): Desafio Foco Laser - design aprovado como "perfeito"
-- Frame 0456 (Pt1): Desafio Mindfulness - design rejeitado como "péssimo"
-- Frame 0672 (Pt1): Desafio Mindfulness com botão visível
-- Frame 3912 (Pt2): "Aceite o Momento Presente" - rejeitado como "nada a ver"
-- Frame 4440 (Pt2): Desafio Resistência - UX criticada
-- Frame 4920 (Pt2): Foco Laser novamente (confirmação)
-- Frame 5664 (Pt2): Resistência em execução - criticado
-- Frame 6816 (Pt2): Memória Livre - aprovado como "perfeito"
+**Vídeo 2 (Finais-2.mp4):**
 
-**URLs Identificadas:**
+- `docs\Frames_PRD\Video2\frame_0384.png` - Definição final: 2 níveis
+- `docs\Frames_PRD\Video2\frame_1776.png` - "60% não conseguiram"
+- `docs\Frames_PRD\Video2\frame_2736.png` - Design mudou, péssimo
+- `docs\Frames_PRD\Video2\frame_3048.png` - BUG de mudança automática
+- `docs\Frames_PRD\Video2\frame_3288.png` - Fusão: inimigos no desafio
+- `docs\Frames_PRD\Video2\frame_3432.png` - Crítica: estética de vidro
+- `docs\Frames_PRD\Video2\frame_4032.png` - Mecânica final definida
 
-- Versão em análise (problemas): `respiralivre flow.vercel.app`
-- Versão de referência (aprovada): `respiralivre flow.lovable.app`
+**Vídeo 3 (Finais-3.mp4):**
 
-### 12.2 Assets
+- `docs\Frames_PRD\Video3\frame_0720.png` - Conceito de boss
+- `docs\Frames_PRD\Video3\frame_1296.png` - Mecânica boss em ação
+- `docs\Frames_PRD\Video3\frame_1656.png` - Detalhamento completo
+- `docs\Frames_PRD\Video3\frame_2352.png` - Design raiz criticado
+- `docs\Frames_PRD\Video3\frame_2736.png` - UX sobrecarregada
+- `docs\Frames_PRD\Video3\frame_3312.png` - BUG de navegação
+- `docs\Frames_PRD\Video3\frame_3840.png` - Página simples aprovada
+- `docs\Frames_PRD\Video3\frame_4224.png` - Elite Liberdade (copy aprovada)
 
-**Ícones Necessários:**
+**Vídeo 4 (Finais-4.mp4):**
 
-- [ ] Ícone do Desafio Mindfulness (turquesa/verde água, 256x256px, SVG)
-- [ ] Ícone de raio para seção "Como Funciona"
-- [ ] Ícone de troféu para tela de conclusão (customizado na cor do desafio)
-- [ ] Ícones sensoriais: ️ Ver, Ouvir, Sentir (podem ser emojis ou custom)
+- `docs\Frames_PRD\Video4\frame_0480.png` - Solução personalizada
+- `docs\Frames_PRD\Video4\frame_0792.png` - Design atual melhor
+- `docs\Frames_PRD\Video4\frame_0936.png` - Copy 70% desconto
+- `docs\Frames_PRD\Video4\frame_1272.png` - Solução híbrida
+- `docs\Frames_PRD\Video4\frame_1704.png` - Distribuição problemática
+- `docs\Frames_PRD\Video4\frame_1896.png` - Oferta desbloqueada (aprovado fortemente)
+- `docs\Frames_PRD\Video4\frame_2784.png` - Personalização nível 2
 
-**Paletas de Cores (arquivo Figma/Sketch):**
+### 12.2 Assets Necessários
 
-- Paleta completa do Desafio Mindfulness
-- Comparação com Foco Laser e Memória Livre
-- Exemplos de uso (botões, cards, backgrounds)
+**Sons (4 arquivos):**
 
-**Animações (Lottie ou código):**
+- verde.mp3 - Tom grave (C3, ~130 Hz)
+- amarelo.mp3 - Tom médio-agudo (E3, ~165 Hz)
+- azul.mp3 - Tom médio (G3, ~196 Hz)
+- roxo.mp3 - Tom agudo (C4, ~262 Hz)
 
-- Animação de pulso do botão central
-- Animação de pontos flutuando
-- Animação de slide-up do botão "Concluir"
+**Sons de Feedback:**
 
-**Documentação de Design System (se criar):**
+- sucesso.mp3 - Som de conquista/vitória
+- erro.mp3 - Som de erro/falha
+- click.mp3 - Som de clique de botão
+- eliminacao.mp3 - Som de eliminar inimigo
 
-- Componente: ChallengeCard
-- Componente: ChallengeButton
-- Componente: SensorButton
-- Componente: PointsDisplay
-- Componente: CompletionScreen
+**Ícones:**
+
+- inimigo.svg - Representação de inimigo/tentação
+- cerebro.svg - Ícone do desafio Memória Livre
+- alvo.svg - Ícone do desafio Foco Rápido
+- boss.svg - Ícone de boss (futuro)
+
+**Badges:**
+
+- mente_de_aco.png` - Badge do Nível 2 (Memória Livre)
+- reflexos_de_elite.png` - Badge de 30+ acertos (Foco Rápido)
 
 ### 12.3 Dados de Análise
 
-**Citações Literais Críticas do Usuário:**
+**Vídeos Analisados:**
 
-1. **Sobre o Design Quebrado (00:00s):**
+- Finais-1.mp4: 180 segundos, 4.320 frames extraídos
+- Finais-2.mp4: 180 segundos, 4.320 frames extraídos
+- Finais-3.mp4: 180 segundos, 4.320 frames extraídos
+- Finais-4.mp4: 125.67 segundos, 3.016 frames extraídos
 
-   > "Ó, tá vendo que quebrou totalmente ali, mano, o design já aqui, né? Já tá péssimo o design."
+**Total de Dados:**
 
-2. **Sobre o Design de Referência (00:10s):**
+- Duração total: 11 minutos 45 segundos (685.67s)
+- Frames extraídos: 15.976
+- Frames-chave analisados: 36
+- Transcrição: 411 linhas de texto
+- Timestamps mapeados: 80+
 
-   > "Ó, perfeito. Eu quero esse design aqui."
+**Fontes:**
 
-3. **Sobre o Texto do Mindfulness (00:22s):**
-
-   > "Note seus pensamentos e sensações... tá péssimo isso aqui. Tá? Péssimo esse desafio."
-
-4. **Sobre o Desafio Foco Laser (00:33s):**
-
-   > "Eu gostei desse desafio Foco Laser. Tem que ser trabalhado. Vamos colocar meio que numa estante assim, né?"
-
-5. **Conceito do Botão de Emergência (00:55s - 01:05s):**
-
-   > "Botão de emergência. Que funciona assim: Funciona com o objetivo de estimular a presença, né? O Mindfulness. Correto? Melhor do que isso daqui."
-
-6. **Mecânica de Observação (01:09s):**
-
-   > "A pessoa tem que, é... notar cinco coisas no ambiente dela. Seja visualmente ou auditivamente, né?"
-
-7. **Sistema de Pontuação (01:26s):**
-
-   > "E esse botão... Vai ganhando pontuação, vai mudando de cor, né? E tudo mais."
-
-8. **Honestidade (02:22s):**
-
-   > "Então tem que ser fortificado que a honestidade da pessoa conta muito."
-
-9. **Estado de Presença (02:09s):**
-
-   > "Isso é provado, tá? É... ela fica em estado de presença total, assim."
-
-10. **Sistema Multi-Sensorial (03:22s - 03:30s):**
-
-    > "Pode ter tipo um botão ali maior, né, um redondo. E pode ter, tipo assim, botões de sentido, que ela toca embaixo."
-
-11. **Pontuação Diferenciada (Pt2, 00:41s):**
-
-    > "Ver = 1 ponto; Ouvir = 3 pontos; Sentir = 5 pontos, tá?"
-
-12. **Cálculo da Média (Pt2, 01:23s):**
-
-    > "Um, mais... ouvir que é três pontos, mais sentir que é cinco pontos, dá nove. Nove dividido por três... dá a média de três."
-
-13. **Requisito Mínimo (Pt2, 01:54s):**
-
-    > "Daí ela tem que pontuar no mínimo nove, né? Ou seja, clicou no botão grande três vezes, né?"
-
-14. **Sobre "Aceite o Momento Presente" (Pt2, 02:43s):**
-
-    > "Aceite o momento presente. Olha que nada a ver, véi. Nada a ver."
-
-15. **Sobre Muita Informação (Pt2, 03:01s):**
-
-    > "Nossa, muita informação, péssimo de ler, péssima experiência de usuário."
-
-16. **Sobre Distribuição de Botões (Pt2, 03:05s):**
-
-    > "Aqui eu gostei da distribuição dos botões, tipo 'iniciar desafio' e 'pular desafio', um do lado do outro, né? Mas eu ainda prefiro um abaixo do outro que nem tava no outro."
-
-17. **Sobre Desafio Resistência (Pt2, 03:49s):**
-
-    > "Não, esquece que eu falei, não. Não pode ser no lugar desse aqui não. Péssimo. Péssimo."
-
-18. **Sobre Botão Concluir (Pt2, 04:32s):**
-
-    > "Isso aqui... eu não gostei, a pessoa tem que clicar no botão 'concluir', coletar pontos, daí pô, quebra a dinâmica ali."
-
-19. **Sobre Memória Livre (Pt2, 04:44s):**
-
-    > "Isso aqui é perfeito, cara. Entendeu, mano? Esse desafio da Memória Livre, pode vir... eh... depois daquele desafio do mindfulness, né?"
-
-20. **Sobre Deixar na Gaveta (Pt2, 05:16s):**
-    > "Vamos deixar na gaveta esse dali do botão, que na verdade tem aquela ideia ali de eliminar os inimigos, que a gente vai ter que trabalhar nela ainda, né?"
-
-**Timestamps e Decisões Mapeadas:**
-
-| Timestamp  | Decisão       | Frame | Descrição                    |
-| ---------- | ------------- | ----- | ---------------------------- |
-| Pt1 00:00s | Rejeição      | 0001  | Design quebrado              |
-| Pt1 00:10s | Aprovação     | 0240  | Design perfeito (Foco Laser) |
-| Pt1 00:19s | Rejeição      | 0456  | Mindfulness péssimo          |
-| Pt1 00:33s | Interesse     | 0792  | Foco Laser interessante      |
-| Pt1 00:55s | Conceito      | 1320  | Botão de Emergência          |
-| Pt1 01:09s | Mecânica      | 1656  | Notar 5 coisas               |
-| Pt1 02:16s | ️ Regra       | 3264  | Honestidade importante       |
-| Pt1 03:22s | Interface     | 5040  | Botões de sentido            |
-| Pt2 00:53s | Sistema       | 1272  | Ver=1, Ouvir=3, Sentir=5     |
-| Pt2 01:54s | Requisito     | 2736  | Mínimo 9 pontos              |
-| Pt2 02:43s | Rejeição      | 3912  | "Aceite momento" péssimo     |
-| Pt2 03:05s | ️ Preferência | 4440  | Botões vertical > horizontal |
-| Pt2 03:54s | Rejeição      | 5664  | Resistência péssimo          |
-| Pt2 04:44s | Aprovação     | 6816  | Memória Livre perfeito       |
+- Transcrição completa: Finais_completo.md
+- Vídeos originais: Finais-1.mp4, Finais-2.mp4, Finais-3.mp4, Finais-4.mp4
+- Frames extraídos: /home/claude/frames/video1-4/
 
 ---
 
-## GLOSSÁRIO
+## RESUMO EXECUTIVO
 
-**Botão de Emergência:** Nome conceitual do novo Desafio Mindfulness, focado em observação ativa
+**PRIORIDADES MÁXIMAS:**
 
-**Série:** Conjunto de 5 observações registradas pelo usuário
+1. Corrigir bugs críticos do Memória Livre (automação indevida)
+2. Implementar sistema de 2 níveis com confirmação manual
+3. Criar página de vendas híbrida (design raiz + copy referência)
+4. Implementar Desafio Foco Rápido no design correto
 
-**Botão Grande/Central:** Botão principal que registra 5 observações de uma vez (3 pontos)
+**DECISÕES-CHAVE:**
 
-**Botões Sensoriais/Específicos:** Botões "Ver", "Ouvir", "Sentir" com pontuações diferenciadas
+- Design base: Versão raiz (lovable.app) - APROVADO
+- Copy de vendas: Versão referência (vercel.app) - APROVADO
+- Abordagem: Híbrida, pegando melhor de cada versão
+- Priorização: "o mais urgente é aquelas coisas que eu falei já" (Vídeo 4, 02:04s)
 
-**Desafio de Referência:** Desafio Foco Laser e Memória Livre, aprovados como modelos de design
+**ELEMENTOS REJEITADOS:**
 
-**Gaveta:** Backlog de ideias não priorizadas para implementação imediata
+- Estética de vidro (glassmorphism)
+- Design da versão referência para desafios
+- "Elite Liberdade" como título principal
+- Desafio do botão original (arquivado)
+- Boss Battle atual (muito tedioso, retrabalhar)
 
-**XP:** Experience Points - pontos de experiência para progressão de nível
+**PRÓXIMOS PASSOS:**
 
-**Coins:** Moeda virtual do app
-
-**Step:** Indicador de progresso/etapa no fluxo do app
-
-**WCAG AA:** Web Content Accessibility Guidelines nível AA - padrão de acessibilidade
-
-**FPS:** Frames Per Second - taxa de quadros por segundo
-
-**CTA:** Call To Action - botão ou elemento que incentiva ação
-
-**UX:** User Experience - experiência do usuário
-
-**MVP:** Minimum Viable Product - produto mínimo viável
-
----
-
-## CONCLUSÃO E PRÓXIMOS PASSOS
-
-Este PRD documenta tecnicamente a redesign completa do Desafio Mindfulness baseado em análise frame-by-frame de 13.913 frames e transcrição literal de 9min39s de feedback do usuário. Todas as decisões, requisitos e especificações estão fundamentadas em observações factuais e citações diretas.
-
-**Próximas Ações Imediatas:**
-
-1.  Aprovação deste PRD pelas partes interessadas
-2.  ️ Kickoff com equipe de design para definir paleta e ícone final
-3.  ️ Refinamento técnico com equipe de engenharia
-4.  ️ Criação de tasks/tickets detalhados para Sprint 1
-5.  ️ Configuração de analytics e eventos de tracking
-6.  ️ Início do desenvolvimento (Fase 1 - MVP)
-
-**Contato para Dúvidas:**
-
-- Product Manager: [Nome/Email]
-- Designer Lead: [Nome/Email]
-- Tech Lead: [Nome/Email]
+1. Review deste PRD com equipe técnica
+2. Breakdown de tasks no backlog
+3. Iniciar desenvolvimento da Fase 1
+4. QA contínuo com foco em bugs identificados
+5. Deploy incremental e monitoramento de métricas
 
 ---
 
-**Documento elaborado por:** Claude (Anthropic)  
-**Baseado em:** Análise técnica completa de vídeos fornecidos  
-**Versão:** 1.0  
-**Status:** DRAFT - Aguardando Aprovação  
-**Última Atualização:** 17 de Dezembro de 2025
+**Documento criado por:** Análise automatizada de vídeos  
+**Método:** Extração frame-by-frame + correlação com transcrição  
+**Frames analisados:** 15.976 frames totais, 36 frames-chave documentados  
+**Factualidade:** 100% baseado em evidências visuais e quotes literais  
+**Versão:** 2.0 - Análise de Vídeos Finais  
+**Data:** 18 de Dezembro de 2025
