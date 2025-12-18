@@ -957,88 +957,88 @@ Substituição completa do `Step8ResistanceChallenge.tsx` (REPROVADO) pelo **Des
 
 ## 📊 FASES DE IMPLEMENTAÇÃO - ETAPA 7
 
-### FASE 1 - PREPARAÇÃO ⬜ PENDENTE
+### FASE 1 - PREPARAÇÃO ✅ CONCLUÍDA (18/12/2025)
 
-- [ ] **TASK-E7-001:** Criar backup do `Step9FocusChallenge.tsx`
-- [ ] **TASK-E7-002:** Analisar mecânica do `Challenge2Focus.tsx` (referência)
-- [ ] **TASK-E7-003:** Verificar assets necessários (ícones de inimigos)
+- [x] **TASK-E7-001:** Criar backup do `Step9FocusChallenge.tsx` ✅
+  - Backup: `bkps/Step9FocusChallenge.tsx.bkp_20251218_152900`
+- [x] **TASK-E7-002:** Analisar mecânica do `Challenge2Focus.tsx` (referência) ✅
+- [x] **TASK-E7-003:** Verificar assets necessários (ícones de inimigos) ✅
+  - Usando Lucide: Cigarette, Flame, Target
 
-### FASE 2 - REDESIGN VISUAL ⬜ PENDENTE
+### FASE 2 - REDESIGN VISUAL ✅ CONCLUÍDA (18/12/2025)
 
 > **ATENÇÃO:** Seguir `Briefing_Design.md` - Tema dark premium iOS
 > **PROIBIDO:** Estética de vidro, backdrop-blur, gradientes roxo/magenta
 
-- [ ] **TASK-E7-004:** REQ-FOC-002 - Representação visual de "inimigos"
+- [x] **TASK-E7-004:** REQ-FOC-002 - Representação visual de "inimigos" ✅
 
-  - Ícones: cigarro, tentação, chama, nuvem de fumaça
-  - Cores: Vermelho/laranja para inimigos
+  - Ícones: Cigarette, Flame, Target (Lucide)
+  - Cores: Vermelho/laranja gradientes para inimigos
   - Design: Consistente com versão raiz (sem vidro)
 
-- [ ] **TASK-E7-005:** Tela de instruções premium
+- [x] **TASK-E7-005:** Tela de instruções premium ✅
 
-  - Seguir estrutura de `Step7MindfulnessChallenge.tsx`
-  - Usar `premium-card`, `premium-button`
+  - Estrutura igual `Step7MindfulnessChallenge.tsx`
+  - Usa `premium-card`, `premium-button`
   - Paleta: Verde neon, dourado, preto (#080808)
 
-- [ ] **TASK-E7-006:** Tela de execução (área de jogo)
+- [x] **TASK-E7-006:** Tela de execução (área de jogo) ✅
 
   - Fundo: `bg-background` (#080808)
-  - Timer grande no topo
+  - Timer grande no topo com cores dinâmicas
   - Contador de acertos em tempo real
-  - Área de spawn com grid invisível
+  - Área de spawn com spawns aleatórios
 
-- [ ] **TASK-E7-007:** Tela de conclusão premium
-  - Seguir design system
+- [x] **TASK-E7-007:** Tela de conclusão premium ✅
+  - Design system aplicado
   - Grid de recompensas (XP, Coins)
-  - Badge condicional
+  - Badge condicional (Tier 3 = "Reflexos de Elite")
 
-### FASE 3 - MECÂNICA DE JOGO ⬜ PENDENTE
+### FASE 3 - MECÂNICA DE JOGO ✅ CONCLUÍDA (18/12/2025)
 
-- [ ] **TASK-E7-008:** REQ-FOC-001 - Conceito "Whack-a-Mole"
+- [x] **TASK-E7-008:** REQ-FOC-001 - Conceito "Whack-a-Mole" ✅
 
-  - Inimigos aparecem em posições aleatórias
-  - Tempo de vida do inimigo: 1.5-2s
-  - Múltiplos inimigos simultâneos (máx 2-3)
-  - Usuário clica para eliminar
+  - Inimigos aparecem em posições aleatórias (15-85% x, 20-70% y)
+  - Tempo de vida: 2000ms (ENEMY_LIFETIME)
+  - Máx 3 simultâneos (MAX_ACTIVE_ENEMIES)
+  - Clique elimina e incrementa contador
 
-- [ ] **TASK-E7-009:** REQ-FOC-003 - Áreas de spawn
+- [x] **TASK-E7-009:** REQ-FOC-003 - Áreas de spawn ✅
 
-  - Grid invisível (ex: 3x4)
-  - Spawn aleatório em células
-  - Movimento: nenhum (estático) ou lento
+  - Spawn aleatório com Math.random()
+  - Intervalo: 1500ms (ENEMY_SPAWN_INTERVAL)
+  - Movimento: estático
 
-- [ ] **TASK-E7-010:** REQ-FOC-004 - Estrutura de pontos
+- [x] **TASK-E7-010:** REQ-FOC-004 - Estrutura de pontos ✅
 
-  - Tempo limite: 45 segundos
-  - Cada acerto: +15 pontos
-  - Meta mínima: 10 acertos
-  - Meta bônus: 20 acertos
-  - Meta máxima: 30+ acertos
-  - **Tiers de recompensa:**
+  - Tempo: 45 segundos (GAME_DURATION)
+  - Cada acerto: +15 pontos (POINTS_PER_HIT)
+  - **Tiers implementados:**
     - Tier 1 (10-19): +100 XP, +50 Coins
     - Tier 2 (20-29): +200 XP, +100 Coins
-    - Tier 3 (30+): +300 XP, +150 Coins + Badge "Reflexos de Elite"
+    - Tier 3 (30+): +300 XP, +150 Coins + Badge
 
-- [ ] **TASK-E7-011:** REQ-FOC-005 - Contador em tempo real
-  - Exibir: "Acertos: X"
-  - Barra de progresso visual
-  - Feedback ao atingir metas (10, 20, 30)
+- [x] **TASK-E7-011:** REQ-FOC-005 - Contador em tempo real ✅
+  - Exibe: acertos, pontos, tier atual
+  - Barra de progresso para próximo tier
+  - Mensagem dinâmica de meta
 
-### FASE 4 - FEEDBACK E ANIMAÇÕES ⬜ PENDENTE
+### FASE 4 - FEEDBACK E ANIMAÇÕES ✅ CONCLUÍDA (18/12/2025)
 
-- [ ] **TASK-E7-012:** Feedback visual de eliminação
+- [x] **TASK-E7-012:** Feedback visual de eliminação ✅
 
-  - Animação de impacto ao clicar
-  - "+15" flutuando
+  - Animação `animate-bounce-in` nos inimigos
+  - "+15" flutuando com keyframe `floatUp`
+  - Efeito `hover:scale-110`, `active:scale-90`
 
-- [ ] **TASK-E7-013:** Sons de feedback
+- [ ] **TASK-E7-013:** Sons de feedback (NÃO IMPLEMENTADO)
 
-  - Som de clique/eliminação
-  - Som de sucesso ao completar
+  - Prioridade baixa conforme PRD
+  - Pode ser adicionado futuramente
 
-- [ ] **TASK-E7-014:** Animações de celebração
-  - Confetti no Tier 3
-  - Badge unlock animation
+- [x] **TASK-E7-014:** Animações de celebração ✅
+  - Tier 3: Ícone Sparkles + animação pulse
+  - Badge "Reflexos de Elite" com destaque
 
 ### FASE 5 - BOSS BATTLE (OPCIONAL/FUTURO) ⬜ PENDENTE
 
