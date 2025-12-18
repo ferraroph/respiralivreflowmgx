@@ -10,6 +10,55 @@
 - respiralivrereflow.lovable.app (Versão Atual/Raiz)
 - respiralivrereflow.vercel.app (Versão de Referência)
 
+# REFERÊNCIAS VISUAIS
+
+As seguintes referências visuais são FRAMES extraídos dos vídeos analisados para fazer esse PRD. É OBRIGATÓRIO A "VISUALIZAÇÃO"/LEITURA CONSTANTE E SISTEMÁTICA DESSES FRAMES ENQUANTO FAZ CADA TASK (SISTEMATICAMENTE VEJA OS FRAMES DE REFERÊNCIA, COMPARANDO SEMPRE COM SUAS ALTERAÇÕES ENQUANTO ALTERA, NÃO DEPOIS QUE ALTERA).
+
+**Frames-Chave Analisados:**
+
+**Vídeo 1 (Finais-1.mp4):**
+
+- `docs\Frames_PRD\Video1\frame_0096.png` - Desafio Memória Livre (aprovado)
+- `docs\Frames_PRD\Video1\frame_1296.png` - "tá muito bom, pô"
+- `docs\Frames_PRD\Video1\frame_1600.png` - Interface de jogo com 4 botões
+- `docs\Frames_PRD\Video1\frame_1680.png` - "lógica tá péssima"
+- `docs\Frames_PRD\Video1\frame_1872.png` - BUG: tela de erro automática
+- `docs\Frames_PRD\Video1\frame_2232.png` - Solução: botão de confirmação
+- `docs\Frames_PRD\Video1\frame_2712.png` - BUG: mensagem sozinha
+- `docs\Frames_PRD\Video1\frame_3312.png` - Definição de sequências
+- `docs\Frames_PRD\Video1\frame_4008.png` - Sistema de níveis proposto
+
+**Vídeo 2 (Finais-2.mp4):**
+
+- `docs\Frames_PRD\Video2\frame_0384.png` - Definição final: 2 níveis
+- `docs\Frames_PRD\Video2\frame_1776.png` - "60% não conseguiram"
+- `docs\Frames_PRD\Video2\frame_2736.png` - Design mudou, péssimo
+- `docs\Frames_PRD\Video2\frame_3048.png` - BUG de mudança automática
+- `docs\Frames_PRD\Video2\frame_3288.png` - Fusão: inimigos no desafio
+- `docs\Frames_PRD\Video2\frame_3432.png` - Crítica: estética de vidro
+- `docs\Frames_PRD\Video2\frame_4032.png` - Mecânica final definida
+
+**Vídeo 3 (Finais-3.mp4):**
+
+- `docs\Frames_PRD\Video3\frame_0720.png` - Conceito de boss
+- `docs\Frames_PRD\Video3\frame_1296.png` - Mecânica boss em ação
+- `docs\Frames_PRD\Video3\frame_1656.png` - Detalhamento completo
+- `docs\Frames_PRD\Video3\frame_2352.png` - Design raiz criticado
+- `docs\Frames_PRD\Video3\frame_2736.png` - UX sobrecarregada
+- `docs\Frames_PRD\Video3\frame_3312.png` - BUG de navegação
+- `docs\Frames_PRD\Video3\frame_3840.png` - Página simples aprovada
+- `docs\Frames_PRD\Video3\frame_4224.png` - Elite Liberdade (copy aprovada)
+
+**Vídeo 4 (Finais-4.mp4):**
+
+- `docs\Frames_PRD\Video4\frame_0480.png` - Solução personalizada
+- `docs\Frames_PRD\Video4\frame_0792.png` - Design atual melhor
+- `docs\Frames_PRD\Video4\frame_0936.png` - Copy 70% desconto
+- `docs\Frames_PRD\Video4\frame_1272.png` - Solução híbrida
+- `docs\Frames_PRD\Video4\frame_1704.png` - Distribuição problemática
+- `docs\Frames_PRD\Video4\frame_1896.png` - Oferta desbloqueada (aprovado fortemente)
+- `docs\Frames_PRD\Video4\frame_2784.png` - Personalização nível 2
+
 ---
 
 ## 1. CONTEXTO E OBJETIVO
@@ -1223,53 +1272,6 @@ OU
 ---
 
 ## 12. ANEXOS
-
-### 12.1 Referências Visuais
-
-**Frames-Chave Analisados:**
-
-**Vídeo 1 (Finais-1.mp4):**
-
-- `docs\Frames_PRD\Video1\frame_0096.png` - Desafio Memória Livre (aprovado)
-- `docs\Frames_PRD\Video1\frame_1296.png` - "tá muito bom, pô"
-- `docs\Frames_PRD\Video1\frame_1600.png` - Interface de jogo com 4 botões
-- `docs\Frames_PRD\Video1\frame_1680.png` - "lógica tá péssima"
-- `docs\Frames_PRD\Video1\frame_1872.png` - BUG: tela de erro automática
-- `docs\Frames_PRD\Video1\frame_2232.png` - Solução: botão de confirmação
-- `docs\Frames_PRD\Video1\frame_2712.png` - BUG: mensagem sozinha
-- `docs\Frames_PRD\Video1\frame_3312.png` - Definição de sequências
-- `docs\Frames_PRD\Video1\frame_4008.png` - Sistema de níveis proposto
-
-**Vídeo 2 (Finais-2.mp4):**
-
-- `docs\Frames_PRD\Video2\frame_0384.png` - Definição final: 2 níveis
-- `docs\Frames_PRD\Video2\frame_1776.png` - "60% não conseguiram"
-- `docs\Frames_PRD\Video2\frame_2736.png` - Design mudou, péssimo
-- `docs\Frames_PRD\Video2\frame_3048.png` - BUG de mudança automática
-- `docs\Frames_PRD\Video2\frame_3288.png` - Fusão: inimigos no desafio
-- `docs\Frames_PRD\Video2\frame_3432.png` - Crítica: estética de vidro
-- `docs\Frames_PRD\Video2\frame_4032.png` - Mecânica final definida
-
-**Vídeo 3 (Finais-3.mp4):**
-
-- `docs\Frames_PRD\Video3\frame_0720.png` - Conceito de boss
-- `docs\Frames_PRD\Video3\frame_1296.png` - Mecânica boss em ação
-- `docs\Frames_PRD\Video3\frame_1656.png` - Detalhamento completo
-- `docs\Frames_PRD\Video3\frame_2352.png` - Design raiz criticado
-- `docs\Frames_PRD\Video3\frame_2736.png` - UX sobrecarregada
-- `docs\Frames_PRD\Video3\frame_3312.png` - BUG de navegação
-- `docs\Frames_PRD\Video3\frame_3840.png` - Página simples aprovada
-- `docs\Frames_PRD\Video3\frame_4224.png` - Elite Liberdade (copy aprovada)
-
-**Vídeo 4 (Finais-4.mp4):**
-
-- `docs\Frames_PRD\Video4\frame_0480.png` - Solução personalizada
-- `docs\Frames_PRD\Video4\frame_0792.png` - Design atual melhor
-- `docs\Frames_PRD\Video4\frame_0936.png` - Copy 70% desconto
-- `docs\Frames_PRD\Video4\frame_1272.png` - Solução híbrida
-- `docs\Frames_PRD\Video4\frame_1704.png` - Distribuição problemática
-- `docs\Frames_PRD\Video4\frame_1896.png` - Oferta desbloqueada (aprovado fortemente)
-- `docs\Frames_PRD\Video4\frame_2784.png` - Personalização nível 2
 
 ### 12.2 Assets Necessários
 
