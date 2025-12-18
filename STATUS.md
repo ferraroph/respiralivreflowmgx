@@ -260,32 +260,53 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 
 ---
 
-## 4. ATUALIZAÇÃO 18/12/2025 - CONSOLIDAÇÃO DO ESTADO
+## 4. ATUALIZAÇÃO 18/12/2025 - CONSOLIDAÇÃO DO ESTADO (ATUALIZADO)
 
 ### RESUMO DAS ETAPAS
 
-| Etapa                      | Componente                      | Status                              | Data          |
-| -------------------------- | ------------------------------- | ----------------------------------- | ------------- |
-| 1 - Onboarding/Personagem  | `Step1CharacterCreation.tsx`    | docs\Frames_PRD\Video4\ APROVADO    | -             |
-| 2 - Calculadora            | `Step4Calculator.tsx`           | docs\Frames_PRD\Video4\ CORRIGIDO   | 08/12/2025    |
-| 3 - Escolha de Missão      | `Step3GoalSelection.tsx`        | docs\Frames_PRD\Video4\ APROVADO    | 08/12/2025    |
-| 4 - Desafio Respiração     | `Step6BreathingChallenge.tsx`   | docs\Frames_PRD\Video4\ APROVADO    | 17/12/2025    |
-| 5 - Desafio Mindfulness    | `Step7MindfulnessChallenge.tsx` | docs\Frames_PRD\Video4\ APROVADO    | 17/12/2025    |
-| 6 - Desafio Resistência    | `Step8ResistanceChallenge.tsx`  | docs\Frames_PRD\Video4\ REPROVADO   | Refação total |
-| 7 - Desafio Foco (Memória) | `Step9FocusChallenge.tsx`       | docs\Frames_PRD\Video4\ A VERIFICAR | -             |
-| 8 - Boss Fight             | `Step10BossChallenge.tsx`       | docs\Frames_PRD\Video4\ A VERIFICAR | -             |
-| 9 - Oferta Final           | `Step11FinalOffer.tsx`          | docs\Frames_PRD\Video4\ A VERIFICAR | -             |
+| Etapa                     | Componente                      | Status                         | Data       |
+| ------------------------- | ------------------------------- | ------------------------------ | ---------- |
+| 1 - Onboarding/Personagem | `Step1CharacterCreation.tsx`    | ✅ APROVADO                    | -          |
+| 2 - Calculadora           | `Step4Calculator.tsx`           | ✅ CORRIGIDO                   | 08/12/2025 |
+| 3 - Escolha de Missão     | `Step3GoalSelection.tsx`        | ✅ APROVADO                    | 08/12/2025 |
+| 4 - Desafio Respiração    | `Step6BreathingChallenge.tsx`   | ✅ APROVADO                    | 17/12/2025 |
+| 5 - Desafio Mindfulness   | `Step7MindfulnessChallenge.tsx` | ✅ APROVADO                    | 17/12/2025 |
+| 6 - Desafio Memória Livre | `Step8ResistanceChallenge.tsx`  | ✅ APROVADO                    | 18/12/2025 |
+| 7 - Desafio Foco Rápido   | `Step9FocusChallenge.tsx`       | ⚠️ REDESIGN NECESSÁRIO         | PENDENTE   |
+| 8 - Boss Fight            | `Step10BossChallenge.tsx`       | ❌ REJEITADO PARCIAL (PRD 2.2) | FUTURO     |
+| 9 - Página de Vendas      | `Step11FinalOffer.tsx`          | ⬜ A IMPLEMENTAR (Híbrida)     | PENDENTE   |
 
-### PRÓXIMAS PRIORIDADES (Conforme PRD.md Seção 10.1)
+### PRÓXIMAS PRIORIDADES (Conforme PRD.md Seção 10.1 - ATUALIZADO 18/12/2025)
 
-**URGENTE (Semana 1-2):**
+**🔥 PRÓXIMA ETAPA - Etapa 7: Desafio Foco Rápido (REQ-FOC-001 a 005)**
 
-1. docs\Frames_PRD\Video4\ Corrigir bugs críticos do Memória Livre (REQ-MEM-001 a 004) - `Step9FocusChallenge.tsx`
-2. docs\Frames_PRD\Video4\ Implementar botão de confirmação (REQ-MEM-005)
-3. docs\Frames_PRD\Video4\ Implementar sistema de 2 níveis (REQ-MEM-006, 007)
-4. docs\Frames_PRD\Video4\ Criar página de vendas híbrida (REQ-VENDA-001 a 018) - `Step11FinalOffer.tsx`
+> **Arquivo:** `Step9FocusChallenge.tsx` > **PRD Ref:** Seção 3.2 - DESAFIO: FOCO RÁPIDO
+> **Status Atual:** Design REJEITADO - Usa estética de vidro (glassmorphism) proibida pelo PRD
 
-**ALTA PRIORIDADE (Semana 3-4):** 5. docs\Frames_PRD\Video4\ Implementar sons no Memória Livre (REQ-MEM-012) 6. docs\Frames_PRD\Video4\ Melhorar animações e feedback (REQ-MEM-013) 7. docs\Frames_PRD\Video4\ Criar Desafio Foco Rápido completo (REQ-FOC-001 a 005) - `Step8ResistanceChallenge.tsx` 8. docs\Frames_PRD\Video4\ Implementar sistema de bônus do Nível 2 (REQ-MEM-009, 010, 011)
+**Problemas identificados no componente atual:**
+
+1. ❌ Design usa `backdrop-blur-xl`, `bg-white/10` (estética de vidro - REJEITADO)
+2. ❌ Paleta usa `from-indigo-900 via-purple-900 to-pink-900` (PRD rejeita)
+3. ❌ Mecânica incompleta - Não segue REQ-FOC (tiers de recompensa, inimigos, etc.)
+4. ❌ Não é "whack-a-mole" com inimigos como especificado no PRD
+
+**Requisitos do PRD Seção 3.2:**
+
+- REQ-FOC-001: Conceito "Whack-a-Mole" com inimigos (cigarros, tentações)
+- REQ-FOC-002: Representação visual de inimigos
+- REQ-FOC-003: Áreas de spawn e movimento
+- REQ-FOC-004: Estrutura de pontos (10/20/30 acertos = tiers)
+- REQ-FOC-005: Contador de acertos em tempo real
+
+**ALTA PRIORIDADE - Etapa 9: Página de Vendas Híbrida (REQ-VENDA-001 a 018)**
+
+> **Arquivo:** `Step11FinalOffer.tsx` > **PRD Ref:** Seção 3.4 - PÁGINA DE CONVERSÃO/VENDAS
+> **Estratégia:** Design base = versão raiz (lovable.app) + Copy = versão referência (vercel.app)
+
+**BAIXA PRIORIDADE - Etapa 8: Boss Fight**
+
+> **Arquivo:** `Step10BossChallenge.tsx` > **Status:** REJEITADO PARCIALMENTE no PRD (muito tedioso, má UX)
+> **Decisão:** Retrabalhar futuramente ou arquivar
 
 ### REFERÊNCIAS CRÍTICAS
 

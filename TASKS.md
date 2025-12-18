@@ -926,3 +926,220 @@ Substituição completa do `Step8ResistanceChallenge.tsx` (REPROVADO) pelo **Des
 - **Componente a Substituir:** [src/components/steps/Step8ResistanceChallenge.tsx](src/components/steps/Step8ResistanceChallenge.tsx)
 - **Componente Referência:** [util/funilrespiralivre-oficial/src/components/challenges/Challenge3Memory.tsx](util/funilrespiralivre-oficial/src/components/challenges/Challenge3Memory.tsx)
 - **Pasta Backups:** [bkps/](bkps/)
+
+---
+
+# ETAPA 7 - DESAFIO FOCO RÁPIDO (WHACK-A-MOLE)
+
+> **PRD de Referência:** [PRD.md](PRD.md) (Seção 3.2 - REQ-FOC-001 a REQ-FOC-006)
+> **Arquivo de Status:** [STATUS.md](STATUS.md) > **Data de Início:** PENDENTE
+
+---
+
+## 📋 VISÃO GERAL - ETAPA 7
+
+**REDESIGN COMPLETO** do `Step9FocusChallenge.tsx` seguindo os requisitos do PRD.md Seção 3.2. O componente atual foi **REJEITADO** por usar estética de vidro (glassmorphism) proibida no PRD.
+
+**Componente a Redesenhar:** `src/components/steps/Step9FocusChallenge.tsx`
+**Componente de Referência:** `util/funilrespiralivre-oficial/src/components/challenges/Challenge2Focus.tsx` (apenas para lógica, NÃO para design)
+**Design Base:** Seguir `Briefing_Design.md` (tema dark premium iOS)
+
+---
+
+## 🗂️ ESTRUTURA DE BACKUPS - ETAPA 7
+
+| Arquivo                 | Backup   | Localização                                        |
+| ----------------------- | -------- | -------------------------------------------------- |
+| Step9FocusChallenge.tsx | PENDENTE | `bkps/Step9FocusChallenge.tsx.bkp_YYYYMMDD_HHMMSS` |
+| FunnelContainer.tsx     | PENDENTE | `bkps/FunnelContainer.tsx.bkp_YYYYMMDD_HHMMSS`     |
+
+---
+
+## 📊 FASES DE IMPLEMENTAÇÃO - ETAPA 7
+
+### FASE 1 - PREPARAÇÃO ⬜ PENDENTE
+
+- [ ] **TASK-E7-001:** Criar backup do `Step9FocusChallenge.tsx`
+- [ ] **TASK-E7-002:** Analisar mecânica do `Challenge2Focus.tsx` (referência)
+- [ ] **TASK-E7-003:** Verificar assets necessários (ícones de inimigos)
+
+### FASE 2 - REDESIGN VISUAL ⬜ PENDENTE
+
+> **ATENÇÃO:** Seguir `Briefing_Design.md` - Tema dark premium iOS
+> **PROIBIDO:** Estética de vidro, backdrop-blur, gradientes roxo/magenta
+
+- [ ] **TASK-E7-004:** REQ-FOC-002 - Representação visual de "inimigos"
+
+  - Ícones: cigarro, tentação, chama, nuvem de fumaça
+  - Cores: Vermelho/laranja para inimigos
+  - Design: Consistente com versão raiz (sem vidro)
+
+- [ ] **TASK-E7-005:** Tela de instruções premium
+
+  - Seguir estrutura de `Step7MindfulnessChallenge.tsx`
+  - Usar `premium-card`, `premium-button`
+  - Paleta: Verde neon, dourado, preto (#080808)
+
+- [ ] **TASK-E7-006:** Tela de execução (área de jogo)
+
+  - Fundo: `bg-background` (#080808)
+  - Timer grande no topo
+  - Contador de acertos em tempo real
+  - Área de spawn com grid invisível
+
+- [ ] **TASK-E7-007:** Tela de conclusão premium
+  - Seguir design system
+  - Grid de recompensas (XP, Coins)
+  - Badge condicional
+
+### FASE 3 - MECÂNICA DE JOGO ⬜ PENDENTE
+
+- [ ] **TASK-E7-008:** REQ-FOC-001 - Conceito "Whack-a-Mole"
+
+  - Inimigos aparecem em posições aleatórias
+  - Tempo de vida do inimigo: 1.5-2s
+  - Múltiplos inimigos simultâneos (máx 2-3)
+  - Usuário clica para eliminar
+
+- [ ] **TASK-E7-009:** REQ-FOC-003 - Áreas de spawn
+
+  - Grid invisível (ex: 3x4)
+  - Spawn aleatório em células
+  - Movimento: nenhum (estático) ou lento
+
+- [ ] **TASK-E7-010:** REQ-FOC-004 - Estrutura de pontos
+
+  - Tempo limite: 45 segundos
+  - Cada acerto: +15 pontos
+  - Meta mínima: 10 acertos
+  - Meta bônus: 20 acertos
+  - Meta máxima: 30+ acertos
+  - **Tiers de recompensa:**
+    - Tier 1 (10-19): +100 XP, +50 Coins
+    - Tier 2 (20-29): +200 XP, +100 Coins
+    - Tier 3 (30+): +300 XP, +150 Coins + Badge "Reflexos de Elite"
+
+- [ ] **TASK-E7-011:** REQ-FOC-005 - Contador em tempo real
+  - Exibir: "Acertos: X"
+  - Barra de progresso visual
+  - Feedback ao atingir metas (10, 20, 30)
+
+### FASE 4 - FEEDBACK E ANIMAÇÕES ⬜ PENDENTE
+
+- [ ] **TASK-E7-012:** Feedback visual de eliminação
+
+  - Animação de impacto ao clicar
+  - "+15" flutuando
+
+- [ ] **TASK-E7-013:** Sons de feedback
+
+  - Som de clique/eliminação
+  - Som de sucesso ao completar
+
+- [ ] **TASK-E7-014:** Animações de celebração
+  - Confetti no Tier 3
+  - Badge unlock animation
+
+### FASE 5 - BOSS BATTLE (OPCIONAL/FUTURO) ⬜ PENDENTE
+
+> REQ-FOC-006: Mecânica opcional para versão avançada
+
+- [ ] **TASK-E7-015:** Boss no topo com HP bar
+- [ ] **TASK-E7-016:** Quick Time Events simultâneos
+- [ ] **TASK-E7-017:** Sistema de HP do jogador
+
+---
+
+## 📌 PROBLEMAS IDENTIFICADOS NO COMPONENTE ATUAL
+
+**Step9FocusChallenge.tsx (262 linhas):**
+
+1. **Linha 97-98:** `bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900` - PALETA REJEITADA
+2. **Linha 99:** `bg-white/10 backdrop-blur-xl` - ESTÉTICA DE VIDRO REJEITADA
+3. **Linha 147-149:** Mesma paleta errada na fase challenge
+4. **Linha 152:** `bg-white/10 backdrop-blur-xl` - ESTÉTICA DE VIDRO
+5. **Linha 168:** `bg-white/5 backdrop-blur-sm` - ESTÉTICA DE VIDRO
+6. **Mecânica:** Apenas 1 alvo por vez, sem sistema de tiers
+
+---
+
+## 📌 REGISTRO DE ALTERAÇÕES - ETAPA 7
+
+| Data       | Task                  | Status | Backup | Observações                 |
+| ---------- | --------------------- | ------ | ------ | --------------------------- |
+| 18/12/2025 | Criação seção Etapa 7 | ⬜     | N/A    | Baseado em PRD.md Seção 3.2 |
+
+---
+
+## 🔗 LINKS IMPORTANTES - ETAPA 7
+
+- **STATUS.md:** [STATUS.md](STATUS.md)
+- **PRD Foco Rápido:** [PRD.md](PRD.md) (Seção 3.2)
+- **Componente a Redesenhar:** [src/components/steps/Step9FocusChallenge.tsx](src/components/steps/Step9FocusChallenge.tsx)
+- **Briefing Design:** [Briefing_Design.md](Briefing_Design.md)
+- **Pasta Backups:** [bkps/](bkps/)
+
+---
+
+# ETAPA 9 - PÁGINA DE VENDAS HÍBRIDA
+
+> **PRD de Referência:** [PRD.md](PRD.md) (Seção 3.4 - REQ-VENDA-001 a REQ-VENDA-018)
+> **Arquivo de Status:** [STATUS.md](STATUS.md) > **Data de Início:** PENDENTE
+
+---
+
+## 📋 VISÃO GERAL - ETAPA 9
+
+**IMPLEMENTAÇÃO DA ESTRATÉGIA HÍBRIDA** aprovada no PRD:
+
+- **Design base:** Versão raiz (lovable.app) - "tá perfeito"
+- **Copy principal:** Versão referência (vercel.app) - "a copy tá perfeita"
+
+**Componente a Modificar:** `src/components/steps/Step11FinalOffer.tsx`
+**Referência Copy:** PRD.md Seção 3.4, Video 3-4 frames
+
+---
+
+## 📊 REQUISITOS DA PÁGINA DE VENDAS (REQ-VENDA-\*)
+
+### SEÇÃO SUPERIOR: Perfil de Liberdade
+
+- [ ] **REQ-VENDA-001:** Card de Perfil do Usuário
+- [ ] **REQ-VENDA-002:** "Baseado nas suas X conquistas"
+- [ ] **REQ-VENDA-003:** Box de Diagnóstico (opcional)
+
+### SEÇÃO CENTRAL: Oferta Desbloqueada
+
+- [ ] **REQ-VENDA-004:** Badge "🔓 OFERTA EXCLUSIVA DESBLOQUEADA" (vermelho)
+- [ ] **REQ-VENDA-005:** Título "Sua Classificação Desbloqueou"
+- [ ] **REQ-VENDA-006:** "70% DE DESCONTO" (verde gigante)
+- [ ] **REQ-VENDA-007:** "Apenas para quem completou a jornada como você"
+
+### SEÇÃO DE PREÇO
+
+- [ ] **REQ-VENDA-008:** Estrutura de preço (original riscado + desconto)
+- [ ] **REQ-VENDA-009:** Badge "📈 Você economizou R$ X"
+
+### SEÇÃO DE BENEFÍCIOS
+
+- [ ] **REQ-VENDA-010:** Card do Produto Principal
+- [ ] **REQ-VENDA-011:** Lista de benefícios híbrida
+
+### ELEMENTOS DE URGÊNCIA
+
+- [ ] **REQ-VENDA-012:** Timer de Oferta
+- [ ] **REQ-VENDA-013:** Prova Social
+
+### DISTRIBUIÇÃO E LAYOUT
+
+- [ ] **REQ-VENDA-017:** Hierarquia visual correta
+- [ ] **REQ-VENDA-018:** CTA Principal (verde neon)
+
+---
+
+## 🔗 LINKS IMPORTANTES - ETAPA 9
+
+- **STATUS.md:** [STATUS.md](STATUS.md)
+- **PRD Página de Vendas:** [PRD.md](PRD.md) (Seção 3.4)
+- **Componente a Modificar:** [src/components/steps/Step11FinalOffer.tsx](src/components/steps/Step11FinalOffer.tsx)
+- **Referência Frames:** `docs/Frames_PRD/Video3-4/`
