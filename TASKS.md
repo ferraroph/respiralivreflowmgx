@@ -4,7 +4,7 @@
 
 ---
 
-## 📋 VISÃO GERAL
+## VISÃO GERAL
 
 Este arquivo rastreia todas as tarefas e subtarefas para otimização do **Desafio da Respiração** (Etapa 5 do funil).
 
@@ -13,7 +13,7 @@ Este arquivo rastreia todas as tarefas e subtarefas para otimização do **Desaf
 
 ---
 
-## 🗂️ ESTRUTURA DE BACKUPS
+## ️ ESTRUTURA DE BACKUPS
 
 | Arquivo                       | Backup    | Localização                                            |
 | ----------------------------- | --------- | ------------------------------------------------------ |
@@ -22,19 +22,16 @@ Este arquivo rastreia todas as tarefas e subtarefas para otimização do **Desaf
 
 ---
 
-## 📊 FASES DE IMPLEMENTAÇÃO (Conforme PRD Seção 10.1)
+## FASES DE IMPLEMENTAÇÃO (Conforme PRD Seção 10.1)
 
-### FASE 1 - CRÍTICO (MVP Corrigido) ✅ CONCLUÍDA (11/12/2025)
+### FASE 1 - CRÍTICO (MVP Corrigido) CONCLUÍDA (11/12/2025)
 
-- [x] **TASK-001:** REQ-TUT-001 - Correção Ortográfica ✅
-- [x] **TASK-003:** REQ-EXEC-003 - Corrigir Hierarquia de Botões ✅
-- [x] **TASK-004:** REQ-EXEC-004 - Melhorar Distribuição de Elementos ✅
-
-**Backup:** `bkps/Step6BreathingChallenge.tsx.bkp_20251211_174334`
+- [x] **TASK-001:** REQ-TUT-001 - Correção Ortográfica - [x] **TASK-003:** REQ-EXEC-003 - Corrigir Hierarquia de Botões - [x] **TASK-004:** REQ-EXEC-004 - Melhorar Distribuição de Elementos
+      **Backup:** `bkps/Step6BreathingChallenge.tsx.bkp_20251211_174334`
 
 ---
 
-### FASE 1.5 - CORREÇÃO ANIMAÇÃO (CRÍTICO) ⚠️ PENDENTE
+### FASE 1.5 - CORREÇÃO ANIMAÇÃO (CRÍTICO) ️ PENDENTE
 
 > **ATENÇÃO:** NÃO ALTERAR DESIGN EXISTENTE. NÃO ALTERAR PROPORÇÕES MÁXIMA/MÍNIMA.
 
@@ -108,12 +105,12 @@ const breathScale =
 
 **ERROS A EVITAR:**
 
-- ❌ NÃO colocar texto "INSPIRE" sobrepondo números
-- ❌ NÃO fazer anel sumir atrás do círculo
-- ❌ NÃO criar tela separada de countdown (é DENTRO do círculo)
-- ❌ NÃO alterar posição do texto para fora do círculo sem acompanhar movimento
-- ❌ NÃO alterar design/cores/proporções existentes
-- ❌ NÃO começar animação fora do ponto 0
+- NÃO colocar texto "INSPIRE" sobrepondo números
+- NÃO fazer anel sumir atrás do círculo
+- NÃO criar tela separada de countdown (é DENTRO do círculo)
+- NÃO alterar posição do texto para fora do círculo sem acompanhar movimento
+- NÃO alterar design/cores/proporções existentes
+- NÃO começar animação fora do ponto 0
 
 ### FASE 2 - ESSENCIAL (Otimizações de UX)
 
@@ -129,15 +126,15 @@ const breathScale =
 
 ---
 
-## 📝 DETALHAMENTO DAS TAREFAS
+## DETALHAMENTO DAS TAREFAS
 
 ---
 
-### TASK-001: Correção Ortográfica ⚠️ CRÍTICO
+### TASK-001: Correção Ortográfica ️ CRÍTICO
 
 > **PRD Ref:** Seção 3.1 - REQ-TUT-001
 > **Prioridade:** CRÍTICA
-> **Status:** ⬜ NÃO INICIADA
+> **Status:** NÃO INICIADA
 
 **Problema:**
 
@@ -179,11 +176,11 @@ const breathScale =
 
 ---
 
-### TASK-002: Implementar Animação Sincronizada ⚠️ CRÍTICO
+### TASK-002: Implementar Animação Sincronizada ️ CRÍTICO
 
 > **PRD Ref:** Seção 3.2 - REQ-EXEC-001
 > **Prioridade:** CRÍTICA
-> **Status:** ⬜ NÃO INICIADA
+> **Status:** NÃO INICIADA
 
 **Problema:**
 
@@ -264,11 +261,11 @@ setTimer((prev) => {
 
 ---
 
-### TASK-003: Corrigir Hierarquia de Botões ⚠️ CRÍTICO
+### TASK-003: Corrigir Hierarquia de Botões ️ CRÍTICO
 
 > **PRD Ref:** Seção 3.2 - REQ-EXEC-003
 > **Prioridade:** CRÍTICA
-> **Status:** ⬜ NÃO INICIADA
+> **Status:** NÃO INICIADA
 
 **Problema:**
 
@@ -358,11 +355,11 @@ setTimer((prev) => {
 
 ---
 
-### TASK-004: Melhorar Distribuição de Elementos ⚠️ CRÍTICO
+### TASK-004: Melhorar Distribuição de Elementos ️ CRÍTICO
 
 > **PRD Ref:** Seção 3.2 - REQ-EXEC-004
 > **Prioridade:** ALTA
-> **Status:** ⬜ NÃO INICIADA
+> **Status:** NÃO INICIADA
 
 **Problema:**
 
@@ -400,7 +397,7 @@ setTimer((prev) => {
 
 > **PRD Ref:** Seção 3.1 - REQ-TUT-002
 > **Prioridade:** ALTA
-> **Status:** ⬜ NÃO INICIADA
+> **Status:** NÃO INICIADA
 
 **Problema:**
 
@@ -444,7 +441,7 @@ setTimer((prev) => {
 
 > **PRD Ref:** Seção 3.1 - REQ-TUT-004
 > **Prioridade:** ALTA
-> **Status:** ⬜ NÃO INICIADA
+> **Status:** NÃO INICIADA
 
 **Situação Atual:**
 
@@ -497,7 +494,7 @@ setTimer((prev) => {
 
 > **PRD Ref:** Seção 3.2 - REQ-EXEC-002
 > **Prioridade:** ALTA
-> **Status:** ⬜ NÃO INICIADA
+> **Status:** NÃO INICIADA
 
 **Problema:**
 
@@ -544,7 +541,7 @@ setTimer((prev) => {
 
 > **PRD Ref:** Seção 3.2 - REQ-EXEC-005
 > **Prioridade:** ALTA
-> **Status:** ⬜ NÃO INICIADA
+> **Status:** NÃO INICIADA
 
 **Problema:**
 
@@ -574,7 +571,7 @@ setTimer((prev) => {
 
 > **PRD Ref:** Seção 3.3 - REQ-CONC-001
 > **Prioridade:** ALTA
-> **Status:** ⬜ NÃO INICIADA
+> **Status:** NÃO INICIADA
 
 **Problema:**
 
@@ -616,7 +613,7 @@ setTimer((prev) => {
 
 > **PRD Ref:** Seção 3.2 - REQ-EXEC-006
 > **Prioridade:** BAIXA
-> **Status:** ⬜ NÃO INICIADA
+> **Status:** NÃO INICIADA
 
 **Nota do PRD:**
 
@@ -631,16 +628,16 @@ setTimer((prev) => {
 
 ---
 
-## 📌 REGISTRO DE ALTERAÇÕES
+## REGISTRO DE ALTERAÇÕES
 
 | Data       | Task             | Status | Backup | Observações              |
 | ---------- | ---------------- | ------ | ------ | ------------------------ |
-| 11/12/2025 | Criação TASKS.md | ✅     | N/A    | Documento inicial criado |
+| 11/12/2025 | Criação TASKS.md |        | N/A    | Documento inicial criado |
 | -          | -                | -      | -      | -                        |
 
 ---
 
-## 🔗 LINKS IMPORTANTES
+## LINKS IMPORTANTES
 
 - **STATUS.md:** [STATUS.md](STATUS.md)
 - **PRD:** [docs/dev/etapa_5/PRD_1_Claude.md](docs/dev/etapa_5/PRD_1_Claude.md)
@@ -657,7 +654,7 @@ setTimer((prev) => {
 
 ---
 
-## 📋 VISÃO GERAL - ETAPA 5
+## VISÃO GERAL - ETAPA 5
 
 Este arquivo rastreia todas as tarefas e subtarefas para **redesign completo** do **Desafio Mindfulness** (Etapa 5 do funil).
 
@@ -669,7 +666,7 @@ Este arquivo rastreia todas as tarefas e subtarefas para **redesign completo** d
 
 ---
 
-## 🗂️ ESTRUTURA DE BACKUPS - ETAPA 5
+## ️ ESTRUTURA DE BACKUPS - ETAPA 5
 
 | Arquivo                       | Backup       | Localização                                              |
 | ----------------------------- | ------------ | -------------------------------------------------------- |
@@ -677,123 +674,117 @@ Este arquivo rastreia todas as tarefas e subtarefas para **redesign completo** d
 
 ---
 
-## 📊 FASES DE IMPLEMENTAÇÃO - ETAPA 5 (Conforme PRD Seção 10.1)
+## FASES DE IMPLEMENTAÇÃO - ETAPA 5 (Conforme PRD Seção 10.1)
 
-### FASE 1 MVP - CRÍTICO (4-6 semanas) ⬜ NÃO INICIADA
+### FASE 1 MVP - CRÍTICO (4-6 semanas) CONCLUÍDA (17/12/2025)
 
 #### Sprint 1-2: Fundação Visual e Apresentação
 
-- [ ] **TASK-E5-001:** REQ-VISUAL-001 - Estrutura de card padrão (igual Foco Laser)
-  - Componente: `Step7MindfulnessChallenge.tsx`
+- [x] **TASK-E5-001:** REQ-VISUAL-001 - Estrutura de card padrão (igual Foco Laser) - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.2, REQ-VISUAL-001
   - Código de Referência: `Step9FocusChallenge.tsx` (estrutura visual)
-- [ ] **TASK-E5-002:** REQ-VISUAL-002 - Paleta turquesa/verde água
+- [x] **TASK-E5-002:** REQ-VISUAL-002 - Paleta turquesa/verde água
 
   - Componente: `Step7MindfulnessChallenge.tsx`
   - Cores: #00CED1 (Turquesa) ou #3EB489 (Verde Água)
   - PRD Ref: Seção 5.1, Paleta do Novo Desafio Mindfulness
 
-- [ ] **TASK-E5-003:** REQ-VISUAL-003 - Ícone do desafio com badge de nível
+- [x] **TASK-E5-003:** REQ-VISUAL-003 - Ícone do desafio com badge de nível
 
   - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.2, REQ-VISUAL-003
   - Sugestões: cérebro com ondas, olho mindful, mão em mudra
 
-- [ ] **TASK-E5-004:** REQ-VISUAL-004 - Seção "Como Funciona" com 3 passos
+- [x] **TASK-E5-004:** REQ-VISUAL-004 - Seção "Como Funciona" com 3 passos
 
   - Componente: `Step7MindfulnessChallenge.tsx` (tela instructions)
   - PRD Ref: Seção 3.2, REQ-VISUAL-004
   - Passos: Observar, Registrar, Completar (ou similar)
 
-- [ ] **TASK-E5-005:** REQ-VISUAL-005 - Card de Recompensas (+150 XP, +50 Coins)
+- [x] **TASK-E5-005:** REQ-VISUAL-005 - Card de Recompensas (+150 XP, +50 Coins)
 
   - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.2, REQ-VISUAL-005
 
-- [ ] **TASK-E5-006:** REQ-VISUAL-006 - Botão CTA full-width
-  - Componente: `Step7MindfulnessChallenge.tsx`
+- [x] **TASK-E5-006:** REQ-VISUAL-006 - Botão CTA full-width - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.2, REQ-VISUAL-006
 
 #### Sprint 3-4: Mecânica Core e Tela de Execução
 
-- [ ] **TASK-E5-007:** REQ-EXEC-001 - Layout da tela principal de execução
+- [x] **TASK-E5-007:** REQ-EXEC-001 - Layout da tela principal de execução
 
   - Componente: `Step7MindfulnessChallenge.tsx` (tela challenge)
   - PRD Ref: Seção 3.3, REQ-EXEC-001
   - Layout: fundo preto, barra de progresso, botão grande central
 
-- [ ] **TASK-E5-008:** REQ-EXEC-002 - Botão central grande
+- [x] **TASK-E5-008:** REQ-EXEC-002 - Botão central grande
 
   - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.3, REQ-EXEC-002
   - Formato: círculo perfeito, 60-70% da largura
   - Valor: +3 pontos por clique
 
-- [ ] **TASK-E5-009:** REQ-EXEC-003 - 3 botões sensoriais
+- [x] **TASK-E5-009:** REQ-EXEC-003 - 3 botões sensoriais
 
   - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.3, REQ-EXEC-003
-  - Botões: "👁️ Ver" (+1pt), "👂 Ouvir" (+3pts), "✋ Sentir" (+5pts)
+  - Botões: "️ Ver" (+1pt), " Ouvir" (+3pts), " Sentir" (+5pts)
 
-- [ ] **TASK-E5-010:** REQ-MIND-004 - Sistema de pontuação diferenciada
+- [x] **TASK-E5-010:** REQ-MIND-004 - Sistema de pontuação diferenciada
 
   - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.1, REQ-MIND-004
   - Cálculo: Ver=1, Ouvir=3, Sentir=5, Central=(1+3+5)/3=3
 
-- [ ] **TASK-E5-011:** REQ-EXEC-004 - Display de pontuação em tempo real
+- [x] **TASK-E5-011:** REQ-EXEC-004 - Display de pontuação em tempo real
 
   - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.3, REQ-EXEC-004
   - Formato: "Pontos: X / 9 mínimo"
 
-- [ ] **TASK-E5-012:** REQ-MIND-005 - Mínimo 9 pontos para completar
+- [x] **TASK-E5-012:** REQ-MIND-005 - Mínimo 9 pontos para completar
 
   - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.1, REQ-MIND-005
   - Lógica: Botão "Concluir" só aparece quando pontos >= 9
 
-- [ ] **TASK-E5-013:** REQ-EXEC-005 - Botão "Concluir" condicional
-  - Componente: `Step7MindfulnessChallenge.tsx`
+- [x] **TASK-E5-013:** REQ-EXEC-005 - Botão "Concluir" condicional - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.3, REQ-EXEC-005
   - Animação: slide-up suave quando pontos >= 9
 
 #### Sprint 5-6: Feedback, Animações e Conclusão
 
-- [ ] **TASK-E5-014:** REQ-MIND-006 - Feedback visual e animações
+- [x] **TASK-E5-014:** REQ-MIND-006 - Feedback visual e animações
 
   - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.1, REQ-MIND-006
   - Animações: pulso de cor, vibração, "+X" flutuando
 
-- [ ] **TASK-E5-015:** REQ-EXEC-006 - Mensagens de estado
+- [x] **TASK-E5-015:** REQ-EXEC-006 - Mensagens de estado
 
   - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.3, REQ-EXEC-006
   - Mensagens: inicial, mínimo atingido, excelente (15+)
 
-- [ ] **TASK-E5-016:** REQ-EXEC-007 - Tela de conclusão customizada
+- [x] **TASK-E5-016:** REQ-EXEC-007 - Tela de conclusão customizada
 
   - Componente: `Step7MindfulnessChallenge.tsx` (tela completed)
   - PRD Ref: Seção 3.3, REQ-EXEC-007
   - Usar design system (não inline styles)
 
-- [ ] **TASK-E5-017:** REQ-CORR-001 - Remover desafio antigo
-  - Componente: `Step7MindfulnessChallenge.tsx`
+- [x] **TASK-E5-017:** REQ-CORR-001 - Remover desafio antigo - Componente: `Step7MindfulnessChallenge.tsx`
   - PRD Ref: Seção 3.4, REQ-CORR-001
   - Ação: Substituir código antigo pelo novo
 
 ---
 
-### FASE 2 - ESSENCIAL (Otimizações de UX) ⬜ NÃO INICIADA
+### FASE 2 - ESSENCIAL (Otimizações de UX) CONCLUÍDA (17/12/2025)
 
-- [ ] **TASK-E5-018:** REQ-VISUAL-007 - Espaçamento e hierarquia
-- [ ] **TASK-E5-019:** REQ-MIND-007 - Garantir ausência de limite de tempo
-- [ ] **TASK-E5-020:** REQ-MIND-008 - Mensagens de incentivo à honestidade
+- [x] **TASK-E5-018:** REQ-VISUAL-007 - Espaçamento e hierarquia - [x] **TASK-E5-019:** REQ-MIND-007 - Garantir ausência de limite de tempo - [x] **TASK-E5-020:** REQ-MIND-008 - Mensagens de incentivo à honestidade
 
 ---
 
-### FASE 3 - ACESSIBILIDADE (Polish) ⬜ NÃO INICIADA
+### FASE 3 - ACESSIBILIDADE (Polish) NÃO INICIADA
 
 - [ ] **TASK-E5-021:** Implementar contraste WCAG AA
 - [ ] **TASK-E5-022:** Garantir áreas de toque adequadas (44x44px)
@@ -801,19 +792,137 @@ Este arquivo rastreia todas as tarefas e subtarefas para **redesign completo** d
 
 ---
 
-## 📌 REGISTRO DE ALTERAÇÕES - ETAPA 5
+## REGISTRO DE ALTERAÇÕES - ETAPA 5
 
-| Data       | Task                  | Status | Backup | Observações                  |
-| ---------- | --------------------- | ------ | ------ | ---------------------------- |
-| 17/12/2025 | Criação seção Etapa 5 | ✅     | N/A    | Baseado em PRD.md atualizado |
-| -          | -                     | -      | -      | -                            |
+| Data       | Task                  | Status | Backup                                                   | Observações                  |
+| ---------- | --------------------- | ------ | -------------------------------------------------------- | ---------------------------- |
+| 17/12/2025 | Criação seção Etapa 5 |        | N/A                                                      | Baseado em PRD.md atualizado |
+| 17/12/2025 | TASK-E5-001 a E5-020  |        | `bkps/Step7MindfulnessChallenge.tsx.bkp_20251217_173327` | Todas as tarefas concluídas  |
+| 18/12/2025 | Consolidação Status   |        | N/A                                                      | Atualização de tracking      |
 
 ---
 
-## 🔗 LINKS IMPORTANTES - ETAPA 5
+## LINKS IMPORTANTES - ETAPA 5
 
 - **STATUS.md:** [STATUS.md](STATUS.md)
 - **PRD Mindfulness:** [PRD.md](PRD.md) (Raiz do projeto)
 - **Componente Atual:** [src/components/steps/Step7MindfulnessChallenge.tsx](src/components/steps/Step7MindfulnessChallenge.tsx)
 - **Referência Visual (Foco Laser):** [src/components/steps/Step9FocusChallenge.tsx](src/components/steps/Step9FocusChallenge.tsx)
+- **Pasta Backups:** [bkps/](bkps/)
+
+---
+
+# ETAPA 6 - DESAFIO MEMÓRIA LIVRE
+
+> **PRD de Referência:** [PRD.md](PRD.md) (Seção 3.1 - REQ-MEM-001 a REQ-MEM-014)
+> **Arquivo de Status:** [STATUS.md](STATUS.md) > **Data de Início:** 18/12/2025
+
+---
+
+## 📋 VISÃO GERAL - ETAPA 6
+
+Substituição completa do `Step8ResistanceChallenge.tsx` (REPROVADO) pelo **Desafio Memória Livre** corrigido, baseado no `Challenge3Memory.tsx` do projeto de referência.
+
+**Componente a Substituir:** `src/components/steps/Step8ResistanceChallenge.tsx`
+**Componente de Referência:** `util/funilrespiralivre-oficial/src/components/challenges/Challenge3Memory.tsx`
+**Backup:** `bkps/Step8ResistanceChallenge.tsx.bkp_20251218_145500`
+
+---
+
+## 🗂️ ESTRUTURA DE BACKUPS - ETAPA 6
+
+| Arquivo                      | Backup    | Localização                                             |
+| ---------------------------- | --------- | ------------------------------------------------------- |
+| Step8ResistanceChallenge.tsx | ✅ CRIADO | `bkps/Step8ResistanceChallenge.tsx.bkp_20251218_145500` |
+| FunnelContainer.tsx          | PENDENTE  | `bkps/FunnelContainer.tsx.bkp_YYYYMMDD_HHMMSS`          |
+
+---
+
+## 📊 FASES DE IMPLEMENTAÇÃO - ETAPA 6
+
+### FASE 1 - CORREÇÃO DE BUGS CRÍTICOS ✅ CONCLUÍDA (18/12/2025)
+
+- [x] **TASK-E6-001:** REQ-MEM-001 - Remover validação automática ✅
+
+  - Arquivo: `Step8ResistanceChallenge.tsx` (substituído)
+  - Problema: Linhas 77-81 do Challenge3Memory validam imediatamente
+  - Solução: Armazenar input sem validar até confirmação
+  - PRD Ref: Seção 3.1.1
+
+- [x] **TASK-E6-002:** REQ-MEM-002 - Corrigir execução automática ✅
+
+  - Problema: Sequências executam sozinhas
+  - Solução: Nenhuma ação sem interação explícita
+
+- [x] **TASK-E6-003:** REQ-MEM-003 - Corrigir mensagens automáticas ✅
+
+  - Problema: Tela de erro aparece sem completar tentativa
+  - Solução: Mensagens APENAS após validação explícita
+
+- [x] **TASK-E6-004:** REQ-MEM-005 - Implementar botão de confirmação ✅
+  - Adicionado: Botão "✓ Confirmar Sequência"
+  - Adicionado: Botão "↻ Tentar Novamente"
+  - PRD Ref: Seção 3.1.2
+
+### FASE 2 - SISTEMA DE 2 NÍVEIS ✅ CONCLUÍDA (18/12/2025)
+
+- [x] **TASK-E6-005:** REQ-MEM-006 - Padronizar número de sequências ✅
+
+  - Nível 1: 2 cores
+  - Nível 2: 5 cores
+
+- [x] **TASK-E6-006:** REQ-MEM-007 - Indicador de nível na UI ✅
+
+  - Exibir: "Nível 1 de 2" / "Nível 2 de 2"
+
+- [x] **TASK-E6-007:** REQ-MEM-009 - Nível 2 opcional com bônus ✅
+
+  - Tela de transição após Nível 1
+  - Copy motivacional: "60% não conseguem..."
+  - Botões: "🔥 Aceitar Desafio" / "Finalizar"
+
+- [x] **TASK-E6-008:** REQ-MEM-011 - Estrutura de recompensas ✅
+  - Nível 1: +200 XP, +100 Coins
+  - Nível 2: +300 XP bônus, +200 Coins bônus, Badge "Mente de Aço"
+
+### FASE 3 - UX/UI E FEEDBACK ⬜ PENDENTE
+
+- [ ] **TASK-E6-009:** REQ-MEM-008 - Velocidade por nível
+
+  - Nível 2: 25-30% mais lento
+
+- [ ] **TASK-E6-010:** REQ-MEM-012 - Sons únicos por cor
+
+  - Verde: Tom grave (C3)
+  - Amarelo: Tom médio-agudo (E3)
+  - Azul: Tom médio (G3)
+  - Roxo: Tom agudo (C4)
+
+- [ ] **TASK-E6-011:** REQ-MEM-013 - Animações de feedback
+
+  - Scale up + glow ao clicar
+  - Confetti no sucesso
+  - Shake no erro
+
+- [ ] **TASK-E6-012:** Adaptar design para paleta do funil
+  - Seguir `Briefing_Design.md`
+  - Cores: Verde neon, dourado, preto
+
+---
+
+## 📌 REGISTRO DE ALTERAÇÕES - ETAPA 6
+
+| Data       | Task                   | Status | Backup                                                  | Observações                  |
+| ---------- | ---------------------- | ------ | ------------------------------------------------------- | ---------------------------- |
+| 18/12/2025 | Criação seção Etapa 6  | ✅     | N/A                                                     | Baseado em PRD.md Seção 3.1  |
+| 18/12/2025 | Backup Step8Resistance | ✅     | `bkps/Step8ResistanceChallenge.tsx.bkp_20251218_145500` | Backup antes de substituição |
+
+---
+
+## 🔗 LINKS IMPORTANTES - ETAPA 6
+
+- **STATUS.md:** [STATUS.md](STATUS.md)
+- **PRD Memória Livre:** [PRD.md](PRD.md) (Seção 3.1)
+- **Componente a Substituir:** [src/components/steps/Step8ResistanceChallenge.tsx](src/components/steps/Step8ResistanceChallenge.tsx)
+- **Componente Referência:** [util/funilrespiralivre-oficial/src/components/challenges/Challenge3Memory.tsx](util/funilrespiralivre-oficial/src/components/challenges/Challenge3Memory.tsx)
 - **Pasta Backups:** [bkps/](bkps/)

@@ -114,7 +114,7 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
   - **CORREÇÃO (08/12/2025):** Implementado avanço automático para próxima etapa ao clicar no card.
   - Feedback visual de seleção (Borda verde/Destaque).
 
-### ETAPA 4: DESAFIO DA RESPIRAÇÃO ✅ APROVADO
+### ETAPA 4: DESAFIO DA RESPIRAÇÃO docs\Frames_PRD\Video4\ APROVADO
 
 **Arquivo:** `src/components/steps/Step6BreathingChallenge.tsx`
 **PRD de Referência:** `docs/dev/etapa_5/PRD_1_Claude.md`
@@ -126,7 +126,7 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 
 **Checklist de Requisitos - TELA DE TUTORIAL:**
 
-- [x] **REQ-TUT-001 (CRÍTICO):** Corrigir ortografia "Como Funcionar:" → "Como Funciona" ✅ (11/12/2025)
+- [x] **REQ-TUT-001 (CRÍTICO):** Corrigir ortografia "Como Funcionar:" → "Como Funciona" docs\Frames_PRD\Video4\ (11/12/2025)
 - [ ] **REQ-TUT-002 (ALTA):** Adicionar efeito de glow pulsante no ícone de vento
 - [x] **REQ-TUT-003 (MÉDIA):** Container de "Como Funciona" existe (manter)
 - [ ] **REQ-TUT-004 (ALTA):** Otimizar box de recompensas com valores do funil antigo
@@ -139,9 +139,9 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
   - Anel de progresso acompanhando círculo
   - Countdown inicial "PREPARE-SE" → 3 → 2 → 1
   - Número de respirações no centro após 1º ciclo
-- [x] **REQ-EXEC-002 (ALTA):** Aumentar tamanho do círculo (w-40 → w-64) ✅ (11/12/2025)
-- [x] **REQ-EXEC-003 (CRÍTICO):** Corrigir hierarquia de botões ✅ (11/12/2025)
-- [x] **REQ-EXEC-004 (ALTA):** Melhorar distribuição de elementos ✅ (11/12/2025)
+- [x] **REQ-EXEC-002 (ALTA):** Aumentar tamanho do círculo (w-40 → w-64) docs\Frames_PRD\Video4\ (11/12/2025)
+- [x] **REQ-EXEC-003 (CRÍTICO):** Corrigir hierarquia de botões docs\Frames_PRD\Video4\ (11/12/2025)
+- [x] **REQ-EXEC-004 (ALTA):** Melhorar distribuição de elementos docs\Frames_PRD\Video4\ (11/12/2025)
 - [ ] **REQ-EXEC-005 (ALTA):** Implementar feedback de dopamina (contador XP animado)
 - [ ] **REQ-EXEC-006 (BAIXA):** Som opcional
 
@@ -151,15 +151,15 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 
 **Bugs Identificados (11/12/2025):**
 
-- ❌ Linha 122: Erro ortográfico "Como Funcionar:"
-- ❌ Linha 48-56: Animação não sincroniza corretamente (lógica de cyclePosition bugada)
-- ❌ Linhas 228-247: Hierarquia de botões invertida (Pular em amarelo no topo!)
-- ❌ Linha 206: Círculo muito pequeno (w-40 h-40)
-- ❌ Linhas 254-311: Tela de conclusão com inline styles (inconsistente)
+- docs\Frames_PRD\Video4\ Linha 122: Erro ortográfico "Como Funcionar:"
+- docs\Frames_PRD\Video4\ Linha 48-56: Animação não sincroniza corretamente (lógica de cyclePosition bugada)
+- docs\Frames_PRD\Video4\ Linhas 228-247: Hierarquia de botões invertida (Pular em amarelo no topo!)
+- docs\Frames_PRD\Video4\ Linha 206: Círculo muito pequeno (w-40 h-40)
+- docs\Frames_PRD\Video4\ Linhas 254-311: Tela de conclusão com inline styles (inconsistente)
 
 **Backup Pendente:** `bkps/Step6BreathingChallenge.tsx.bkp_YYYYMMDD_HHMMSS`
 
-### ETAPA 5: DESAFIO MINDFULNESS (BOTÃO DE EMERGÊNCIA) ✅ APROVADO
+### ETAPA 5: DESAFIO MINDFULNESS (BOTÃO DE EMERGÊNCIA) docs\Frames_PRD\Video4\ APROVADO
 
 **Arquivo:** `src/components/steps/Step7MindfulnessChallenge.tsx` (REDESIGN COMPLETO - 17/12/2025)
 **PRD de Referência:** `PRD.md` | **Briefing Design:** `Briefing_Design.md`
@@ -170,38 +170,38 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 > Conceito: "Botão de Emergência" - Sistema multi-sensorial para estimular presença.
 > Design segue paleta consistente com Step 1-2 do funil (ver Briefing_Design.md).
 
-**Checklist de Requisitos - MECÂNICA CORE:** ✅ COMPLETO
+**Checklist de Requisitos - MECÂNICA CORE:** docs\Frames_PRD\Video4\ COMPLETO
 
-- [x] **REQ-MIND-001:** Redesign como "Botão de Emergência" ✅
-- [x] **REQ-MIND-002:** Mecânica de observação ✅
-- [x] **REQ-MIND-003:** Sistema de 4 botões (Central=3pts, Ver=1pt, Ouvir=3pts, Sentir=5pts) ✅
-- [x] **REQ-MIND-004:** Sistema de pontuação diferenciada ✅
-- [x] **REQ-MIND-005:** Mínimo 9 pontos para completar ✅
-- [x] **REQ-MIND-006:** Feedback visual e animações (pontos flutuantes) ✅
-- [x] **REQ-MIND-007:** Sem limite de tempo ✅
-- [x] **REQ-MIND-008:** Mensagens de estado ✅
+- [x] **REQ-MIND-001:** Redesign como "Botão de Emergência" docs\Frames_PRD\Video4\
+- [x] **REQ-MIND-002:** Mecânica de observação docs\Frames_PRD\Video4\
+- [x] **REQ-MIND-003:** Sistema de 4 botões (Central=3pts, Ver=1pt, Ouvir=3pts, Sentir=5pts) docs\Frames_PRD\Video4\
+- [x] **REQ-MIND-004:** Sistema de pontuação diferenciada docs\Frames_PRD\Video4\
+- [x] **REQ-MIND-005:** Mínimo 9 pontos para completar docs\Frames_PRD\Video4\
+- [x] **REQ-MIND-006:** Feedback visual e animações (pontos flutuantes) docs\Frames_PRD\Video4\
+- [x] **REQ-MIND-007:** Sem limite de tempo docs\Frames_PRD\Video4\
+- [x] **REQ-MIND-008:** Mensagens de estado docs\Frames_PRD\Video4\
 
-**Checklist de Requisitos - VISUAL:** ✅ COMPLETO
+**Checklist de Requisitos - VISUAL:** docs\Frames_PRD\Video4\ COMPLETO
 
-- [x] **REQ-VISUAL-001:** Estrutura premium-card ✅
-- [x] **REQ-VISUAL-002:** Paleta consistente com funil ✅
-- [x] **REQ-VISUAL-003:** Ícone com glow + badge ✅
-- [x] **REQ-VISUAL-004:** "Como Funciona" com 3 passos ✅
-- [x] **REQ-VISUAL-005:** Card de Recompensas ✅
-- [x] **REQ-VISUAL-006:** Botão CTA premium-button ✅
-- [x] **REQ-VISUAL-007:** Espaçamento e hierarquia ✅
+- [x] **REQ-VISUAL-001:** Estrutura premium-card docs\Frames_PRD\Video4\
+- [x] **REQ-VISUAL-002:** Paleta consistente com funil docs\Frames_PRD\Video4\
+- [x] **REQ-VISUAL-003:** Ícone com glow + badge docs\Frames_PRD\Video4\
+- [x] **REQ-VISUAL-004:** "Como Funciona" com 3 passos docs\Frames_PRD\Video4\
+- [x] **REQ-VISUAL-005:** Card de Recompensas docs\Frames_PRD\Video4\
+- [x] **REQ-VISUAL-006:** Botão CTA premium-button docs\Frames_PRD\Video4\
+- [x] **REQ-VISUAL-007:** Espaçamento e hierarquia docs\Frames_PRD\Video4\
 
-**Checklist de Requisitos - TELA DE EXECUÇÃO:** ✅ COMPLETO
+**Checklist de Requisitos - TELA DE EXECUÇÃO:** docs\Frames_PRD\Video4\ COMPLETO
 
-- [x] **REQ-EXEC-001:** Layout com botão grande centralizado ✅
-- [x] **REQ-EXEC-002:** Botão central grande (w-56 h-56) ✅
-- [x] **REQ-EXEC-003:** 3 botões sensoriais ✅
-- [x] **REQ-EXEC-004:** Display de pontuação em tempo real ✅
-- [x] **REQ-EXEC-005:** Botão "Concluir" aparece quando >= 9 pts ✅
-- [x] **REQ-EXEC-006:** Mensagens de estado ✅
-- [x] **REQ-EXEC-007:** Tela de conclusão customizada ✅
+- [x] **REQ-EXEC-001:** Layout com botão grande centralizado docs\Frames_PRD\Video4\
+- [x] **REQ-EXEC-002:** Botão central grande (w-56 h-56) docs\Frames_PRD\Video4\
+- [x] **REQ-EXEC-003:** 3 botões sensoriais docs\Frames_PRD\Video4\
+- [x] **REQ-EXEC-004:** Display de pontuação em tempo real docs\Frames_PRD\Video4\
+- [x] **REQ-EXEC-005:** Botão "Concluir" aparece quando >= 9 pts docs\Frames_PRD\Video4\
+- [x] **REQ-EXEC-006:** Mensagens de estado docs\Frames_PRD\Video4\
+- [x] **REQ-EXEC-007:** Tela de conclusão customizada docs\Frames_PRD\Video4\
 
-**Testes Realizados (17/12/2025):** ✅ Browser test confirmou funcionamento correto
+**Testes Realizados (17/12/2025):** docs\Frames_PRD\Video4\ Browser test confirmou funcionamento correto
 
 ### ETAPA 6: DESAFIO DE RESISTÊNCIA
 
@@ -257,3 +257,39 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 - [x] **Auto-Scroll:** Implementar `window.scrollTo(0, 0)` no container principal (`FunnelContainer`) para rodar em toda troca de etapa.
 - [x] **Barra de Progresso:** Verificar se existe uma barra de progresso visual no topo de todas as telas (Mencionado como faltante no PRD).
 - [ ] **Botão Voltar:** Garantir que o botão voltar exista e funcione corretamente em TODAS as telas, sem exceção.
+
+---
+
+## 4. ATUALIZAÇÃO 18/12/2025 - CONSOLIDAÇÃO DO ESTADO
+
+### RESUMO DAS ETAPAS
+
+| Etapa                      | Componente                      | Status                              | Data          |
+| -------------------------- | ------------------------------- | ----------------------------------- | ------------- |
+| 1 - Onboarding/Personagem  | `Step1CharacterCreation.tsx`    | docs\Frames_PRD\Video4\ APROVADO    | -             |
+| 2 - Calculadora            | `Step4Calculator.tsx`           | docs\Frames_PRD\Video4\ CORRIGIDO   | 08/12/2025    |
+| 3 - Escolha de Missão      | `Step3GoalSelection.tsx`        | docs\Frames_PRD\Video4\ APROVADO    | 08/12/2025    |
+| 4 - Desafio Respiração     | `Step6BreathingChallenge.tsx`   | docs\Frames_PRD\Video4\ APROVADO    | 17/12/2025    |
+| 5 - Desafio Mindfulness    | `Step7MindfulnessChallenge.tsx` | docs\Frames_PRD\Video4\ APROVADO    | 17/12/2025    |
+| 6 - Desafio Resistência    | `Step8ResistanceChallenge.tsx`  | docs\Frames_PRD\Video4\ REPROVADO   | Refação total |
+| 7 - Desafio Foco (Memória) | `Step9FocusChallenge.tsx`       | docs\Frames_PRD\Video4\ A VERIFICAR | -             |
+| 8 - Boss Fight             | `Step10BossChallenge.tsx`       | docs\Frames_PRD\Video4\ A VERIFICAR | -             |
+| 9 - Oferta Final           | `Step11FinalOffer.tsx`          | docs\Frames_PRD\Video4\ A VERIFICAR | -             |
+
+### PRÓXIMAS PRIORIDADES (Conforme PRD.md Seção 10.1)
+
+**URGENTE (Semana 1-2):**
+
+1. docs\Frames_PRD\Video4\ Corrigir bugs críticos do Memória Livre (REQ-MEM-001 a 004) - `Step9FocusChallenge.tsx`
+2. docs\Frames_PRD\Video4\ Implementar botão de confirmação (REQ-MEM-005)
+3. docs\Frames_PRD\Video4\ Implementar sistema de 2 níveis (REQ-MEM-006, 007)
+4. docs\Frames_PRD\Video4\ Criar página de vendas híbrida (REQ-VENDA-001 a 018) - `Step11FinalOffer.tsx`
+
+**ALTA PRIORIDADE (Semana 3-4):** 5. docs\Frames_PRD\Video4\ Implementar sons no Memória Livre (REQ-MEM-012) 6. docs\Frames_PRD\Video4\ Melhorar animações e feedback (REQ-MEM-013) 7. docs\Frames_PRD\Video4\ Criar Desafio Foco Rápido completo (REQ-FOC-001 a 005) - `Step8ResistanceChallenge.tsx` 8. docs\Frames_PRD\Video4\ Implementar sistema de bônus do Nível 2 (REQ-MEM-009, 010, 011)
+
+### REFERÊNCIAS CRÍTICAS
+
+- **PRD Principal:** [PRD.md](PRD.md) (1369 linhas)
+- **Projeto de Referência:** `util/funilrespiralivre-oficial/` (lovable.dev)
+- **Frames de Referência:** `docs/Frames_PRD/Video1-4/`
+- **Briefing Design:** [Briefing_Design.md](Briefing_Design.md)
