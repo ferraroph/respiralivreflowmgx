@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Virus Outbreak Simulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <link rel="icon" type="image/png" href="virus_favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="jquery-3.4.0.min.js"></script>
+    <script src="classes.js"></script>
+    <script src="main.js"></script>
+    <script src="plotly.min.js"></script>
+
+
+    <!-- PWA equivalent meta tags for iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="red">
+    <meta name="apple-mobile-web-app-title" content="VirusBreak">
+    <link rel="apple-touch-icon" href="./icons/icon152.png">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Virus Outbreak Simulator</h1>
+    </div>
+
+    <div class="virus">
+        <ul class="sidebar">
+            <li class="selected"><a href="#">Viruses</a></li>
+            <li><a href="#">Properties</a></li>
+            <li class="smallonly"><a href="#">Run</a></li>
+        </ul>
+
+        <div id="viruschoice">
+            <p class="hint">Start by selecting a virus</p>
+            <ul id="viruslist">
+            </ul>
+        </div>
+
+
+
+        <div id="virusslide" style="display:none;">
+            <p class="hint">Change the properties of your virus outbreak</p>
+
+            <p><span id="virulence" class="changevalue">0.1</span> % Virulence <br>(how likely to infect someone)</p>
+            <div class="slider"><input type="range" min="0" max="100" value="10" class="slidercontrol"
+                    id="virulenceslider"> </div>
+
+            <p><span id="lethality" class="changevalue">0.1</span> % Lethality <br>(how likely to kill someone)</p>
+            <div class="slider"><input type="range" min="0" max="100" value="10" class="slidercontrol"
+                    id="lethalityslider"> </div>
+
+            <p><span id="incubation" class="changevalue">5</span> days Incubation Time <br>(how many days without
+                symptoms)</p>
+            <div class="slider"><input type="range" min="0" max="20" value="5" class="slidercontrol"
+                    id="incubationslider"> </div>
+
+            <p><span id="infection" class="changevalue">5</span> days Infection Time <br>(how many days are you ill)</p>
+            <div class="slider"><input type="range" min="0" max="20" value="5" class="slidercontrol"
+                    id="infectionslider"> </div>
+
+            <p><span id="vaccination" class="changevalue">5</span> % Vaccination <br>(how much of the population is
+                vaccinated)</p>
+            <div class="slider"><input type="range" min="0" max="95" value="80" class="slidercontrol"
+                    id="vaccinationslider"> </div>
+
+            <p>Containment <br>(what steps are taken to slow the virus spread)</p>
+            <div><select name="quarantine" id="quarantineselector">
+                    <option>No containment</option>
+                    <option>Quarantine</option>
+                    <option>Quarantine plus distancing</option>
+
+                </select>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="simulation" id="simulationdiv">
+        <div id="clockdiv">
+            <p id="day">Day 1</p>
+        </div>
+
+        <div class="categories">
+            <ul class="categories">
+                <li class="uninfected">Uninfected<br><span id="uninfectedcount">0</span></li><li class="infectious">Carriers<br><span id="infectiouscount">0</span></li><li class="symptomatic">Sick<br><span id="symptomaticcount">0</span></li><li class="immune">Immune<br><span id="immunecount">0</span></li><li class="vaccinated">Vaccinated<br><span id="vaccinatedcount">0</span></li><li class="dead">Dead<br><span id="deadcount">0</span></li>
+            </ul>
+        </div>
+
+        <div id="heatmap">
+
+            <table id="simulationtable">
+
+            </table>
+
+        </div>
+
+        <div id="graphdiv">
+            <!-- This is the placeholder for the plotly graph -->
+        </div>
+
+
+        <div class="categories">
+            <ul class="categories">
+                <li class="economycost">Economy<br><span id="economycost">0</span></li><li class="vaccinationcost">Vaccine<br><span id="vaccinationcost">0</span></li><li class="nhscost">NHS<br><span id="nhscost">0</span></li>
+            </ul>
+        </div>
+
+
+        <div class="buttons">
+            <button id="startstop" type="button">Start</button>
+            <button id="infect" type="button">Infect</button>
+            <button id="reset" type="button">Reset</button>
+            <button id="switchbutton" type="button">Graph</button>
+        </div>
+    
+    </div>
+
+
+
+    <div id="fadeout">
+
+    </div>
+    <div id="welcome">
+        <div id="welcomecontent">
+        </div>
+
+        <div class="buttons">
+            <button id="play">Let's play!</button>
+        </div>
+
+        <p id="branding" class="center">
+            <a href="https://www.twitter.com/intent/tweet?screen_name=virus_break"><img src="images/virusbreak_twitter.png" alt="Send Feedback" title="Send Feedback"></a>
+            <a href="https://www.babraham.ac.uk"><img src="images/babraham_logo.png" alt="Babraham"></a>
+            <a href="https://www.bbsrc.ac.uk"><img src="images/bbsrc_logo.png" alt="BBSRC"></a>
+        </p>
+    </div>
+
+    <!-- Register the PWA serivce worker -->
+    <!--
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./service-worker.js')
+            .then((reg) => {
+                console.log('Service worker registered.', reg);
+            });
+            });
+        }
+    </script>
+    -->
+
+</body>
+
+</html>
