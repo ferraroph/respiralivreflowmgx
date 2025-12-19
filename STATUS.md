@@ -260,7 +260,7 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 
 ---
 
-## 4. ATUALIZAÇÃO 18/12/2025 - CONSOLIDAÇÃO DO ESTADO (ATUALIZADO)
+## 4. ATUALIZAÇÃO 19/12/2025 - CONSOLIDAÇÃO DO ESTADO (ATUALIZADO)
 
 ### RESUMO DAS ETAPAS
 
@@ -272,31 +272,59 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 | 4 - Desafio Respiração    | `Step6BreathingChallenge.tsx`   | ✅ APROVADO                    | 17/12/2025 |
 | 5 - Desafio Mindfulness   | `Step7MindfulnessChallenge.tsx` | ✅ APROVADO                    | 17/12/2025 |
 | 6 - Desafio Memória Livre | `Step8ResistanceChallenge.tsx`  | ✅ APROVADO                    | 18/12/2025 |
-| 7 - Desafio Foco Rápido   | `Step9FocusChallenge.tsx`       | ✅ APROVADO                    | 18/12/2025 |
+| 7 - Desafio Foco Rápido   | `Step9FocusChallenge.tsx`       | 🔄 PENDENTE OTIMIZAÇÃO         | 19/12/2025 |
 | 8 - Boss Fight            | `Step10BossChallenge.tsx`       | ❌ REJEITADO PARCIAL (PRD 2.2) | FUTURO     |
 | 9 - Página de Vendas      | `Step11FinalOffer.tsx`          | ⬜ A IMPLEMENTAR (Híbrida)     | PENDENTE   |
 
-### PRÓXIMAS PRIORIDADES (Conforme PRD.md Seção 10.1 - ATUALIZADO 18/12/2025)
+---
 
-**🔥 PRÓXIMA ETAPA - Etapa 7: Desafio Foco Rápido (REQ-FOC-001 a 005)**
+### 🔥 PRÓXIMA PRIORIDADE - OTIMIZAÇÃO ETAPA 7: DESAFIO FOCO RÁPIDO
 
-> **Arquivo:** `Step9FocusChallenge.tsx` > **PRD Ref:** Seção 3.2 - DESAFIO: FOCO RÁPIDO
-> **Status Atual:** Design REJEITADO - Usa estética de vidro (glassmorphism) proibida pelo PRD
+> **Arquivo:** `Step9FocusChallenge.tsx` > **PRD Ref:** Seção 3.2 - REQ-FOC-001 a REQ-FOC-006
+> **Ideias Documentadas:** `docs/ideias_etapa_7/` (9 arquivos)
+> **Arquivo Mais Recente:** `docs/ideias_etapa_7/FUSAO_MELHORES_IDEIAS.md`
 
-**Problemas identificados no componente atual:**
+#### STATUS ATUAL DO COMPONENTE
 
-1. ❌ Design usa `backdrop-blur-xl`, `bg-white/10` (estética de vidro - REJEITADO)
-2. ❌ Paleta usa `from-indigo-900 via-purple-900 to-pink-900` (PRD rejeita)
-3. ❌ Mecânica incompleta - Não segue REQ-FOC (tiers de recompensa, inimigos, etc.)
-4. ❌ Não é "whack-a-mole" com inimigos como especificado no PRD
+O componente `Step9FocusChallenge.tsx` foi implementado com mecânica básica de whack-a-mole, MAS precisa de otimização significativa para se tornar um "jogo de verdade" conforme discussões anteriores.
 
-**Requisitos do PRD Seção 3.2:**
+**Implementação atual possui:**
 
-- REQ-FOC-001: Conceito "Whack-a-Mole" com inimigos (cigarros, tentações)
-- REQ-FOC-002: Representação visual de inimigos
-- REQ-FOC-003: Áreas de spawn e movimento
-- REQ-FOC-004: Estrutura de pontos (10/20/30 acertos = tiers)
-- REQ-FOC-005: Contador de acertos em tempo real
+- ✅ Mecânica básica de whack-a-mole
+- ✅ Inimigos com spawn aleatório
+- ✅ Sistema de tiers (10/20/30 acertos)
+- ✅ Timer de 45 segundos
+- ✅ Design premium (tema dark iOS)
+
+**Falta para otimização (documentado em `ideias_etapa_7/`):**
+
+- ❌ Sistema de HP/Vidas do jogador
+- ❌ Sistema de Combos
+- ❌ Boss Battle integrado
+- ❌ Tipos de inimigos variados
+- ❌ Power-ups
+- ❌ Efeitos visuais "juice" (screen shake, partículas)
+- ❌ Sons de feedback
+
+#### 5 OPÇÕES DE SÍNTESE DOCUMENTADAS (FUSAO_MELHORES_IDEIAS.md)
+
+| #   | Nome                            | Fusão de Conceitos                      | Boss?         | Dificuldade |
+| --- | ------------------------------- | --------------------------------------- | ------------- | ----------- |
+| 1   | Boss Arena 360° com Slash       | Boss Rush + Arena Espacial + Slash      | ✅ Central    | Alta        |
+| 2   | Purificação Biológica com Slash | Célula/Biológico + Fruit Ninja + Vórtex | ✅ Final      | Média       |
+| 3   | Defesa Vórtex com Ondas         | Vórtex + Tower Defense + Boss Rush      | ✅ Após ondas | Média       |
+| 4   | Arena Boss Multifase            | Boss Rush + Arena 360° + Célula         | ✅ Orbita     | Alta        |
+| 5   | Slash Arena com Boss Final      | Fruit Ninja + Arena + Boss Rush + Ondas | ✅ Final      | Alta        |
+
+#### PRÓXIMOS PASSOS
+
+1. **DISCUSSÃO/ALINHAMENTO** - Definir qual conceito usar para otimização
+2. **NÃO EXECUTAR** - Aguardando aprovação explícita do usuário
+3. **EVITAR ERROS PASSADOS** - Documentar restrições antes de qualquer execução
+
+---
+
+### OUTRAS PRIORIDADES
 
 **ALTA PRIORIDADE - Etapa 9: Página de Vendas Híbrida (REQ-VENDA-001 a 018)**
 
@@ -308,9 +336,12 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 > **Arquivo:** `Step10BossChallenge.tsx` > **Status:** REJEITADO PARCIALMENTE no PRD (muito tedioso, má UX)
 > **Decisão:** Retrabalhar futuramente ou arquivar
 
+---
+
 ### REFERÊNCIAS CRÍTICAS
 
 - **PRD Principal:** [PRD.md](PRD.md) (1369 linhas)
 - **Projeto de Referência:** `util/funilrespiralivre-oficial/` (lovable.dev)
 - **Frames de Referência:** `docs/Frames_PRD/Video1-4/`
 - **Briefing Design:** [Briefing_Design.md](Briefing_Design.md)
+- **Ideias Etapa 7:** `docs/ideias_etapa_7/` (9 arquivos de conceitos)
