@@ -262,79 +262,42 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 
 ## 4. ATUALIZAÇÃO 19/12/2025 - CONSOLIDAÇÃO DO ESTADO (ATUALIZADO)
 
-### RESUMO DAS ETAPAS
+### RESUMO DAS ETAPAS (ATUALIZADO 22/12/2025)
 
-| Etapa                     | Componente                      | Status                         | Data       |
-| ------------------------- | ------------------------------- | ------------------------------ | ---------- |
-| 1 - Onboarding/Personagem | `Step1CharacterCreation.tsx`    | ✅ APROVADO                    | -          |
-| 2 - Calculadora           | `Step4Calculator.tsx`           | ✅ CORRIGIDO                   | 08/12/2025 |
-| 3 - Escolha de Missão     | `Step3GoalSelection.tsx`        | ✅ APROVADO                    | 08/12/2025 |
-| 4 - Desafio Respiração    | `Step6BreathingChallenge.tsx`   | ✅ APROVADO                    | 17/12/2025 |
-| 5 - Desafio Mindfulness   | `Step7MindfulnessChallenge.tsx` | ✅ APROVADO                    | 17/12/2025 |
-| 6 - Desafio Memória Livre | `Step8ResistanceChallenge.tsx`  | ✅ APROVADO                    | 18/12/2025 |
-| 7 - Desafio Foco Rápido   | `Step9FocusChallenge.tsx`       | 🔄 PENDENTE OTIMIZAÇÃO         | 19/12/2025 |
-| 8 - Boss Fight            | `Step10BossChallenge.tsx`       | ❌ REJEITADO PARCIAL (PRD 2.2) | FUTURO     |
-| 9 - Página de Vendas      | `Step11FinalOffer.tsx`          | ⬜ A IMPLEMENTAR (Híbrida)     | PENDENTE   |
+| Etapa                     | Componente                      | Status                    | Data       |
+| ------------------------- | ------------------------------- | ------------------------- | ---------- |
+| 1 - Onboarding/Personagem | `Step1CharacterCreation.tsx`    | ✅ APROVADO               | -          |
+| 2 - Calculadora           | `Step4Calculator.tsx`           | ✅ CORRIGIDO              | 08/12/2025 |
+| 3 - Escolha de Missão     | `Step3GoalSelection.tsx`        | ✅ APROVADO               | 08/12/2025 |
+| 4 - Desafio Respiração    | `Step6BreathingChallenge.tsx`   | ✅ APROVADO               | 17/12/2025 |
+| 5 - Desafio Mindfulness   | `Step7MindfulnessChallenge.tsx` | ✅ APROVADO               | 17/12/2025 |
+| 6 - Desafio Memória Livre | `Step8ResistanceChallenge.tsx`  | ✅ APROVADO               | 18/12/2025 |
+| 7 - Desafio Foco Rápido   | `Step9FocusChallenge.tsx`       | ✅ APROVADO + Tier 3 Auto | 22/12/2025 |
+| ~~8 - Boss Fight~~        | ~~`Step10BossChallenge.tsx`~~   | ❌ REMOVIDO               | 22/12/2025 |
+| 8 - Página de Vendas      | `Step11FinalOffer.tsx`          | ⬜ A OTIMIZAR (Híbrida)   | PENDENTE   |
 
----
-
-### 🔥 PRÓXIMA PRIORIDADE - OTIMIZAÇÃO ETAPA 7: DESAFIO FOCO RÁPIDO
-
-> **Arquivo:** `Step9FocusChallenge.tsx` > **PRD Ref:** Seção 3.2 - REQ-FOC-001 a REQ-FOC-006
-> **Ideias Documentadas:** `docs/ideias_etapa_7/` (9 arquivos)
-> **Arquivo Mais Recente:** `docs/ideias_etapa_7/FUSAO_MELHORES_IDEIAS.md`
-
-#### STATUS ATUAL DO COMPONENTE
-
-O componente `Step9FocusChallenge.tsx` foi implementado com mecânica básica de whack-a-mole, MAS precisa de otimização significativa para se tornar um "jogo de verdade" conforme discussões anteriores.
-
-**Implementação atual possui:**
-
-- ✅ Mecânica básica de whack-a-mole
-- ✅ Inimigos com spawn aleatório
-- ✅ Sistema de tiers (10/20/30 acertos)
-- ✅ Timer de 45 segundos
-- ✅ Design premium (tema dark iOS)
-
-**Falta para otimização (documentado em `ideias_etapa_7/`):**
-
-- ❌ Sistema de HP/Vidas do jogador
-- ❌ Sistema de Combos
-- ❌ Boss Battle integrado
-- ❌ Tipos de inimigos variados
-- ❌ Power-ups
-- ❌ Efeitos visuais "juice" (screen shake, partículas)
-- ❌ Sons de feedback
-
-#### 5 OPÇÕES DE SÍNTESE DOCUMENTADAS (FUSAO_MELHORES_IDEIAS.md)
-
-| #   | Nome                            | Fusão de Conceitos                      | Boss?         | Dificuldade |
-| --- | ------------------------------- | --------------------------------------- | ------------- | ----------- |
-| 1   | Boss Arena 360° com Slash       | Boss Rush + Arena Espacial + Slash      | ✅ Central    | Alta        |
-| 2   | Purificação Biológica com Slash | Célula/Biológico + Fruit Ninja + Vórtex | ✅ Final      | Média       |
-| 3   | Defesa Vórtex com Ondas         | Vórtex + Tower Defense + Boss Rush      | ✅ Após ondas | Média       |
-| 4   | Arena Boss Multifase            | Boss Rush + Arena 360° + Célula         | ✅ Orbita     | Alta        |
-| 5   | Slash Arena com Boss Final      | Fruit Ninja + Arena + Boss Rush + Ondas | ✅ Final      | Alta        |
-
-#### PRÓXIMOS PASSOS
-
-1. **DISCUSSÃO/ALINHAMENTO** - Definir qual conceito usar para otimização
-2. **NÃO EXECUTAR** - Aguardando aprovação explícita do usuário
-3. **EVITAR ERROS PASSADOS** - Documentar restrições antes de qualquer execução
+> **NOTA 22/12/2025:** Boss Fight REMOVIDO do projeto. Fluxo agora: Foco Rápido → Página de Vendas.
+> Arquivo movido para: `bkps/Step10BossChallenge.tsx.bkp_20251222_REMOVED`
 
 ---
 
-### OUTRAS PRIORIDADES
+### 🔥 PRÓXIMA PRIORIDADE - ETAPA 8: PÁGINA DE VENDAS HÍBRIDA
 
-**ALTA PRIORIDADE - Etapa 9: Página de Vendas Híbrida (REQ-VENDA-001 a 018)**
-
-> **Arquivo:** `Step11FinalOffer.tsx` > **PRD Ref:** Seção 3.4 - PÁGINA DE CONVERSÃO/VENDAS
+> **Arquivo:** `Step11FinalOffer.tsx` > **PRD Ref:** Seção 3.4 - REQ-VENDA-001 a REQ-VENDA-018
 > **Estratégia:** Design base = versão raiz (lovable.app) + Copy = versão referência (vercel.app)
 
-**BAIXA PRIORIDADE - Etapa 8: Boss Fight**
+#### ALTERAÇÕES FEITAS EM 22/12/2025
 
-> **Arquivo:** `Step10BossChallenge.tsx` > **Status:** REJEITADO PARCIALMENTE no PRD (muito tedioso, má UX)
-> **Decisão:** Retrabalhar futuramente ou arquivar
+1. **Remoção do Boss Fight**
+
+   - Arquivo movido para `bkps/`
+   - Referências removidas de: FunnelContainer, DevNavigation, CheckpointModal
+   - TOTAL_STEPS: 9 → 8
+
+2. **Foco Rápido - Botão de Prosseguir ao Tier 3**
+   - Adicionado estado `showComplete`
+   - Botão "🔥 Tier Máximo! Coletar X pts" aparece quando atinge 30+ acertos
+   - Usuário pode prosseguir imediatamente sem esperar timer
 
 ---
 
