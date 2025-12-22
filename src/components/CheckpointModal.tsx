@@ -20,22 +20,19 @@ const CheckpointModal: React.FC<CheckpointModalProps> = ({
   const getStepName = (step: number) => {
     const stepNames = {
       1: 'Criação de Personagem',
-      2: 'Verificação da Realidade',
+      2: 'Calculadora de Economia',
       3: 'Seleção de Objetivos',
-      4: 'Calculadora de Economia',
-      5: 'Simulador de Saúde',
-      6: 'Desafio de Respiração',
-      7: 'Desafio de Mindfulness',
-      8: 'Desafio de Resistência',
-      9: 'Desafio de Foco',
-      10: 'Desafio Final (Boss)',
-      11: 'Oferta Final'
+      4: 'Desafio de Respiração',
+      5: 'Desafio de Mindfulness',
+      6: 'Desafio Memória Livre',
+      7: 'Desafio Foco Rápido',
+      8: 'Oferta Final'
     };
     return stepNames[step as keyof typeof stepNames] || `Etapa ${step}`;
   };
 
   const getProgressPercentage = () => {
-    return Math.round((progress.current_step / 11) * 100);
+    return Math.round((progress.current_step / 8) * 100);
   };
 
   return (

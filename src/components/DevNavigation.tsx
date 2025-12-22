@@ -8,7 +8,7 @@ import { ChevronDown, ChevronUp, Code2, Zap, ToggleLeft, ToggleRight } from 'luc
 // Cada item representa uma "tela" navegável do funil
 export interface StepInfo {
   id: string;           // Identificador único
-  step: number;         // Número do step principal (1-9)
+  step: number;         // Número do step principal (1-8)
   subStep: number;      // Número da sub-etapa (1, 2, 3...)
   label: string;        // Nome curto
   description: string;  // Descrição detalhada
@@ -51,18 +51,12 @@ export const FUNNEL_STEPS_MAP: StepInfo[] = [
   { id: '7.2', step: 7, subStep: 2, label: '7.2', description: 'Alvos Ativos', internalState: { phase: 'challenge' } },
   { id: '7.3', step: 7, subStep: 3, label: '7.3', description: 'Conclusão', internalState: { phase: 'completed' } },
   
-  // Step 8 - Boss Challenge (4 sub-etapas)
-  { id: '8.1', step: 8, subStep: 1, label: '8.1', description: 'Intro Boss', internalState: { phase: 'intro' } },
-  { id: '8.2', step: 8, subStep: 2, label: '8.2', description: 'Instruções Boss', internalState: { phase: 'instructions' } },
-  { id: '8.3', step: 8, subStep: 3, label: '8.3', description: 'Batalha Ativa', internalState: { phase: 'challenge' } },
-  { id: '8.4', step: 8, subStep: 4, label: '8.4', description: 'Vitória', internalState: { phase: 'victory' } },
-  
-  // Step 9 - Oferta Final (1 sub-etapa)
-  { id: '9.1', step: 9, subStep: 1, label: '9.1', description: 'Oferta Final', internalState: {} },
+  // Step 8 - Oferta Final (1 sub-etapa) - Removido Boss Fight
+  { id: '8.1', step: 8, subStep: 1, label: '8.1', description: 'Oferta Final', internalState: {} },
 ];
 
-export const TOTAL_STEPS = 9;
-export const TOTAL_SUB_STEPS = FUNNEL_STEPS_MAP.length; // 23
+export const TOTAL_STEPS = 8; // Removido Boss Fight
+export const TOTAL_SUB_STEPS = FUNNEL_STEPS_MAP.length; // 19 (era 23 com Boss)
 
 interface DevNavigationProps {
   currentStep: number;

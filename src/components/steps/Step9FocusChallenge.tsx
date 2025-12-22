@@ -37,11 +37,20 @@ const Step9FocusChallenge = ({ userProfile, onUpdateProfile, onNext, onBack, dev
   const [enemies, setEnemies] = useState<Enemy[]>([]);
   const [floatingPoints, setFloatingPoints] = useState<{ id: number; x: number; y: number }[]>([]);
   const [isActive, setIsActive] = useState(false);
+  const [showComplete, setShowComplete] = useState(false);
 
   // Debug log
   useEffect(() => {
     console.log('[FocusChallenge] Phase:', phase, 'TimeLeft:', timeLeft, 'Hits:', hits, 'Enemies:', enemies.length);
   }, [phase, timeLeft, hits, enemies.length]);
+
+  // Mostrar botão Concluir quando atingir Tier 3 (30+ acertos)
+  useEffect(() => {
+    if (hits >= TIER_3_MIN && !showComplete && isActive) {
+      setShowComplete(true);
+      console.log('[FocusChallenge] 🔥 TIER 3 ATINGIDO! Botão Concluir disponível.');
+    }
+  }, [hits, showComplete, isActive]);
 
   // Timer do jogo
   useEffect(() => {
@@ -131,6 +140,14 @@ const Step9FocusChallenge = ({ userProfile, onUpdateProfile, onNext, onBack, dev
     console.log('[FocusChallenge] Desafio pulado. Sem recompensas.');
     setIsActive(false);
     onNext();
+  };
+
+  // Concluir antecipadamente ao atingir Tier 3
+  const handleComplete = () => {
+    console.log('[FocusChallenge] Concluindo com Tier 3! Acertos:', hits);
+    setIsActive(false);
+    setPhase('completed');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const getTier = () => {
@@ -445,14 +462,28 @@ const Step9FocusChallenge = ({ userProfile, onUpdateProfile, onNext, onBack, dev
             )}
           </div>
 
-          {/* Botão Pular - Discreto */}
-          <button
-            onClick={handleSkip}
-            className="w-full p-3 rounded-2xl text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center justify-center gap-2 glass-effect"
-          >
-            <X className="w-4 h-4" />
-            Pular Desafio (Sem Recompensas)
-          </button>
+          {/* Botões de Ação */}
+          <div className="space-y-3">
+            {/* Botão Concluir - Só aparece quando atingir Tier 3 */}
+            {showComplete && (
+              <button
+                onClick={handleComplete}
+                className="w-full premium-button text-lg flex items-center justify-center gap-3 animate-fade-up"
+              >
+                <Trophy className="w-6 h-6" />
+                🔥 Tier Máximo! Coletar {hits * POINTS_PER_HIT} pts
+              </button>
+            )}
+
+            {/* Botão Pular - Discreto */}
+            <button
+              onClick={handleSkip}
+              className="w-full p-3 rounded-2xl text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center justify-center gap-2 glass-effect"
+            >
+              <X className="w-4 h-4" />
+              Pular Desafio (Sem Recompensas)
+            </button>
+          </div>
         </div>
 
         {/* CSS para animações */}

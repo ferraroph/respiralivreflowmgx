@@ -7,7 +7,6 @@ import Step6BreathingChallenge from './steps/Step6BreathingChallenge';
 import Step7MindfulnessChallenge from './steps/Step7MindfulnessChallenge';
 import Step8ResistanceChallenge from './steps/Step8ResistanceChallenge';
 import Step9FocusChallenge from './steps/Step9FocusChallenge';
-import Step10BossChallenge from './steps/Step10BossChallenge';
 import Step11FinalOffer from './steps/Step11FinalOffer';
 import CheckpointModal from './CheckpointModal';
 import DevNavigation, { getDevModeActive } from './DevNavigation';
@@ -163,7 +162,7 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
   // DEV NAVIGATION - Funções de navegação de desenvolvimento
   // ============================================================================
   // Importa o mapa de etapas para calcular o total
-  const TOTAL_STEPS = 9;
+  const TOTAL_STEPS = 8; // Removido Boss Fight
 
   /**
    * Navega diretamente para qualquer etapa/sub-etapa do funil
@@ -227,8 +226,7 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
       breathingChallengeCompleted: true,
       mindfulnessChallengeCompleted: true,
       resistanceChallengeCompleted: true,
-      focusChallengeCompleted: true,
-      bossDefeated: false
+      focusChallengeCompleted: true
     };
 
     setCharacterData(mockCharacterData);
@@ -331,11 +329,9 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
       case 6:
         return <Step8ResistanceChallenge key={`step6-${currentSubStep}`} onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} devInitialState={internalState} />;
       case 7:
-        return <Step9FocusChallenge key={`step7-${currentSubStep}`} onNext={handleNext} onBack={handleBack} onUpdateScore={handleScoreUpdate} devInitialState={internalState} />;
+        return <Step9FocusChallenge key={`step7-${currentSubStep}`} userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
       case 8:
-        return <Step10BossChallenge key={`step8-${currentSubStep}`} userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} devInitialState={internalState} />;
-      case 9:
-        return <Step11FinalOffer key={`step9-${currentSubStep}`} userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
+        return <Step11FinalOffer key={`step8-${currentSubStep}`} userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} onBack={handleBack} />;
       default:
         return <Step1CharacterCreation key={`step-default-${currentSubStep}`} userProfile={userProfile} onUpdateProfile={handleProfileUpdate} onNext={handleNext} devInitialState={internalState} />;
     }
