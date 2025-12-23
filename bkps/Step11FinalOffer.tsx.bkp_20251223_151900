@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { UserProfile } from '@/types/funnel';
-import { Crown, Star, Zap, Shield, Trophy, CheckCircle, Clock, Users, Unlock, TrendingUp } from 'lucide-react';
+import { Crown, Star, Zap, Shield, Trophy, CheckCircle, Clock, Users } from 'lucide-react';
 import { StepWrapper } from '../StepWrapper';
 
 interface Step11FinalOfferProps {
@@ -145,54 +145,6 @@ const Step11FinalOffer = ({ userProfile, onUpdateProfile, onNext, onBack }: Step
           </div>
         </div>
 
-        {/* NOVA SEÇÃO: Oferta Exclusiva Desbloqueada - REQ-VENDA-004 a 009 */}
-        <div className="space-y-6">
-          {/* Badge de Oferta Exclusiva - REQ-VENDA-004 */}
-          <div className="text-center space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 animate-glow-pulse">
-              <Unlock className="w-4 h-4 text-red-400" />
-              <span className="text-sm font-bold text-red-400">🔓 OFERTA EXCLUSIVA DESBLOQUEADA</span>
-            </div>
-            
-            {/* Título "Sua Classificação Desbloqueou" - REQ-VENDA-005 */}
-            <h2 className="text-2xl font-bold text-foreground">
-              Sua Classificação Desbloqueou
-            </h2>
-            
-            {/* "70% DE DESCONTO" em destaque gigante - REQ-VENDA-006 */}
-            <div className="text-5xl font-black bg-gradient-to-r from-success via-primary to-success bg-clip-text text-transparent animate-gradient-shift">
-              70% DE DESCONTO
-            </div>
-            
-            {/* Copy de exclusividade - REQ-VENDA-007 */}
-            <p className="text-muted-foreground">
-              Apenas para quem completou a jornada como você
-            </p>
-          </div>
-
-          {/* Estrutura de Preço Correta - REQ-VENDA-008 */}
-          <div className="premium-card p-6 text-center">
-            <div className="space-y-4">
-              <div>
-                <div className="text-sm text-muted-foreground line-through mb-1">
-                  De R$ 97,90
-                </div>
-                <div className="text-5xl font-bold bg-gradient-to-r from-success to-primary bg-clip-text text-transparent">
-                  R$ 29,90
-                </div>
-              </div>
-
-              {/* Badge de Economia - REQ-VENDA-009 */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-success/20 border border-success/30">
-                <TrendingUp className="w-4 h-4 text-success" />
-                <span className="text-sm font-bold text-success">
-                  📈 Você economizou R$ 68,00
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Product Presentation */}
         <div className="premium-card p-6 mb-6 border-gold/30">
           <div className="text-center mb-6">
@@ -226,7 +178,14 @@ const Step11FinalOffer = ({ userProfile, onUpdateProfile, onNext, onBack }: Step
             </div>
           </div>
 
-          {/* Preço movido para seção acima - REQ-VENDA-017 */}
+          {/* Price and Urgency */}
+          <div className="premium-card p-4 bg-gradient-to-r from-gold/10 to-success/10 border-gold/20 mb-4">
+            <div className="text-center">
+              <p className="text-xs text-muted-foreground line-through">De R$ 497</p>
+              <p className="text-3xl font-black text-gold mb-1">R$ 197</p>
+              <p className="text-xs text-success font-bold">60% OFF - Oferta Especial</p>
+            </div>
+          </div>
 
           {/* Countdown Timer */}
           <div className="premium-card p-4 bg-gradient-to-r from-red-500/10 to-orange-500/10 border-red-500/20 mb-6">
