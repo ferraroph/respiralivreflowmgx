@@ -1,5 +1,7 @@
 # INSTRUÇÕES
 
+agora na página de ofertas, ao invés de ir pra uma página de checkout, vamos fazer com que o usuário consiga finalizar a compra já pela página de ofertas.
+
 Crie um checkout transparente com somente pix usando essa API que mandei abaixo (tem tudo que você precisa para fazer o checkout funcionar)
 
 Chave api para ser usada:sk_fb1df3be4fac3e2ad0873344358738d913596434a95cb273a2e89c2603c3bf8f5c28e592fa911beb2d91de03994b1c02b232b73796a9a68861c57b5a68366e8c
