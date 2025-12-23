@@ -17,7 +17,7 @@ import { UserTrackingService, UserProgress, LeadData } from '../lib/supabase';
 // ============================================================================
 // Para DESATIVAR a navegação de desenvolvimento, mude para: false
 // IMPORTANTE: Veja USER.md para mais detalhes
-const DEV_NAVIGATION_ENABLED = false;
+const DEV_NAVIGATION_ENABLED = true;
 // ============================================================================
 
 interface FunnelContainerProps {
