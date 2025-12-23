@@ -1102,38 +1102,128 @@ Substituição completa do `Step8ResistanceChallenge.tsx` (REPROVADO) pelo **Des
 
 ## 📊 REQUISITOS DA PÁGINA DE VENDAS (REQ-VENDA-\*)
 
-### SEÇÃO SUPERIOR: Perfil de Liberdade
+> **Data de Atualização:** 23/12/2025
+> **Componente:** `src/components/steps/Step11FinalOffer.tsx` > **Frames PRD:** Video3 (3312, 3840, 4224), Video4 (0480, 0792, 0936, 1272, 1704, 1896, 2784)
 
-- [ ] **REQ-VENDA-001:** Card de Perfil do Usuário
-- [ ] **REQ-VENDA-002:** "Baseado nas suas X conquistas"
-- [ ] **REQ-VENDA-003:** Box de Diagnóstico (opcional)
+---
 
-### SEÇÃO CENTRAL: Oferta Desbloqueada
+### FASE 1 - CORREÇÃO DE COPY E PREÇOS ⬜ PENDENTE
 
-- [ ] **REQ-VENDA-004:** Badge "🔓 OFERTA EXCLUSIVA DESBLOQUEADA" (vermelho)
-- [ ] **REQ-VENDA-005:** Título "Sua Classificação Desbloqueou"
-- [ ] **REQ-VENDA-006:** "70% DE DESCONTO" (verde gigante)
-- [ ] **REQ-VENDA-007:** "Apenas para quem completou a jornada como você"
+- [ ] **TASK-E9-001:** REQ-VENDA-008 - Corrigir estrutura de preços
 
-### SEÇÃO DE PREÇO
+  - Arquivo: `Step11FinalOffer.tsx` (linha 184-186)
+  - Atual: "De R$ 497" → "R$ 197" (60% OFF)
+  - Correto (PRD): "De R$ 97,90" → "R$ 29,90" (70% OFF)
+  - Backups: `bkps/Step11FinalOffer.tsx.bkp_YYYYMMDD_HHMMSS`
 
-- [ ] **REQ-VENDA-008:** Estrutura de preço (original riscado + desconto)
-- [ ] **REQ-VENDA-009:** Badge "📈 Você economizou R$ X"
+- [ ] **TASK-E9-002:** REQ-VENDA-006 - Destaque "70% DE DESCONTO"
+  - Texto: "70% DE DESCONTO" em verde gigante (text-4xl ou maior)
+  - Cor: `text-success` ou `text-primary` (verde neon)
+  - Posição: Elemento mais destacado da seção de oferta
 
-### SEÇÃO DE BENEFÍCIOS
+---
 
-- [ ] **REQ-VENDA-010:** Card do Produto Principal
-- [ ] **REQ-VENDA-011:** Lista de benefícios híbrida
+### FASE 2 - SEÇÃO DE OFERTA DESBLOQUEADA ⬜ PENDENTE
 
-### ELEMENTOS DE URGÊNCIA
+- [ ] **TASK-E9-003:** REQ-VENDA-004 - Badge "OFERTA EXCLUSIVA DESBLOQUEADA"
 
-- [ ] **REQ-VENDA-012:** Timer de Oferta
-- [ ] **REQ-VENDA-013:** Prova Social
+  - Texto: "🔓 OFERTA EXCLUSIVA DESBLOQUEADA"
+  - Cor: Vermelho/laranja (bg-red-500/20 border-red-500/40)
+  - Posição: NOVA SEÇÃO após card "Seu Perfil de Liberdade"
+  - Frame ref: `frame_4224.png`
 
-### DISTRIBUIÇÃO E LAYOUT
+- [ ] **TASK-E9-004:** REQ-VENDA-005 - Título "Sua Classificação Desbloqueou"
 
-- [ ] **REQ-VENDA-017:** Hierarquia visual correta
-- [ ] **REQ-VENDA-018:** CTA Principal (verde neon)
+  - Texto: "Sua Classificação Desbloqueou"
+  - Cor: Branco (text-foreground)
+  - Tamanho: text-2xl ou text-3xl
+  - Posição: Logo abaixo do badge vermelho
+
+- [ ] **TASK-E9-005:** REQ-VENDA-007 - Copy de exclusividade
+
+  - Texto: "Apenas para quem completou a jornada como você"
+  - Cor: Cinza claro (text-muted-foreground)
+  - Posição: Abaixo do desconto
+
+- [ ] **TASK-E9-006:** REQ-VENDA-009 - Badge de economia
+  - Texto: "📈 Você economizou R$ 68,00"
+  - Cor: Verde (bg-success/20 text-success)
+  - Formato: Badge/pill
+  - Posição: Abaixo do preço com desconto
+
+---
+
+### FASE 3 - SEÇÃO SUPERIOR (JÁ EXISTE - VERIFICAR) ✅ PARCIAL
+
+- [x] **TASK-E9-007:** REQ-VENDA-001 - Card de Perfil do Usuário ✅
+
+  - Status: Já existe (linha 105-146)
+  - Ação: MANTER
+
+- [x] **TASK-E9-008:** REQ-VENDA-002 - "Baseado nas suas X conquistas" ✅
+
+  - Status: Já existe (linha 100-102)
+  - Ação: MANTER
+
+- [x] **TASK-E9-009:** REQ-VENDA-003 - Box de Diagnóstico ✅
+  - Status: Já existe (linha 140-145)
+  - Ação: MANTER
+
+---
+
+### FASE 4 - SEÇÃO DE BENEFÍCIOS (JÁ EXISTE - VERIFICAR) ✅ PARCIAL
+
+- [x] **TASK-E9-010:** REQ-VENDA-010 - Card do Produto Principal ✅
+
+  - Status: Já existe (linha 148-202)
+  - Ação: MANTER
+
+- [x] **TASK-E9-011:** REQ-VENDA-011 - Lista de benefícios híbrida ✅
+  - Status: Já existe com todos os itens aprovados
+  - Ação: MANTER
+
+---
+
+### FASE 5 - ELEMENTOS DE URGÊNCIA (JÁ EXISTE - VERIFICAR) ✅ PARCIAL
+
+- [x] **TASK-E9-012:** REQ-VENDA-012 - Timer de Oferta ✅
+
+  - Status: Já existe (linha 190-201)
+  - Ação: MANTER
+
+- [x] **TASK-E9-013:** REQ-VENDA-013 - Prova Social ✅
+  - Status: Já existe "1.847 pessoas" (linha 204-213)
+  - Ação: MANTER
+
+---
+
+### FASE 6 - REORGANIZAÇÃO DE HIERARQUIA ⬜ PENDENTE
+
+- [ ] **TASK-E9-014:** REQ-VENDA-017 - Hierarquia visual correta
+
+  - **ATUAL:**
+    1. Header + Logo
+    2. "Baseado nas suas X conquistas"
+    3. Card "Seu Perfil de Liberdade"
+    4. Card "Respira Livre Premium" (com preço embutido)
+    5. Timer
+    6. Prova Social
+    7. CTA
+  - **CORRETO (PRD):**
+    1. Header + Logo
+    2. "Baseado nas suas X conquistas"
+    3. Card "Seu Perfil de Liberdade"
+    4. **NOVA SEÇÃO: Badge vermelho + "Sua Classificação Desbloqueou" + "70% DE DESCONTO"**
+    5. Estrutura de preço + Badge economia
+    6. Copy exclusividade
+    7. Card "Respira Livre Premium" (SEM preço)
+    8. Timer
+    9. Prova Social
+    10. CTA
+
+- [x] **TASK-E9-015:** REQ-VENDA-018 - CTA Principal ✅
+  - Status: Já existe (linha 216-222)
+  - Ação: MANTER (verificar cor verde neon)
 
 ---
 
