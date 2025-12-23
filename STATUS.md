@@ -285,6 +285,43 @@ BASEADO NA ANÁLISE DO ARQUIVO PRD.md (VÍDEO SIDK5694)
 
 > **Arquivo:** `Step11FinalOffer.tsx` > **PRD Ref:** Seção 3.4 - REQ-VENDA-001 a REQ-VENDA-018
 > **Estratégia:** Design base = versão raiz (lovable.app) + Copy = versão referência (vercel.app)
+> **Data de Análise Atualizada:** 23/12/2025
+
+#### ANÁLISE DO ESTADO ATUAL (23/12/2025)
+
+**Componente:** `src/components/steps/Step11FinalOffer.tsx` (243 linhas)
+**Frames de Referência:** Video3 (3312, 3840, 4224), Video4 (0480, 0792, 0936, 1272, 1704, 1896, 2784)
+
+##### ✅ O QUE JÁ EXISTE (MANTER/AJUSTAR):
+
+- Card "Seu Perfil de Liberdade" com XP, Coins, Badges (REQ-VENDA-001) ✅
+- Barra "Nível de Prontidão" com percentual ✅
+- "Baseado nas suas X conquistas" (REQ-VENDA-002) ✅
+- Box de Diagnóstico (REQ-VENDA-003) ✅
+- Card "Respira Livre Premium" (REQ-VENDA-010) ✅
+- Lista de benefícios híbrida (REQ-VENDA-011) ✅
+- Timer de oferta (REQ-VENDA-012) ✅
+- Prova social "1.847 pessoas" (REQ-VENDA-013) ✅
+- CTA "Garantir Minha Liberdade Agora" (REQ-VENDA-018) ✅
+
+##### ❌ GAPS IDENTIFICADOS (IMPLEMENTAR):
+
+1. **REQ-VENDA-004:** Badge "🔓 OFERTA EXCLUSIVA DESBLOQUEADA" (vermelho) - NÃO EXISTE
+2. **REQ-VENDA-005:** Título "Sua Classificação Desbloqueou" - NÃO EXISTE
+3. **REQ-VENDA-006:** "70% DE DESCONTO" (verde gigante) - NÃO EXISTE (atual mostra "60% OFF" pequeno)
+4. **REQ-VENDA-007:** Copy "Apenas para quem completou a jornada como você" - NÃO EXISTE
+5. **REQ-VENDA-008:** Estrutura de preço ERRADA:
+   - Atual: R$ 497 → R$ 197 (60% OFF)
+   - PRD: R$ 97,90 → R$ 29,90 (70% OFF)
+6. **REQ-VENDA-009:** Badge "📈 Você economizou R$ X" - NÃO EXISTE
+7. **REQ-VENDA-017:** Hierarquia visual INCORRETA - Oferta deve vir APÓS perfil, não embutida
+
+##### 📝 PREÇOS CORRETOS (PRD):
+
+- **Preço Original (Ancoragem):** R$ 97,90
+- **Preço com Desconto:** R$ 29,90
+- **Percentual:** 70% OFF
+- **Economia:** R$ 68,00
 
 #### ALTERAÇÕES FEITAS EM 22/12/2025
 
