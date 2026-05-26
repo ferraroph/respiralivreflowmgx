@@ -121,6 +121,8 @@ const DevNavigation: React.FC<DevNavigationProps> = ({
     s => s.step === currentStep && s.subStep === currentSubStep
   );
 
+  if (import.meta.env.PROD) return null;
+
   return (
     <div className="fixed bottom-4 right-4 z-[9999]">
       {/* Toggle Button - Muda de cor baseado no devModeActive */}
