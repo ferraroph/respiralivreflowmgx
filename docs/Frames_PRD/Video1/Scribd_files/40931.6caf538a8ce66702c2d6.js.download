@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_scribd_app_monolith=self.webpackChunk_scribd_app_monolith||[]).push([[40931],{40931:(p,s,e)=>{p.exports=e(36882)}}]);
+//# sourceMappingURL=https://www.scribd.com/webpack/monolith/40931.6caf538a8ce66702c2d6.js.map
