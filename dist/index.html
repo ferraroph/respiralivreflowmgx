@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
+    <!-- SPA History Lock: Trava o History API IMEDIATAMENTE para impedir
+         que gtag.js e Facebook Pixel disparem PageView duplicados.
+         O app usa MemoryRouter e nunca muda a URL, então é seguro. -->
+    <script>
+    (function() {
+      var noop = function() {};
+      history.pushState = noop;
+      history.replaceState = noop;
+    })();
+    </script>
+
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-5V8PXKR3');</script>
+    })(window,document,'script','dataLayer','GTM-TWL6CNZ3');</script>
     <!-- End Google Tag Manager -->
 
     <meta charset="UTF-8" />
@@ -24,13 +36,22 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    <script type="module" crossorigin src="/assets/index-DrDPfQy_.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-B_Vg1wiZ.css">
+
+    <!-- UTMify -->
+    <script
+      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+      data-utmify-prevent-xcod-sck
+      data-utmify-prevent-subids
+      async
+      defer
+    ></script>
+    <script type="module" crossorigin src="/assets/index-BIoq5o5Y.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BAnk7oLm.css">
   </head>
 
   <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5V8PXKR3"
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWL6CNZ3"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
