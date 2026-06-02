@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { UserProfile } from '@/types/funnel';
 import Step1CharacterCreation from './steps/Step1CharacterCreation';
 import Step3GoalSelection from './steps/Step3GoalSelection';
@@ -40,6 +40,10 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
   // Modo Dev - quando ativo, desabilita o CheckpointModal
   const [devModeActive, setDevModeActive] = useState<boolean>(() => getDevModeActive());
 
+  // Guard para evitar cascata de effects durante inicialização
+  // Isso previne que múltiplos re-renders durante o init disparem eventos no GTM
+  const isInitializedRef = useRef(false);
+
   // Callback para quando o modo dev muda no DevNavigation
   const handleDevModeChange = useCallback((isActive: boolean) => {
     setDevModeActive(isActive);
@@ -59,13 +63,17 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
   }, [totalScore, onScoreUpdate]);
 
   // Auto-scroll para o topo em cada mudança de step
+  // Guard: só roda após inicialização para evitar scroll desnecessário
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (isInitializedRef.current) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }, [currentStep]);
 
   useEffect(() => {
     // Save progress whenever it changes
-    if (!isLoading) {
+    // Guard: só salva após inicialização para evitar saves prematuros
+    if (!isLoading && isInitializedRef.current) {
       saveProgress();
     }
   }, [currentStep, totalScore, characterData, progressData, isLoading]);
@@ -94,6 +102,12 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
       console.error('Error initializing user:', error);
     } finally {
       setIsLoading(false);
+      // Marca como inicializado APÓS todos os states serem setados
+      // Isso garante que os effects de scroll/save só rodam após o init
+      // e evita disparar eventos GTM desnecessários
+      requestAnimationFrame(() => {
+        isInitializedRef.current = true;
+      });
     }
   };
 
