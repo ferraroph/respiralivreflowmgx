@@ -17,7 +17,7 @@ import { UserTrackingService, UserProgress, LeadData } from '../lib/supabase';
 // ============================================================================
 // Para DESATIVAR a navegação de desenvolvimento, mude para: false
 // IMPORTANTE: Veja USER.md para mais detalhes
-const DEV_NAVIGATION_ENABLED = true;
+const DEV_NAVIGATION_ENABLED = false;
 // ============================================================================
 
 interface FunnelContainerProps {
@@ -36,7 +36,7 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
   const [savedProgress, setSavedProgress] = useState<UserProgress | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
-  
+
   // Modo Dev - quando ativo, desabilita o CheckpointModal
   const [devModeActive, setDevModeActive] = useState<boolean>(() => getDevModeActive());
 
@@ -76,10 +76,10 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
       setUserId(user?.id || null);
 
       const progress = await UserTrackingService.getOrCreateUserProgress(user?.id);
-      
+
       // Só mostra o checkpoint se o modo dev estiver DESATIVADO
       const isDevMode = getDevModeActive();
-      
+
       if (progress && progress.current_step > 1 && !isDevMode) {
         setSavedProgress(progress);
         setShowCheckpoint(true);
@@ -193,7 +193,7 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
       respirCoins: 500,
       streak: 7,
       league: 'bronze',
-      
+
       // Dados do fumante (Step 2 - Calculadora)
       dailyCigarettes: 20,
       cigarettePrice: 12,
@@ -201,7 +201,7 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
       yearlySpend: 86400,
       yearsSmokingSince: 10,
       totalSpentLifetime: 864000,
-      
+
       // Metas e motivações (Step 3)
       quitGoal: 'gradual',
       motivations: ['health', 'money', 'family'],
@@ -214,7 +214,7 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
         description: 'Uma viagem incrível',
         emotionalBenefit: 'Liberdade e novas experiências'
       },
-      
+
       // Desafios completados
       completedChallenges: ['breathing-1', 'mindfulness-1'],
       badges: ['primeiro-passo', 'respirador'],
@@ -340,7 +340,7 @@ const FunnelContainer: React.FC<FunnelContainerProps> = ({ onScoreUpdate }) => {
   return (
     <>
       {renderCurrentStep()}
-      
+
       {/* CheckpointModal - Só aparece se modo dev estiver DESATIVADO */}
       <CheckpointModal
         isOpen={showCheckpoint && !devModeActive}
